@@ -10,6 +10,14 @@ mkdir -p "$HOME_BIN" "$HOME/.config/opencode"
 export PATH="$HOME_BIN:$NPM_GLOBAL/bin:$PATH"
 npm config set prefix "$NPM_GLOBAL"
 
+# Secrets bootstrap: values are injected post-creation into ~/.env.workbench
+# (user-level Codespaces secrets need the codespaces:secrets token scope).
+if [ -f "$HOME/.env.workbench" ]; then
+  set -a; . "$HOME/.env.workbench"; set +a
+fi
+grep -q 'env.workbench' "$HOME/.bashrc" 2>/dev/null || \
+  echo '[ -f ~/.env.workbench ] && . ~/.env.workbench' >> "$HOME/.bashrc"
+
 step() { echo ""; echo "=== [setup] $1 ==="; }
 
 step "opencode CLI"
@@ -56,14 +64,7 @@ else
 fi
 
 step "browserless via docker"
-if docker info >/dev/null 2>&1 && [ -n "${BROWSERLESS_TOKEN:-}" ]; then
-  docker rm -f browserless >/dev/null 2>&1 || true
-  docker run -d --name browserless --restart unless-stopped \
-    -e "TOKEN=${BROWSERLESS_TOKEN}" \
-    -p 3000:3000 ghcr.io/browserless/chromium >/dev/null || echo "browserless container failed"
-else
-  echo "skipped (docker unavailable or BROWSERLESS_TOKEN unset)"
-fi
+bash "$WORKSPACE/.devcontainer/start-browserless.sh" || echo "browserless start failed"
 
 step "esg-hub MCP (clone + build)"
 if [ ! -d "$HOME/esg-hub" ]; then
