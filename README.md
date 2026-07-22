@@ -21,9 +21,14 @@ use the TUI directly in the Codespace terminal.
    builds esg-hub). Check progress: repo → Codespaces → ⋯ → View logs, or
    `gh codespace logs`.
 
-3. **Secrets** — set these as **Codespaces user secrets** (Settings →
-   Codespaces → Secrets) with access to this repo (already configured by the
-   bootstrap script if it was used):
+3. **Secrets** — two ways (the bootstrap script already did option b):
+
+   a. **Permanent**: Settings → Codespaces → Secrets → new secret, grant
+      access to this repo. Requires nothing else; injected as env vars into
+      every Codespace process.
+   b. **Bootstrap (done for you)**: values were written to
+      `~/.env.workbench` inside the Codespace, which `~/.bashrc` and
+      `setup.sh` source automatically.
 
    | Secret | Used by |
    |---|---|
