@@ -1,0 +1,97 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "kimi-for-coding/k3",
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true
+    },
+    "gh_grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app",
+      "enabled": true
+    },
+    "n8n": {
+      "type": "remote",
+      "url": "https://simonmak.app.n8n.cloud/mcp-server/http",
+      "enabled": true
+    },
+    "clerk": {
+      "type": "remote",
+      "url": "https://mcp.clerk.com/mcp",
+      "enabled": true
+    },
+    "vercel": {
+      "type": "remote",
+      "url": "https://mcp.vercel.com",
+      "enabled": true
+    },
+    "github": {
+      "type": "local",
+      "command": ["/home/node/.local/bin/github-mcp-server", "stdio"],
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:SIMONPLMAK_CLOUD_PAT}"
+      },
+      "enabled": true
+    },
+    "perplexity": {
+      "type": "local",
+      "command": ["node", "/home/node/.local/bin/perplexity-agent-mcp/index.js"],
+      "environment": {
+        "PERPLEXITY_API_KEY": "{env:PERPLEXITY_API_KEY}"
+      },
+      "enabled": true,
+      "timeout": 600000
+    },
+    "brave-search": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-brave-search/dist/index.js"],
+      "environment": {
+        "BRAVE_API_KEY": "{env:BRAVE_API_KEY}"
+      },
+      "enabled": true,
+      "timeout": 120000
+    },
+    "postgres": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-postgres/dist/index.js", "{env:DATABASE_URL}"],
+      "enabled": true
+    },
+    "browserless": {
+      "type": "local",
+      "command": ["node", "/home/node/.local/bin/browserless-mcp/dist/index.js"],
+      "environment": {
+        "BROWSERLESS_HOST": "{env:BROWSERLESS_HOST}",
+        "BROWSERLESS_PORT": "{env:BROWSERLESS_PORT}",
+        "BROWSERLESS_TOKEN": "{env:BROWSERLESS_TOKEN}",
+        "BROWSERLESS_PROTOCOL": "{env:BROWSERLESS_PROTOCOL}"
+      },
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/@playwright/mcp/cli.js"],
+      "enabled": true
+    },
+    "esg-hub": {
+      "type": "local",
+      "command": ["node", "/home/node/esg-hub/mcp-server/dist/index.js"],
+      "environment": {
+        "SURREAL_ENDPOINT": "{env:SURREAL_ENDPOINT}",
+        "SURREAL_USERNAME": "{env:SURREAL_USERNAME}",
+        "SURREAL_PASSWORD": "{env:SURREAL_PASSWORD}",
+        "SURREAL_NAMESPACE": "{env:SURREAL_NAMESPACE}",
+        "SURREAL_DATABASE": "{env:SURREAL_DATABASE}"
+      },
+      "enabled": true,
+      "timeout": 120000
+    },
+    "humanity4ai": {
+      "type": "local",
+      "command": ["node", "/home/node/project_human/mcp-servers/dist/mcp-server.js"],
+      "enabled": true,
+      "timeout": 120000
+    }
+  }
+}
