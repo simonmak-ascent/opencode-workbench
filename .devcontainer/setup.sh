@@ -24,6 +24,7 @@ step "opencode CLI"
 if ! command -v opencode >/dev/null 2>&1; then
   curl -fsSL https://opencode.ai/install | bash
 fi
+export PATH="$HOME/.opencode/bin:$PATH"
 opencode --version || echo "opencode install failed (non-fatal for setup)"
 
 step "global npm MCP servers"
@@ -33,9 +34,9 @@ npm install -g --silent \
   @playwright/mcp || echo "npm global MCP install had errors"
 
 step "playwright chromium"
-npx -y playwright install --with-deps chromium >/dev/null 2>&1 || \
-  sudo npx -y playwright install-deps chromium >/dev/null 2>&1 || \
-  echo "playwright deps install had errors (non-fatal)"
+npx -y playwright install chromium >/dev/null 2>&1 || echo "playwright browser install failed"
+sudo env DEBIAN_FRONTEND=noninteractive npx -y playwright install-deps chromium >/dev/null 2>&1 || \
+  echo "playwright system deps had errors (non-fatal)"
 
 step "github-mcp-server binary"
 GHMCP_VER=$(curl -sf https://api.github.com/repos/github/github-mcp-server/releases/latest | grep -o '"tag_name": *"[^"]*"' | cut -d'"' -f4 || true)
