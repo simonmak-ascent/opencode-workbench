@@ -1,86 +1,91 @@
 # Codespace Workbench
 
-A cloud dev environment for OpenCode with the full MCP stack — no local disk
-or compute needed. Pair it with the OpenCode desktop app (attach via URL) or
-use the TUI directly in the Codespace terminal.
+A pre-configured GitHub Codespaces workstation for AI-assisted development
+with OpenCode and MCP servers.
 
-## One-time setup
+The workbench provisions a Node.js environment with OpenCode, pnpm, Vercel
+CLI, and a full suite of MCP servers installed globally — ready the moment
+your Codespace boots.
 
-1. **Create the Codespace** (web: repo → Code → Codespaces → +, or CLI):
+## Purpose
 
-   ```bash
-   gh codespace create --repo simonplmak-cloud/codespace-workbench --machine basicLinux32gb
-   ```
+- Eliminate manual setup on every new Codespace.
+- Keep toolchain and MCP server versions in one place under version control.
+- Provide shell aliases for common workflows across all Codespaces.
 
-   Recommended machine: 4-core (`basicLinux32gb`) — fits the GitHub Pro
-   180 core-hour / 20 GB monthly quota (~45 h of active use). The Codespace
-   auto-stops after 30 min idle; state is preserved.
+## Creating a Codespace
 
-2. **Wait for postCreate** (~3-5 min first time — installs opencode, MCP
-   servers, playwright chromium, starts Postgres + Browserless containers,
-   builds esg-hub). Check progress: repo → Codespaces → ⋯ → View logs, or
-   `gh codespace logs`.
+1. Navigate to the repository on GitHub:
+   `https://github.com/simonplmak-cloud/codespace-workbench`
 
-3. **Secrets** — two ways (the bootstrap script already did option b):
+2. Click **Code** → **Codespaces** → **Create codespace on main**.
 
-   a. **Permanent**: Settings → Codespaces → Secrets → new secret, grant
-      access to this repo. Requires nothing else; injected as env vars into
-      every Codespace process.
-   b. **Bootstrap (done for you)**: values were written to
-      `~/.env.workbench` inside the Codespace, which `~/.bashrc` and
-      `setup.sh` source automatically.
+3. Wait for the post-creation script to finish (watch the terminal output).
 
-   | Secret | Used by |
-   |---|---|
-   | `SIMONPLMAK_CLOUD_PAT` | github MCP |
-   | `PERPLEXITY_API_KEY` | perplexity MCP |
-   | `BRAVE_API_KEY` | brave-search MCP |
-   | `BROWSERLESS_TOKEN` | browserless MCP + container |
-   | `KIMI_API_KEY` | LLM (Kimi K3) |
-   | `SURREAL_ENDPOINT` / `SURREAL_USERNAME` / `SURREAL_PASSWORD` / `SURREAL_NAMESPACE` / `SURREAL_DATABASE` | esg-hub MCP |
+4. The workbench is ready when you see `Workbench setup complete`.
 
-## Daily use
+## Adding MCP Servers
 
-**Attach the desktop app (option 2):**
+Edit `.devcontainer/setup-workbench.sh` and add the npm package name to the
+`PACKAGES` array:
 
 ```bash
-# inside the Codespace
-opencode serve --port 4096 --hostname 0.0.0.0
+PACKAGES=(
+  opencode-ai
+  pnpm
+  # ... existing entries ...
+  @my-org/my-mcp-server    # <-- add new server here
+)
 ```
 
-Then in the desktop app: Settings → Server →
-`https://<codespace-name>-4096.app.github.dev`
-(set port 4096 visibility to Public in the Ports panel if the app can't
-authenticate through GitHub).
+Commit and push. The next Codespace rebuild will install it automatically.
 
-**Or just use the TUI in the Codespace terminal:**
+## Rebuilding the Environment
+
+If you modify `devcontainer.json`, `setup-workbench.sh`, or `aliases.sh`:
+
+1. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`).
+2. Run **Codespaces: Rebuild Container**.
+
+Alternatively, delete the existing Codespace and create a fresh one — the
+post-creation script runs on every new Codespace.
+
+## Verifying OpenCode
+
+After the Codespace boots, open a terminal and run:
 
 ```bash
-opencode
+opencode --version
 ```
 
-**Work on other repos** — `gh` is pre-authenticated inside Codespaces:
+If the command is not found, rebuild the container or check the setup log at
+`/workspaces/.codespaces/.postCreateCommand.log`.
+
+## Cloning Other Repositories
+
+All repositories live under `/workspaces/`. Use the `workspaces` alias to
+jump there quickly:
 
 ```bash
-gh repo clone simonplmak-cloud/esg-hub
-cd esg-hub && opencode
+workspaces
 ```
 
-The global `~/.config/opencode/opencode.json` (installed by setup) applies
-everywhere in the Codespace; project-level configs still override.
+Then clone any repository:
 
-## What's inside
+```bash
+git clone https://github.com/some-org/some-repo.git
+```
 
-- opencode CLI (Kimi K3 default model)
-- MCPs: github, perplexity (Agent API wrapper), brave-search, postgres
-  (memory), browserless, playwright, esg-hub, humanity4ai + remote
-  context7 / gh_grep / n8n / clerk / vercel
-- Postgres 16 (Docker, db `memory`) + Browserless chromium (Docker)
-- `vendor/` — vendored custom MCPs (perplexity-agent-mcp, browserless-mcp),
-  installed to `~/.local/bin` by setup.sh
+## File Structure
 
-## Costs
+```
+.devcontainer/
+├── devcontainer.json       # Codespace definition
+├── setup-workbench.sh      # Post-creation provisioning
+└── aliases.sh              # Shell shortcuts
+```
 
-- Codespaces: metered against your 180 core-h/20 GB Pro quota — stop or
-  delete when done (`gh codespace stop`, `gh codespace delete`).
-- Everything else (LLM, API calls) bills to the respective providers as usual.
+## Requirements
+
+- GitHub Codespaces (or any Dev Container-compatible host)
+- Node.js 20+ (provided by the default Codespaces image)
