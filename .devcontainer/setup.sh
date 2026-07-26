@@ -31,7 +31,9 @@ step "global npm MCP servers"
 npm install -g --silent \
   @modelcontextprotocol/server-brave-search \
   @modelcontextprotocol/server-postgres \
-  @playwright/mcp || echo "npm global MCP install had errors"
+  @playwright/mcp \
+  figma-developer-mcp \
+  @sentry/mcp-server || echo "npm global MCP install had errors"
 
 step "playwright chromium"
 npx -y playwright install chromium >/dev/null 2>&1 || echo "playwright browser install failed"
@@ -81,14 +83,29 @@ if [ ! -d "$HOME/project_human" ]; then
   git clone --depth 1 https://github.com/humanity4ai/project_human "$HOME/project_human" 2>/dev/null || echo "project_human clone failed"
 fi
 
+step "bootstrap data tooling"
+if [ -f "$WORKSPACE/scripts/bootstrap-tools.sh" ]; then
+  bash "$WORKSPACE/scripts/bootstrap-tools.sh" || echo "bootstrap-tools had errors (non-fatal)"
+fi
+
 step "global opencode config"
 cp "$WORKSPACE/opencode.json" "$HOME/.config/opencode/opencode.json"
+
+step "MCP OAuth (n8n + vercel)"
+echo "Attempting non-interactive MCP OAuth — may require manual follow-up for 2FA."
+for svc in n8n vercel; do
+  timeout 30 opencode mcp auth "$svc" </dev/null >/tmp/mcp-auth-$svc.log 2>&1 &
+done
+sleep 5
+echo "MCP OAuth started in background (check /tmp/mcp-auth-*.log)."
+echo "If auth fails, run manually: opencode mcp auth n8n ; opencode mcp auth vercel"
 
 step "done"
 echo ""
 echo "Next steps:"
-echo "  1. Verify secrets are set (Codespaces user secrets): SIMONPLMAK_CLOUD_PAT,"
-echo "     PERPLEXITY_API_KEY, BRAVE_API_KEY, BROWSERLESS_TOKEN, KIMI_API_KEY, SURREAL_*"
-echo "  2. Start the server:  opencode serve --port 4096 --hostname 0.0.0.0"
-echo "  3. Attach your desktop app to the forwarded 4096 URL"
-echo "     (or just run 'opencode' for the TUI right here)"
+echo "  1. Check MCP OAuth status: grep 'Done\|Error' /tmp/mcp-auth-*.log"
+echo "  2. If OAuth failed (expected without browser), run manually:"
+echo "       opencode mcp auth n8n"
+echo "       opencode mcp auth vercel"
+echo "  3. Restart codespace for FIGMA/SENTRY secrets to propagate"
+echo "  4. Start the server:  opencode serve --port 4096 --hostname 0.0.0.0"
