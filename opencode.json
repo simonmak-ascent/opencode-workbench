@@ -1,6 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "model": "kimi-for-coding/k3",
+  "lsp": true,
   "mcp": {
     "context7": {
       "type": "remote",
@@ -74,24 +75,87 @@
       "command": ["node", "/home/node/.npm-global/lib/node_modules/@playwright/mcp/cli.js"],
       "enabled": true
     },
-    "esg-hub": {
+    "figma": {
       "type": "local",
-      "command": ["node", "/home/node/esg-hub/mcp-server/dist/index.js"],
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/figma-developer-mcp/dist/index.js"],
       "environment": {
-        "SURREAL_ENDPOINT": "{env:SURREAL_ENDPOINT}",
-        "SURREAL_USERNAME": "{env:SURREAL_USERNAME}",
-        "SURREAL_PASSWORD": "{env:SURREAL_PASSWORD}",
-        "SURREAL_NAMESPACE": "{env:SURREAL_NAMESPACE}",
-        "SURREAL_DATABASE": "{env:SURREAL_DATABASE}"
+        "FIGMA_ACCESS_TOKEN": "{env:FIGMA_ACCESS_TOKEN}"
       },
-      "enabled": true,
-      "timeout": 120000
+      "enabled": true
     },
-    "humanity4ai": {
+    "mermaid": {
       "type": "local",
-      "command": ["node", "/home/node/project_human/mcp-servers/dist/mcp-server.js"],
-      "enabled": true,
-      "timeout": 120000
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-mermaid/build/index.js"],
+      "enabled": true
+    },
+    "saga": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/saga-mcp/dist/index.js"],
+      "enabled": true
+    },
+    "echarts": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-echarts/build/index.js"],
+      "enabled": true
+    },
+    "surrealdb": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/surrealdb-mcp-server/build/index.js"],
+      "environment": {
+        "SURREALDB_URL": "{env:SURREALDB_URL}",
+        "SURREALDB_USER": "{env:SURREALDB_USER}",
+        "SURREALDB_PASS": "{env:SURREALDB_PASS}",
+        "SURREALDB_NS": "{env:SURREALDB_NS}",
+        "SURREALDB_DB": "{env:SURREALDB_DB}"
+      },
+      "enabled": false
+    },
+    "shadcn": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/@jpisnice/shadcn-ui-mcp-server/build/index.js"],
+      "environment": {
+        "GITHUB_TOKEN": "{env:SIMONPLMAK_CLOUD_PAT}"
+      },
+      "enabled": true
+    },
+    "wcagc": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/@wcagc/mcp/dist/stdio.js"],
+      "environment": {
+        "WCAGC_MCP_KEY": "{env:WCAGC_MCP_KEY}"
+      },
+      "enabled": false
+    },
+    "swagger-testcase": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/swagger-testcase-mcp/dist/index.js"],
+      "enabled": true
+    },
+    "design-system": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-design-system-extractor/dist/index.js"],
+      "enabled": true
+    },
+    "storybook": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/@storybook/mcp/dist/index.js"],
+      "enabled": false
+    },
+    "convertica": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/convertica-mcp/src/index.js"],
+      "environment": {
+        "CONVERTICA_API_KEY": "{env:CONVERTICA_API_KEY}"
+      },
+      "enabled": false
+    },
+    "sentry": {
+      "type": "local",
+      "command": ["node", "/home/node/.npm-global/lib/node_modules/@sentry/mcp-server/dist/index.js"],
+      "environment": {
+        "SENTRY_ACCESS_TOKEN": "{env:SENTRY_ACCESS_TOKEN}"
+      },
+      "enabled": true
     }
   }
 }

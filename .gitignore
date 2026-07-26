@@ -1,9 +1,40 @@
-.env
-.env.*
-*.key
+# Secrets & environment
+.env*
+!.env.example
 *.pem
-*.crt
+*.key
+credentials*
+secrets*
 
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OpenCode runtime
 .opencode/
-.mcp/
-.secrets/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Playwright MCP runtime artifacts
+.playwright-mcp/
+
+# Build artifacts
+dist/
+build/
+*.tsbuildinfo

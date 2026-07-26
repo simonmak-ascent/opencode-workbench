@@ -1,0 +1,41 @@
+{
+  "generated": "2026-07-26",
+  "total": 22,
+  "active": 19,
+  "disabled": 3,
+  "servers": {
+    "remote": [
+      {"name": "context7", "url": "https://mcp.context7.com/mcp", "enabled": true, "auth": "none"},
+      {"name": "gh_grep", "url": "https://mcp.grep.app", "enabled": true, "auth": "none"},
+      {"name": "n8n", "url": "https://simonmak.app.n8n.cloud/mcp-server/http", "enabled": true, "auth": "oauth"},
+      {"name": "clerk", "url": "https://mcp.clerk.com/mcp", "enabled": true, "auth": "none"},
+      {"name": "vercel", "url": "https://mcp.vercel.com", "enabled": true, "auth": "oauth"}
+    ],
+    "local_binary": [
+      {"name": "github-mcp-server", "path": "~/.local/bin/github-mcp-server", "auth_var": "SIMONPLMAK_CLOUD_PAT"}
+    ],
+    "local_npm": [
+      {"name": "server-brave-search", "pkg": "@modelcontextprotocol/server-brave-search", "ver": "0.6.2", "auth_var": "BRAVE_API_KEY", "enabled": true},
+      {"name": "server-postgres", "pkg": "@modelcontextprotocol/server-postgres", "ver": "0.6.2", "auth_var": "DATABASE_URL", "enabled": true},
+      {"name": "playwright", "pkg": "@playwright/mcp", "ver": "0.0.78", "auth_var": null, "enabled": true},
+      {"name": "shadcn", "pkg": "@jpisnice/shadcn-ui-mcp-server", "ver": "2.0.0", "auth_var": "GITHUB_TOKEN", "enabled": true},
+      {"name": "echarts", "pkg": "mcp-echarts", "ver": "0.7.1", "auth_var": null, "enabled": true},
+      {"name": "mermaid", "pkg": "mcp-mermaid", "ver": "0.4.1", "auth_var": null, "enabled": true},
+      {"name": "saga", "pkg": "saga-mcp", "ver": "1.6.0", "auth_var": null, "enabled": true},
+      {"name": "swagger-testcase", "pkg": "swagger-testcase-mcp", "ver": "1.0.0", "auth_var": null, "enabled": true},
+      {"name": "design-system", "pkg": "mcp-design-system-extractor", "ver": "1.1.1", "auth_var": null, "enabled": true},
+      {"name": "figma", "pkg": "figma-developer-mcp", "ver": "0.13.2", "auth_var": "FIGMA_ACCESS_TOKEN", "enabled": true},
+      {"name": "sentry", "pkg": "@sentry/mcp-server", "ver": "0.37.0", "auth_var": "SENTRY_ACCESS_TOKEN", "enabled": true}
+    ],
+    "local_npm_disabled": [
+      {"name": "surrealdb", "pkg": "surrealdb-mcp-server", "ver": "0.2.0", "reason": "requires SURREALDB_* vars"},
+      {"name": "storybook", "pkg": "@storybook/mcp", "ver": "0.8.0", "reason": "library, not standalone CLI"},
+      {"name": "wcagc", "pkg": "@wcagc/mcp", "ver": "0.3.0", "reason": "requires WCAGC_MCP_KEY"},
+      {"name": "convertica", "pkg": "convertica-mcp", "ver": "0.1.3", "reason": "requires CONVERTICA_API_KEY"}
+    ],
+    "vendored": [
+      {"name": "perplexity-agent-mcp", "source": "vendor/perplexity-agent-mcp/", "auth_var": "PERPLEXITY_API_KEY"},
+      {"name": "browserless-mcp", "source": "vendor/browserless-mcp/", "auth_var": "BROWSERLESS_TOKEN"}
+    ]
+  }
+}
