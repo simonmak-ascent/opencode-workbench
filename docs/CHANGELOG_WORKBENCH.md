@@ -3,6 +3,21 @@
 > All notable changes to the codespace-workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-07-26] — WORKSTATION_REVIEW Audit (Round 2)
+
+### Added
+- 5 new backlog items (I13–I17) from comprehensive workstation review
+
+### Changed
+- **AGENTS.md**: MCP server count corrected 18 → 19, all secret sources updated from `~/.env.workbench` to `Codespaces secret → devcontainer.json`
+- **AGENTS.md**: Removed stale `OPENAI_API_KEY` entry, clarified `~/.env.workbench` as legacy fallback
+- **docs/architecture/ai-provider-inventory.md**: Redacted partial Perplexity key prefix
+
+### Fixed
+- Documentation drift: AGENTS.md now matches runtime reality for secret sourcing
+
+---
+
 ## [2026-07-26] — Comprehensive Audit & Fix Sprint
 
 ### Added

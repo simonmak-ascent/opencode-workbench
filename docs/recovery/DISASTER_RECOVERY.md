@@ -9,8 +9,9 @@
 Before attempting recovery, verify these assets exist:
 
 1. **Repository**: `https://github.com/simonplmak-cloud/codespace-workbench` exists
-2. **Secrets**: At least 9 critical secrets configured at https://github.com/settings/codespaces/secrets
+2. **Secrets**: At least 10 critical secrets configured at https://github.com/settings/codespaces/secrets
 3. **PAT**: `SIMONPLMAK_CLOUD_PAT` is active (check: https://github.com/settings/tokens)
+4. **Machine type**: Recommended `4-core` (`basicLinux32gb`) at minimum
 
 ## Recovery Procedure
 

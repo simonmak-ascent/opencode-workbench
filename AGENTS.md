@@ -6,7 +6,7 @@ There is no root `package.json`, no build system, no test framework, no linter, 
 ## Repo structure
 
 - `.devcontainer/setup.sh` — **single source of truth** for workstation automation. Runs on `postCreateCommand`. Installs opencode CLI, npm-global MCP servers, vendored MCPs (perplexity, browserless), Docker containers (Postgres 16, Browserless), and clones external repos (`esg-hub`, `project_human`).
-- `opencode.json` — copied to `~/.config/opencode/opencode.json` by setup.sh. Configures 18 MCP servers (all enabled). All secrets use `{env:VAR}` syntax; never hardcode tokens.
+- `opencode.json` — copied to `~/.config/opencode/opencode.json` by setup.sh. Configures 19 MCP servers (all enabled). All secrets use `{env:VAR}` syntax; never hardcode tokens.
 - `vendor/` — vendored MCP servers copied to `~/.local/bin/` at setup.
 - `configs/` — reference docs for opencode and MCP architecture.
 - `docs/` — comprehensive inventories, secrets map, recovery analysis, changelog.
@@ -16,16 +16,15 @@ There is no root `package.json`, no build system, no test framework, no linter, 
 | Variable | Source | Used by |
 |---|---|---|
 | `N8N_MCP_ACCESS_TOKEN` | Codespaces secret → `devcontainer.json` | n8n MCP |
-| `SIMONPLMAK_CLOUD_PAT` | `~/.env.workbench` | GitHub MCP, shadcn MCP |
-| `PERPLEXITY_API_KEY` | `~/.env.workbench` | Perplexity MCP |
-| `BRAVE_API_KEY` | `~/.env.workbench` | Brave Search MCP |
-| `OPENAI_API_KEY` | `~/.env.workbench` | (OpenCode model fallback) |
+| `SIMONPLMAK_CLOUD_PAT` | Codespaces secret → `devcontainer.json` | GitHub MCP, shadcn MCP |
+| `PERPLEXITY_API_KEY` | Codespaces secret → `devcontainer.json` | Perplexity MCP |
+| `BRAVE_API_KEY` | Codespaces secret → `devcontainer.json` | Brave Search MCP |
 | `DATABASE_URL` | Set in `devcontainer.json` | Postgres MCP (`postgres://opencode:opencode@localhost:5432/memory`) |
-| `SENTRY_ACCESS_TOKEN` | `~/.env.workbench` | Sentry MCP |
-| `FIGMA_ACCESS_TOKEN` | `~/.env.workbench` | Figma MCP |
-| `DEEPSEEK_API_KEY` | `~/.env.workbench` | DeepSeek provider (model: `deepseek/deepseek-v4-pro`) |
+| `SENTRY_ACCESS_TOKEN` | Codespaces secret → `devcontainer.json` | Sentry MCP |
+| `FIGMA_ACCESS_TOKEN` | Codespaces secret → `devcontainer.json` | Figma MCP |
+| `DEEPSEEK_API_KEY` | Codespaces secret → `devcontainer.json` | DeepSeek provider (model: `deepseek/deepseek-v4-pro`) |
 
-Secrets live in `~/.env.workbench`, sourced by `~/.bashrc`. Codespaces secrets propagate via `devcontainer.json` `remoteEnv`.
+Secrets propagate via Codespaces secrets → `devcontainer.json` `remoteEnv`. `~/.bashrc` also sources `~/.env.workbench` if present (legacy/bootstrap fallback).
 
 ## Docker containers (always running)
 

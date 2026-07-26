@@ -21,7 +21,7 @@
 
 | Provider | MCP Server | Secret Required | Status | Notes |
 |----------|-----------|----------------|--------|-------|
-| **Perplexity** | `perplexity-agent-mcp` (local) | `PERPLEXITY_API_KEY` | ❌ 401 — invalid key format | Key starts `Bwfxa0M0...` (not `pplx-`). Regenerate at https://perplexity.ai/settings/api |
+| **Perplexity** | `perplexity-agent-mcp` (local) | `PERPLEXITY_API_KEY` | ✅ Key regenerated (pending rebuild) | Regenerated 2026-07-26 with `pplx-` prefix. Requires codespace rebuild to take effect |
 | **Brave Search** | `server-brave-search` (local) | `BRAVE_API_KEY` | ✅ Working | Search API, key format `BSA...` |
 | **Sentry** | `@sentry/mcp-server` (local) | `SENTRY_ACCESS_TOKEN` | ✅ Working | Key format `sntryu_...` |
 

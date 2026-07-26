@@ -15,7 +15,7 @@
 
 | ID | Priority | Item | Discovered |
 |----|----------|------|------------|
-| I01 | 🔴 | Perplexity API key needs regeneration (wrong prefix) | 2026-07-26 |
+| I01 | 💜 | Perplexity API key needs regeneration (wrong prefix) | 2026-07-26 |
 | I03 | 🟡 | Complete Vercel OAuth — run `opencode mcp auth vercel` | 2026-07-26 |
 | I04 | 🟡 | Set `STORYBOOK_URL` env var for design-system MCP | 2026-07-26 |
 | I05 | 🟢 | Add `OPENROUTER_API_KEY` as alternate AI provider | 2026-07-26 |
@@ -26,6 +26,11 @@
 | I10 | ⚪ | Consider adding WCAGC accessibility MCP | 2026-07-26 |
 | I11 | ⚪ | Explore adding Convertica MCP for content conversion | 2026-07-26 |
 | I12 | 🟢 | Add version tags/git tags for major workstation milestones | 2026-07-26 |
+| I13 | 🔴 | DB_PATH env var empty at runtime — devcontainer.json declares it but codespace needs rebuild to pick up new remoteEnv entry | 2026-07-26 |
+| I14 | 🟡 | `~/.env.workbench` file missing — legacy/bootstrap fallback not available; all secrets now sourced via Codespaces secrets → devcontainer.json, but recovery docs reference this file | 2026-07-26 |
+| I15 | 🟢 | AGENTS.md MCP count was 18 (actual: 19) — fixed, but maintain awareness as servers are added/removed | 2026-07-26 |
+| I16 | 🟢 | `docs/architecture/ai-provider-inventory.md` contained partial Perplexity key prefix — redacted | 2026-07-26 |
+| I17 | ⚪ | Legacy provider env vars (OPENROUTER_API_KEY, GOOGLE_API_KEY, KIMI_API_KEY, VERCEL_ACCESS_TOKEN) present in env but inactive — consider removing from Codespaces secrets if unused | 2026-07-26 |
 
 ## Completed
 
@@ -45,3 +50,4 @@
 | C12 | 🟡 | DR test: recovery score improved 92→94 — Chromium auto-install confirmed | 2026-07-26 |
 | C13 | 🟡 | Added KIMI_API_KEY to devcontainer.json remoteEnv | 2026-07-26 |
 | C14 | 🟢 | Moved KIMI_API_KEY to Optional/Alternate in codespaces-secrets.md | 2026-07-26 |
+| C15 | 🔴 | Regenerated Perplexity API key with `pplx-` prefix (GitHub secret updated; requires codespace rebuild to propagate) | 2026-07-26 |

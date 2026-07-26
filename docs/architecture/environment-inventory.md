@@ -9,6 +9,7 @@
 | Variable | Purpose | Source | Required |
 |----------|---------|--------|----------|
 | `DEEPSEEK_API_KEY` | DeepSeek LLM provider (primary model: deepseek-v4-pro) | Codespaces Secret | Yes |
+| `OPENCODE_API_KEY` | OpenCode Zen managed model service | Codespaces Secret | No (alternate) |
 | `OPENCODE` | Set by opencode runtime | Runtime | Runtime |
 | `OPENCODE_PID` | opencode server PID | Runtime | Runtime |
 
@@ -29,7 +30,7 @@
 | `N8N_MCP_ACCESS_TOKEN` | n8n MCP auth token | Codespaces Secret | Yes |
 | `DB_PATH` | Saga tracker SQLite database path | devcontainer.json | Yes |
 
-(*) Perplexity key currently invalid — must be regenerated with `pplx-` prefix.
+(*) Perplexity key regenerated 2026-07-26 with `pplx-` prefix — requires codespace rebuild.
 
 ## MCP Servers — Disabled / Unused
 

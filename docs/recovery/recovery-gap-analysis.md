@@ -8,7 +8,7 @@
 | # | Requirement | Status | Notes |
 |---|-------------|--------|-------|
 | 1 | Repository contains devcontainer.json | ✅ Pass | Full remoteEnv coverage |
-| 2 | All codespace secrets documented | ✅ Pass | 9 required secrets in docs/codespaces-secrets.md |
+| 2 | All codespace secrets documented | ✅ Pass | 10 required/alternate secrets in docs/codespaces-secrets.md |
 | 3 | setup.sh installs all MCP servers | ✅ Pass | npm global + vendored MCPs |
 | 4 | setup.sh starts Docker containers | ✅ Pass | pg-memory + browserless |
 | 5 | setup.sh copies opencode.json | ✅ Pass | Copies to ~/.config/opencode/ |
@@ -36,7 +36,7 @@
 | Perplexity key invalid | High | Regenerate at https://perplexity.ai/settings/api (wrong prefix) |
 | Postgres data ephemeral | Low | Acceptable for dev environment |
 | Storybook URL not configured | Low | Design-system MCP needs `STORYBOOK_URL` env var |
-| KIMI_API_KEY not in remoteEnv | Low | Legacy provider — listed in secrets doc but not propagated; remove or add |
+| Machine type not in recovery doc | Low | Now documented: `basicLinux32gb` recommended |
 
 ## Recovery Process (Step by Step)
 
