@@ -7,16 +7,16 @@
     "remote": [
       {"name": "context7", "url": "https://mcp.context7.com/mcp", "enabled": true, "auth": "none"},
       {"name": "gh_grep", "url": "https://mcp.grep.app", "enabled": true, "auth": "none"},
-      {"name": "n8n", "url": "https://simonmak.app.n8n.cloud/mcp-server/http", "enabled": true, "auth": "oauth"},
+      {"name": "n8n", "url": "https://simonmak.app.n8n.cloud/mcp-server/http", "enabled": true, "auth": "token"},
       {"name": "clerk", "url": "https://mcp.clerk.com/mcp", "enabled": true, "auth": "none"},
       {"name": "vercel", "url": "https://mcp.vercel.com", "enabled": true, "auth": "oauth"}
     ],
     "local_binary": [
-      {"name": "github-mcp-server", "path": "~/.local/bin/github-mcp-server", "auth_var": "SIMONPLMAK_CLOUD_PAT"}
+      {"name": "github-mcp-server", "path": "~/.local/bin/github-mcp-server", "auth_var": "SIMONPLMAK_CLOUD_PAT", "enabled": true, "type": "go binary"}
     ],
     "local_npm": [
-      {"name": "server-brave-search", "pkg": "@modelcontextprotocol/server-brave-search", "ver": "0.6.2", "auth_var": "BRAVE_API_KEY", "enabled": true},
-      {"name": "server-postgres", "pkg": "@modelcontextprotocol/server-postgres", "ver": "0.6.2", "auth_var": "DATABASE_URL", "enabled": true},
+      {"name": "brave-search", "pkg": "@modelcontextprotocol/server-brave-search", "ver": "0.6.2", "auth_var": "BRAVE_API_KEY", "enabled": true},
+      {"name": "postgres", "pkg": "@modelcontextprotocol/server-postgres", "ver": "0.6.2", "auth_var": "DATABASE_URL", "enabled": true},
       {"name": "playwright", "pkg": "@playwright/mcp", "ver": "0.0.78", "auth_var": null, "enabled": true},
       {"name": "shadcn", "pkg": "@jpisnice/shadcn-ui-mcp-server", "ver": "2.0.0", "auth_var": "GITHUB_TOKEN", "enabled": true},
       {"name": "echarts", "pkg": "mcp-echarts", "ver": "0.7.1", "auth_var": null, "enabled": true},
@@ -34,8 +34,8 @@
       {"name": "convertica", "pkg": "convertica-mcp", "ver": "0.1.3", "reason": "requires CONVERTICA_API_KEY"}
     ],
     "vendored": [
-      {"name": "perplexity-agent-mcp", "source": "vendor/perplexity-agent-mcp/", "auth_var": "PERPLEXITY_API_KEY"},
-      {"name": "browserless-mcp", "source": "vendor/browserless-mcp/", "auth_var": "BROWSERLESS_TOKEN"}
+      {"name": "perplexity", "source": "vendor/perplexity-agent-mcp/", "auth_var": "PERPLEXITY_API_KEY", "enabled": true},
+      {"name": "browserless", "source": "vendor/browserless-mcp/", "auth_var": "BROWSERLESS_TOKEN", "enabled": true}
     ]
   }
 }

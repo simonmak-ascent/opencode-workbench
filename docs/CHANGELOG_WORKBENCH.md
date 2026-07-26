@@ -3,6 +3,31 @@
 ## 2026-07-26
 
 ### Added
+- **MCP packages installed**: mcp-mermaid (0.4.1), saga-mcp (1.6.0), mcp-echarts (0.7.1), @jpisnice/shadcn-ui-mcp-server (2.0.0), swagger-testcase-mcp (1.0.0), mcp-design-system-extractor (1.1.1)
+- **MCP servers enabled**: mermaid, saga, echarts, shadcn, swagger-testcase, design-system (all previously disabled due to missing packages)
+- **Documentation**: environment-inventory.md, codespaces-secrets.md, recovery-gap-analysis.md
+- **Git attributes**: `.gitattributes` created with line-ending and binary-file configs
+- **Backup snapshot**: docs/backup-reports/2026-07-26.md updated
+
+### Changed
+- `configs/mcp/README.md` — reformatted local npm table, updated recovery docs, added cross-references
+- `configs/mcp/mcp-inventory.json` — updated versions, added type fields, corrected auth info
+- `docs/prompts/prompt-index.md` — expanded with related documentation cross-references
+- `docs/CHANGELOG_WORKBENCH.md` — appended today's entries
+
+### Fixed
+- 6 MCP servers were enabled in config but packages weren't installed — now installed and active
+
+### Security
+- Full repository security scan completed: CLEAN — no secrets, tokens, or keys found
+- Verified all `.env*`, `credentials*`, `secrets*` patterns covered by `.gitignore`
+
+### Notes
+- Comprehensive 21-phase workstation preservation audit completed
+- Recovery gap analysis rates overall reproducibility at 89/100
+- 22 MCP servers configured, 19 active, 3 disabled
+
+### Added
 - **CLI tools**: Vercel CLI 57.0.0 (npm global), SurrealDB CLI 3.2.3 (curl installer)
 - **Browsers**: Chromium 150.0.7871.181, Firefox ESR 140.13.0, Google Chrome 150.0.7871.186 (Playwright)
 - **MCP auth**: n8n and Vercel OAuth completed via Playwright browser automation

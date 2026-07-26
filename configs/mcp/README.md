@@ -5,7 +5,7 @@
 ## Summary
 
 **Total:** 22 MCP servers configured
-**Active:** 19 (15 local + 4 remote OAuth-authenticated)
+**Active:** 19 enabled (17 active local/npm + 1 local binary + 2 remote OAuth, some remote no-auth)
 **Disabled:** 4 (missing secrets, library-only, or optional)
 
 ## Authentication Status
@@ -50,18 +50,20 @@
   - Install: download from github/github-mcp-server releases
   - Auth: `GITHUB_PERSONAL_ACCESS_TOKEN` (env var `SIMONPLMAK_CLOUD_PAT`)
 
-### Local npm (global install)
-- `server-brave-search` — web search
-- `server-postgres` — database access
-- `playwright/mcp` — browser automation
-- `shadcn-ui-mcp-server` — UI component library
-- `mcp-echarts` — chart generation
-- `mcp-mermaid` — diagram generation
-- `saga-mcp` — project tracking
-- `swagger-testcase-mcp` — API testing
-- `mcp-design-system-extractor` — design system analysis
-- `figma-developer-mcp` — Figma design integration (enabled 2026-07-26)
-- `@sentry/mcp-server` — Sentry error monitoring (enabled 2026-07-26)
+### Local npm (global install, all enabled)
+| Server | Package | Version | Auth |
+|--------|---------|---------|------|
+| Brave Search | @modelcontextprotocol/server-brave-search | 0.6.2 | BRAVE_API_KEY |
+| Postgres | @modelcontextprotocol/server-postgres | 0.6.2 | DATABASE_URL |
+| Playwright | @playwright/mcp | 0.0.78 | none |
+| Shadcn UI | @jpisnice/shadcn-ui-mcp-server | 2.0.0 | GITHUB_TOKEN |
+| ECharts | mcp-echarts | 0.7.1 | none |
+| Mermaid | mcp-mermaid | 0.4.1 | none |
+| Saga | saga-mcp | 1.6.0 | none |
+| Swagger Testcase | swagger-testcase-mcp | 1.0.0 | none |
+| Design System | mcp-design-system-extractor | 1.1.1 | none |
+| Figma | figma-developer-mcp | 0.13.2 | FIGMA_ACCESS_TOKEN |
+| Sentry | @sentry/mcp-server | 0.37.0 | SENTRY_ACCESS_TOKEN |
 
 ### Vendored (custom, stored in vendor/)
 - `perplexity-agent-mcp` — Perplexity Agent API wrapper
@@ -114,13 +116,25 @@
 
 ## Adding a New MCP Server
 
-1. Choose local vs remote
-2. Add to `opencode.json` under `mcp` key
-3. If local, add install step to `.devcontainer/setup.sh`
-4. Document required secrets in README.md
+1. Choose local vs remote vs vendored
+2. Add entry to `opencode.json` under `mcp` key
+3. If local npm: add `npm install -g <package>` to `.devcontainer/setup.sh`
+4. If vendored: add source to `vendor/` and copy to `~/.local/bin/` in setup.sh
+5. If binary: add download step to `.devcontainer/setup.sh`
+6. If auth required: add secret to `docs/codespaces-secrets.md`
+7. Update `configs/mcp/mcp-inventory.json`
+8. Update `docs/software-inventory.md`
 
 ## Recovery
 
 All MCP server configurations are in `opencode.json`.
 All are reinstalled by `.devcontainer/setup.sh` during postCreate.
 Secrets must be configured via GitHub Codespaces Secrets.
+
+## Related Documentation
+
+- `docs/software-inventory.md` — Full inventory with versions
+- `docs/environment-inventory.md` — Environment variable map
+- `docs/codespaces-secrets.md` — Secrets management
+- `docs/recovery-gap-analysis.md` — Disaster recovery gaps
+- `configs/mcp/mcp-inventory.json` — Machine-readable inventory

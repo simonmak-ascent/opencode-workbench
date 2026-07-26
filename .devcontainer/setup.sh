@@ -33,7 +33,13 @@ npm install -g --silent \
   @modelcontextprotocol/server-postgres \
   @playwright/mcp \
   figma-developer-mcp \
-  @sentry/mcp-server || echo "npm global MCP install had errors"
+  @sentry/mcp-server \
+  mcp-mermaid \
+  saga-mcp \
+  mcp-echarts \
+  @jpisnice/shadcn-ui-mcp-server \
+  swagger-testcase-mcp \
+  mcp-design-system-extractor || echo "npm global MCP install had errors"
 
 step "playwright chromium"
 npx -y playwright install chromium >/dev/null 2>&1 || echo "playwright browser install failed"

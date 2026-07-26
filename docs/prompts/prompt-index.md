@@ -12,8 +12,8 @@
 ## Prompt Categories
 
 ### Workstation Prompts
-- `workstation-preservation.md` — Complete preservation workflow
-- `software-bootstrap.md` — Data tooling installation
+- `workstation-preservation.md` — Complete preservation workflow (21-phase audit)
+- `software-bootstrap.md` — Data tooling installation (pandoc, miller, csvkit, etc.)
 
 ### Maintenance Notes
 
@@ -21,3 +21,12 @@
 - Each prompt includes: title, purpose, when-to-use, author, modification date
 - Prompt changes are tracked in `docs/CHANGELOG_WORKBENCH.md`
 - New prompts should be added to this index immediately
+
+## Related Documentation
+
+- `docs/environment-inventory.md` — Environment variable map
+- `docs/codespaces-secrets.md` — Secrets management
+- `docs/recovery-gap-analysis.md` — Disaster recovery gaps
+- `configs/mcp/` — MCP server architecture
+- `configs/opencode/` — OpenCode configuration
+- `docs/backup-reports/` — Dated backup snapshots
