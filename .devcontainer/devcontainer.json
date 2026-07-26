@@ -28,7 +28,15 @@
     "BROWSERLESS_HOST": "localhost",
     "BROWSERLESS_PORT": "3000",
     "BROWSERLESS_PROTOCOL": "http",
-    "N8N_MCP_ACCESS_TOKEN": "${localEnv:N8N_MCP_ACCESS_TOKEN}"
+    "BROWSERLESS_TOKEN": "${localEnv:BROWSERLESS_TOKEN}",
+    "N8N_MCP_ACCESS_TOKEN": "${localEnv:N8N_MCP_ACCESS_TOKEN}",
+    "PERPLEXITY_API_KEY": "${localEnv:PERPLEXITY_API_KEY}",
+    "BRAVE_API_KEY": "${localEnv:BRAVE_API_KEY}",
+    "FIGMA_ACCESS_TOKEN": "${localEnv:FIGMA_ACCESS_TOKEN}",
+    "SENTRY_ACCESS_TOKEN": "${localEnv:SENTRY_ACCESS_TOKEN}",
+    "SIMONPLMAK_CLOUD_PAT": "${localEnv:SIMONPLMAK_CLOUD_PAT}",
+    "DEEPSEEK_API_KEY": "${localEnv:DEEPSEEK_API_KEY}",
+    "DB_PATH": "/workspaces/codespace-workbench/.saga/.tracker.db"
   },
   "postCreateCommand": "bash .devcontainer/setup.sh"
 }

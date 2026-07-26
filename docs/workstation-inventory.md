@@ -1,106 +1,125 @@
 # Workstation Inventory
 
-> Generated: 2026-07-26 | Host: codespace-workbench (Debian 13)
+> Generated: 2026-07-26 | Updated: 2026-07-26 (post-audit)
+> Purpose: Complete categorized inventory of all workstation files and configurations
 
 ## Repository Structure
 
 ```
 codespace-workbench/
-├── .devcontainer/              # Codespace definition & bootstrap
-│   ├── devcontainer.json        # Image, features, ports, env
-│   ├── setup.sh                 # Post-create: opencode + MCP + infra
-│   ├── setup-workbench.sh       # Legacy (superseded by setup.sh)
-│   ├── aliases.sh               # Shell aliases
-│   └── start-browserless.sh     # Browserless docker launcher
-├── .gitattributes              # Git line-ending & binary config
-├── .playwright-mcp/            # Runtime artifacts (gitignored)
-├── vendor/                     # Custom vendored MCP servers
-│   ├── perplexity-agent-mcp/   # Perplexity agent MCP
-│   └── browserless-mcp/        # Browserless.io MCP
-├── configs/                    # Reference configurations
-│   ├── opencode/README.md      # OpenCode settings docs
-│   └── mcp/                    # MCP architecture & inventory
-├── docs/                       # Documentation
-│   ├── prompts/                # Preserved operational prompts
-│   ├── backup-reports/         # Dated backup snapshots
-│   ├── software-inventory.md   # Installed software catalog
-│   ├── workstation-inventory.md # This file
-│   ├── home-directory-audit.md # Home directory audit
-│   ├── environment-inventory.md # Environment variable map
-│   ├── codespaces-secrets.md   # Secrets management
-│   ├── recovery-gap-analysis.md # Disaster recovery gaps
-│   └── CHANGELOG_WORKBENCH.md  # Change history
-├── scripts/                    # Automation scripts
-│   └── bootstrap-tools.sh      # Data processing tooling
-├── backup/                     # Backup directory (empty)
-├── opencode.json               # OpenCode config (22 MCP servers)
-├── .gitignore                  # Secret & artifact exclusion
-└── README.md                   # Architecture & recovery guide
+├── .devcontainer/          # Single source of truth for automation
+│   ├── setup.sh            # Main postCreateCommand — installs everything
+│   ├── setup-workbench.sh  # Additional workstation setup
+│   ├── devcontainer.json   # Container config, ports, remoteEnv
+│   ├── start-browserless.sh# Browserless Docker startup
+│   └── aliases.sh          # Shell aliases
+├── .opencode/              # OpenCode runtime (gitignored — local only)
+│   └── skills/             # 28 custom agent skills (TRACKED)
+│       ├── api-builder/SKILL.md
+│       ├── api-research/SKILL.md
+│       ├── ... (26 more)
+│       └── test-writer/SKILL.md
+├── vendor/                 # Vendored MCP source code
+│   ├── browserless-mcp/    # Built by setup.sh
+│   └── perplexity-agent-mcp/ # Installed by setup.sh
+├── configs/                # Reference configs
+│   ├── mcp/
+│   │   ├── README.md
+│   │   └── mcp-inventory.json
+│   └── opencode/
+│       └── README.md
+├── docs/                   # Comprehensive documentation (14 files)
+│   ├── ai-provider-inventory.md
+│   ├── backup-reports/
+│   ├── CHANGELOG_WORKBENCH.md
+│   ├── codespaces-secrets.md
+│   ├── environment-inventory.md
+│   ├── home-directory-audit.md
+│   ├── mcp-inventory.md
+│   ├── opencode-runtime-config.md
+│   ├── opencode-runtime-snapshot.md
+│   ├── prompts/
+│   ├── recovery-gap-analysis.md
+│   ├── software-inventory.md
+│   ├── workstation-inventory.md
+│   └── workstation-playbook.md
+├── scripts/
+│   └── bootstrap-tools.sh  # Post-setup tooling installer
+├── opencode.json           # SINGLE SOURCE OF TRUTH for OpenCode config
+├── AGENTS.md               # OpenCode agent instructions
+├── README.md               # Human-readable overview
+├── .gitignore              # Security exclusions
+└── .gitattributes          # Git LFS/config
 ```
 
-## Shell Configuration
+## Home Directory Files
 
-| File | Purpose | Key Content |
-|------|---------|-------------|
-| ~/.bashrc | Bash config | Sources ~/.env.workbench, adds ~/.opencode/bin to PATH |
-| ~/.profile | Login profile | Sources ~/.bashrc, adds ~/bin, ~/.local/bin to PATH |
-| ~/.zshrc | Zsh config | Oh My Zsh, devcontainers theme, git plugin |
-| ~/.zprofile | Zsh login | Sources ~/.profile |
-| ~/.npmrc | npm config | prefix=/home/node/.npm-global |
-| ~/.gitignore | Global gitignore | node_modules, .DS_Store, .vscode, etc. |
+### ~/ (user home)
 
-## Aliases (devcontainer/aliases.sh)
+| Path | Type | Classification | Notes |
+|------|------|---------------|-------|
+| `~/.bashrc` | Shell config | Source control candidate | Standard + workbench additions |
+| `~/.bash_logout` | Shell config | Local only | Default |
+| `~/.profile` | Shell config | Local only | Default |
+| `~/.zshrc` | Shell config | Local only | oh-my-zsh default |
+| `~/.zprofile` | Shell config | Local only | Default |
+| `~/.npmrc` | npm config | Local only | npm settings |
+| `~/.ssh/` | SSH keys | Local only | Auto-generated by Codespaces |
+| `~/.docker/` | Docker config | Runtime (symlink) | → persistedshare |
+| `~/.gitignore` | Git config | Runtime (symlink) | → persistedshare/dotfiles |
+| `~/esg-hub/` | External repo | Not tracked in this repo | Cloned by setup.sh |
+| `~/project_human/` | External repo | Not tracked in this repo | Cloned by setup.sh |
 
-| Alias | Command |
-|-------|---------|
-| ll | ls -lah |
-| gs | git status |
-| op | opencode |
-| workspaces | cd /workspaces |
+### ~/.config/opencode/
 
-## Installed Software
+| Path | Purpose | Managed by |
+|------|---------|-----------|
+| `opencode.json` | Runtime OpenCode config | Synced from repo `opencode.json` |
+| `node_modules/` | OpenCode plugin deps | npm install (setup.sh) |
+| `package.json` | Plugin manifest | setup.sh |
 
-See `docs/software-inventory.md` for the full catalog with exact versions.
+### ~/.local/
 
-### Core
-- Debian 13, Node.js 22.23.1, Python 3.13.5
-- Docker 29.6.2, Git 2.55.0
-- OpenCode 1.18.5
+| Path | Purpose | Classification |
+|------|---------|---------------|
+| `bin/github-mcp-server` | GitHub MCP binary | Source from GitHub Releases |
+| `bin/browserless-mcp/` | Vendored browserless MCP | Copied from repo vendor/ |
+| `bin/perplexity-agent-mcp/` | Vendored perplexity MCP | Copied from repo vendor/ |
+| `share/` | npm/pip system data | Runtime cache |
+| `state/` | Application state | Runtime cache |
 
-### MCP Servers
-- 22 total: 5 remote, 1 local binary, 11 npm global, 2 vendored, 3 disabled
-- See `configs/mcp/README.md` for full architecture
+### ~/.cache/
 
-## Home Directory Projects
+| Path | Purpose |
+|------|---------|
+| `fontconfig/` | Font cache |
+| `ms-playwright/` | Playwright browser binaries |
+| `puppeteer/` | Puppeteer browser binaries |
+| `opencode/` | OpenCode cache |
 
-| Directory | Type | Repository |
-|-----------|------|-----------|
-| ~/esg-hub/ | Git repo | github.com/simonplmak-cloud/esg-hub |
-| ~/project_human/ | Git repo | github.com/humanity4ai/project_human |
+## Shell Setup
 
-## Infrastructure (Docker)
+### Aliases (from `.devcontainer/aliases.sh`)
+- Sourced by `.bashrc`
+- Provides common shortcuts
 
-| Container | Image | Port | Purpose |
+### PATH additions
+- `/home/node/.local/bin` — local binaries (github-mcp-server, vendored MCPs)
+- `/home/node/.opencode/bin` — OpenCode CLI binary
+
+## Docker Infrastructure
+
+| Container | Image | Port | Startup |
 |-----------|-------|------|---------|
-| pg-memory | postgres:16-alpine | 5432 | OpenCode local memory store |
-| browserless | ghcr.io/browserless/chromium | 3000 | Headless browser automation |
+| `pg-memory` | postgres:16-alpine | 5432 | setup.sh |
+| `browserless` | ghcr.io/browserless/chromium | 3000 | setup.sh (via start-browserless.sh) |
 
-## Secrets Map
+## Secret Propagation Flow
 
-> All secrets stored in GitHub Codespaces Secrets, NOT in this repo.
-> See `docs/codespaces-secrets.md` for full details.
-
-| Secret | Consumers |
-|--------|-----------|
-| SIMONPLMAK_CLOUD_PAT | github MCP, shadcn MCP |
-| PERPLEXITY_API_KEY | perplexity MCP |
-| BRAVE_API_KEY | brave-search MCP |
-| BROWSERLESS_TOKEN | browserless MCP + docker |
-| KIMI_API_KEY | OpenCode LLM (kimi-for-coding/k3) |
-| FIGMA_ACCESS_TOKEN | figma MCP |
-| SENTRY_ACCESS_TOKEN | sentry MCP |
-| N8N_MCP_ACCESS_TOKEN | n8n MCP |
-| DATABASE_URL | postgres MCP |
-| SURREAL_* | surrealdb MCP (optional) |
-| WCAGC_MCP_KEY | wcagc MCP (optional) |
-| CONVERTICA_API_KEY | convertica MCP (optional) |
+```
+GitHub Codespaces Secrets
+  → devcontainer.json remoteEnv
+    → Container environment variables
+      → opencode.json {env:VAR} references
+        → MCP server processes
+```

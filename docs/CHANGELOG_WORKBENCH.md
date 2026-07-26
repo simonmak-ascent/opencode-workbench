@@ -1,73 +1,55 @@
-# Changelog — Codespace Workbench
+# Changelog — Workbench
 
-## 2026-07-26
+> All notable changes to the codespace-workbench configuration.
+> Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+
+## [2026-07-26] — Comprehensive Audit & Fix Sprint
 
 ### Added
-- **MCP packages installed**: mcp-mermaid (0.4.1), saga-mcp (1.6.0), mcp-echarts (0.7.1), @jpisnice/shadcn-ui-mcp-server (2.0.0), swagger-testcase-mcp (1.0.0), mcp-design-system-extractor (1.1.1)
-- **MCP servers enabled**: mermaid, saga, echarts, shadcn, swagger-testcase, design-system (all previously disabled due to missing packages)
-- **Documentation**: environment-inventory.md, codespaces-secrets.md, recovery-gap-analysis.md
-- **Git attributes**: `.gitattributes` created with line-ending and binary-file configs
-- **Backup snapshot**: docs/backup-reports/2026-07-26.md updated
+- 28 custom OpenCode agent skills (`.opencode/skills/`): 10 research, 10 development, 8 publishing
+- `docs/ai-provider-inventory.md` — All AI providers documented
+- `docs/opencode-runtime-config.md` — Runtime config snapshot
+- `docs/opencode-runtime-snapshot.md` — Behavioural configuration preserved
+- `docs/mcp-inventory.md` — All 19 MCP servers with versions and dependencies
+- `docs/workstation-playbook.md` — Operational knowledge captured
+- `DB_PATH` env var for saga MCP in devcontainer.json and opencode.json
+- `.saga/` to `.gitignore`
 
 ### Changed
-- `configs/mcp/README.md` — reformatted local npm table, updated recovery docs, added cross-references
-- `configs/mcp/mcp-inventory.json` — updated versions, added type fields, corrected auth info
-- `docs/prompts/prompt-index.md` — expanded with related documentation cross-references
-- `docs/CHANGELOG_WORKBENCH.md` — appended today's entries
+- **Active model**: `kimi-for-coding/k3` → `deepseek/deepseek-v4-pro`
+- **devcontainer.json `remoteEnv`**: Added 6 missing env vars (BROWSERLESS_TOKEN, PERPLEXITY_API_KEY, BRAVE_API_KEY, FIGMA_ACCESS_TOKEN, SENTRY_ACCESS_TOKEN, SIMONPLMAK_CLOUD_PAT, DEEPSEEK_API_KEY, DB_PATH)
+- **Figma MCP**: Fixed env var name from `FIGMA_ACCESS_TOKEN` → `FIGMA_API_KEY`
+- Runtime sync: `~/.config/opencode/opencode.json` synced from repo
+- Updated `docs/environment-inventory.md` — reflected model change, added new vars
+- Updated `docs/codespaces-secrets.md` — DEEPSEEK_API_KEY moved to Required
+- Updated `docs/software-inventory.md` — all MCP versions current
+- Updated `docs/workstation-inventory.md` — complete file tree
+- Updated `docs/recovery-gap-analysis.md` — score 89→92
 
 ### Fixed
-- 6 MCP servers were enabled in config but packages weren't installed — now installed and active
+- Figma MCP: `-32000 Connection closed` — env var name mismatch
+- Saga MCP: missing `DB_PATH` — now set in devcontainer + opencode config
+- Playwright MCP: installed Chromium (`npx playwright install chrome`)
+- Browserless MCP: verified Docker container + correct token
 
-### Security
-- Full repository security scan completed: CLEAN — no secrets, tokens, or keys found
-- Verified all `.env*`, `credentials*`, `secrets*` patterns covered by `.gitignore`
+### Known Issues
+- Perplexity MCP: 401 — API key regenerated needed (wrong `pplx-` prefix)
+- Vercel MCP: OAuth not completed (requires browser interaction)
+- Design-system MCP: needs `STORYBOOK_URL` pointing to live Storybook
 
-### Notes
-- Comprehensive 21-phase workstation preservation audit completed
-- Recovery gap analysis rates overall reproducibility at 89/100
-- 22 MCP servers configured, 19 active, 3 disabled
-
-### Added
-- **CLI tools**: Vercel CLI 57.0.0 (npm global), SurrealDB CLI 3.2.3 (curl installer)
-- **Browsers**: Chromium 150.0.7871.181, Firefox ESR 140.13.0, Google Chrome 150.0.7871.186 (Playwright)
-- **MCP auth**: n8n and Vercel OAuth completed via Playwright browser automation
-- **MCP fixes**: Browserless MCP (dependencies installed), storybook MCP (disabled — library, not CLI)
-- **MCP enabled**: Figma MCP (0.13.2), Sentry MCP (0.37.0)
-- **Documentation**: workstation-inventory.md, home-directory-audit.md
-- **Security**: .gitignore updated to exclude .playwright-mcp/ runtime artifacts
-
-### Changed
-- `.gitignore` — added .playwright-mcp/ exclusion
-- `configs/mcp/mcp-inventory.json` — updated to reflect 19 active servers
-- `configs/mcp/README.md` — expanded with auth status, architecture diagram
-- `configs/opencode/README.md` — expanded with current state, MCP auth docs
-- `docs/software-inventory.md` — updated with all current versions and new tools
-- `opencode.json` — enabled figma and sentry MCPs, disabled storybook
-
-### Fixed
-- Browserless MCP startup failure (missing @modelcontextprotocol/sdk dependency)
-- Storybook MCP startup failure (disabled — not a standalone CLI server)
-
-### Notes
-- Full workstation preservation audit completed across 18 phases
-- 22 MCP servers configured, 19 active, 4 disabled
-- Remote MCP servers (n8n, vercel) OAuth authenticated
-- Security scan: repository remains clean — no secrets committed
-
-## 2026-07-25
+## [2026-07-25] — Initial Preservation Sprint
 
 ### Added
-- **Documentation structure**: `docs/`, `docs/prompts/`, `docs/backup-reports/`, `configs/opencode/`, `configs/mcp/`
-- **Prompts**: `workstation-preservation.md`, `software-bootstrap.md`
-- **Config inventory**: `mcp-inventory.json`
-- **Software inventory**: `software-inventory.md`
-- **Security**: `.gitignore` (prevents accidental secret commits)
-- **Data tools**: pandoc, miller, csvkit, duckdb, polars, datasette, pyarrow, openpyxl, xlrd, xlsxwriter, lxml, sqlalchemy, tabulate, csvtojson, json2csv
+- Initial documentation structure (docs/)
+- Workstation inventory
+- Software inventory
+- Environment variable inventory
+- Codespaces secrets inventory
+- Recovery gap analysis
+- Prompt index with preservation prompts
+- Bootstrap tools script
+- Backup report
 
 ### Changed
-- `.gitignore` created to prevent secret/environment file leakage
-
-### Notes
-- Security scan completed: no secrets found in repository
-- MCP server catalog documented (22 servers, 14 active, 5 disabled, 3 vendored)
-- Recovery documentation initiated
+- 6 MCP servers enabled
+- Shell aliases configured

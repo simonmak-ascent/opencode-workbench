@@ -1,34 +1,37 @@
 # Environment Variable Inventory
 
-> Generated: 2026-07-26 | Host: codespace-workbench
+> Generated: 2026-07-26 | Updated: 2026-07-26 (post-audit) | Host: codespace-workbench
 > Purpose: Track every environment variable that affects development behaviour.
 > CRITICAL: This file documents names and purposes ONLY. Never record values.
 
-## OpenCode
+## OpenCode — Active Provider
 
 | Variable | Purpose | Source | Required |
 |----------|---------|--------|----------|
-| `KIMI_API_KEY` | LLM provider auth (kimi-for-coding/k3) | Codespaces Secret | Yes |
+| `DEEPSEEK_API_KEY` | DeepSeek LLM provider (primary model: deepseek-v4-pro) | Codespaces Secret | Yes |
 | `OPENCODE` | Set by opencode runtime | Runtime | Runtime |
 | `OPENCODE_PID` | opencode server PID | Runtime | Runtime |
 
-## MCP Servers
+## MCP Servers — Active
 
 | Variable | Purpose | Source | Required |
 |----------|---------|--------|----------|
-| `SIMONPLMAK_CLOUD_PAT` | GitHub personal access token (github MCP, shadcn MCP) | Codespaces Secret | Yes |
-| `PERPLEXITY_API_KEY` | Perplexity API (perplexity-agent-mcp) | Codespaces Secret | Yes |
+| `SIMONPLMAK_CLOUD_PAT` | GitHub PAT (github MCP, shadcn MCP) | Codespaces Secret | Yes |
+| `PERPLEXITY_API_KEY` | Perplexity API (perplexity-agent-mcp) | Codespaces Secret | Yes (*) |
 | `BRAVE_API_KEY` | Brave Search API (brave-search MCP) | Codespaces Secret | Yes |
-| `BROWSERLESS_TOKEN` | Browserless.io auth token | Codespaces Secret | Yes |
+| `BROWSERLESS_TOKEN` | Browserless auth token | Codespaces Secret | Yes |
 | `BROWSERLESS_HOST` | Browserless hostname | devcontainer.json | Yes |
 | `BROWSERLESS_PORT` | Browserless port | devcontainer.json | Yes |
-| `BROWSERLESS_PROTOCOL` | Browserless protocol (http/https) | devcontainer.json | Yes |
+| `BROWSERLESS_PROTOCOL` | Browserless protocol | devcontainer.json | Yes |
 | `FIGMA_ACCESS_TOKEN` | Figma API (figma-developer-mcp) | Codespaces Secret | Yes |
 | `SENTRY_ACCESS_TOKEN` | Sentry API (@sentry/mcp-server) | Codespaces Secret | Yes |
-| `DATABASE_URL` | Postgres connection string (postgres MCP) | devcontainer.json | Yes |
-| `N8N_MCP_ACCESS_TOKEN` | n8n MCP access token | Codespaces Secret | Yes |
+| `DATABASE_URL` | Postgres connection (postgres MCP) | devcontainer.json | Yes |
+| `N8N_MCP_ACCESS_TOKEN` | n8n MCP auth token | Codespaces Secret | Yes |
+| `DB_PATH` | Saga tracker SQLite database path | devcontainer.json | Yes |
 
-## MCP Servers (Optional)
+(*) Perplexity key currently invalid — must be regenerated with `pplx-` prefix.
+
+## MCP Servers — Disabled / Unused
 
 | Variable | Purpose | Source | Required |
 |----------|---------|--------|----------|
@@ -53,20 +56,23 @@
 | `GITHUB_SERVER_URL` | GitHub server URL | Codespaces |
 | `GITHUB_REPOSITORY` | Current repository | Codespaces |
 | `GITHUB_USER` | Current user | Codespaces |
-| `CODESPACES` | Codespace indicator (true) | Codespaces |
+| `CODESPACES` | Codespace indicator | Codespaces |
 | `CODESPACE_NAME` | Codespace name | Codespaces |
 | `GIT_COMMITTER_NAME` | Git identity | Codespaces |
 | `GIT_COMMITTER_EMAIL` | Git identity | Codespaces |
+| `CLOUDENV_ENVIRONMENT_ID` | Cloud environment ID | Codespaces |
+| `INTERNAL_VSCS_TARGET_URL` | VS Code target URL | Codespaces |
 
-## Other LLM / AI (available but not used by current config)
+## LLM / AI Providers (detected, varying levels of use)
 
-| Variable | Purpose | Source |
-|----------|---------|--------|
-| `DEEPSEEK_API_KEY` | DeepSeek API | Codespaces Secret |
-| `OPENROUTER_API_KEY` | OpenRouter API | Codespaces Secret |
-| `GOOGLE_API_KEY` | Google AI API | Codespaces Secret |
-| `VERCEL_ACCESS_TOKEN` | Vercel API | Codespaces Secret |
-| `VERCEL_OIDC_TOKEN` | Vercel OIDC | Runtime |
+| Variable | Purpose | Source | Active? |
+|----------|---------|--------|---------|
+| `DEEPSEEK_API_KEY` | DeepSeek API (active provider) | Codespaces Secret | Yes |
+| `KIMI_API_KEY` | Kimi K3 API (previous provider) | Codespaces Secret | No (legacy) |
+| `OPENROUTER_API_KEY` | OpenRouter API | Codespaces Secret | No |
+| `GOOGLE_API_KEY` | Google AI API | Codespaces Secret | No |
+| `VERCEL_ACCESS_TOKEN` | Vercel API token | Codespaces Secret | No |
+| `VERCEL_OIDC_TOKEN` | Vercel OIDC token | Runtime | No |
 
 ## Shell & Environment
 
@@ -81,10 +87,11 @@
 | `TERM` | Terminal type |
 | `SSH_TTY` | SSH session indicator |
 | `DOCKER_BUILDKIT` | Docker BuildKit enable |
+| `SURREAL_PASSWORD` | SurrealDB password (in env but db disabled) |
 
 ## Notes
 
 - All API keys and tokens are injected via GitHub Codespaces Secrets
-- `devcontainer.json` defines platform-level env vars (DATABASE_URL, BROWSERLESS_*)
-- The `~/.env.workbench` file is sourced at shell login if present
+- `devcontainer.json` `remoteEnv` now explicitly declares all required secrets
+- Active model changed from `kimi-for-coding/k3` to `deepseek/deepseek-v4-pro` as of 2026-07-26
 - No secret values are stored in this repository

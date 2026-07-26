@@ -13,8 +13,9 @@ secrets*
 *.swo
 *~
 
-# OpenCode runtime
-.opencode/
+# OpenCode runtime (except skills)
+.opencode/*
+!.opencode/skills/
 
 # Node
 node_modules/
@@ -33,6 +34,9 @@ Thumbs.db
 
 # Playwright MCP runtime artifacts
 .playwright-mcp/
+
+# Saga tracker (runtime data, not source)
+.saga/
 
 # Build artifacts
 dist/
