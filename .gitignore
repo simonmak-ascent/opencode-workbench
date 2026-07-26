@@ -42,3 +42,6 @@ Thumbs.db
 dist/
 build/
 *.tsbuildinfo
+
+# Cache directories
+.cache/

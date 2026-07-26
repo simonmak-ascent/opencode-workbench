@@ -7,16 +7,16 @@
 
 | Prompt | Purpose | Usage | Dependencies |
 |--------|---------|-------|-------------|
-| [MASTER_WORKBENCH_BACKUP.md](MASTER_WORKBENCH_BACKUP.md) | Full inventory + security + commit prep | Major backup events | `scripts/backup/`, `scripts/inventory/`, `scripts/security/` |
-| [RUN_MASTER_BACKUP.md](RUN_MASTER_BACKUP.md) | Execute master backup via script | Routine backup | `scripts/backup/run-master-backup.sh` |
-| [QUICK_BACKUP.md](QUICK_BACKUP.md) | Rapid state preservation | Before risky operations | None |
+| [MASTER_WORKBENCH_BACKUP.md](MASTER_WORKBENCH_BACKUP.md) | Full inventory + security + commit prep (with fallbacks) | Major backup events | `scripts/backup/`, `scripts/inventory/`, `scripts/security/` (graceful degradation if missing) |
+| [RUN_MASTER_BACKUP.md](RUN_MASTER_BACKUP.md) | Execute master backup with fallback to manual workflow | Routine backup | `scripts/backup/run-master-backup.sh`, or fallback to MASTER_WORKBENCH_BACKUP.md |
+| [QUICK_BACKUP.md](QUICK_BACKUP.md) | Rapid state preservation with config discovery | Before risky operations | `scripts/security/scan-secrets.sh` (graceful fallback) |
 
 ## Audit Prompts
 
 | Prompt | Purpose | Usage | Dependencies |
 |--------|---------|-------|-------------|
-| [WORKSTATION_REVIEW.md](WORKSTATION_REVIEW.md) | Comprehensive workstation audit | Periodic review | `scripts/security/scan-secrets.sh` |
-| [SECURITY_AUDIT.md](SECURITY_AUDIT.md) | Deep security scan | Pre-push validation | `scripts/security/scan-secrets.sh` |
+| [WORKSTATION_REVIEW.md](WORKSTATION_REVIEW.md) | Comprehensive workstation audit (config, MCP, plugins, formatters, cache, docs, env) | Periodic review | `scripts/security/scan-secrets.sh` |
+| [SECURITY_AUDIT.md](SECURITY_AUDIT.md) | Deep security scan + plugin supply chain audit | Pre-push validation | `scripts/security/scan-secrets.sh` |
 
 ## Recovery Prompts
 

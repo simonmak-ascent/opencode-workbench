@@ -3,6 +3,26 @@
   "model": "deepseek/deepseek-v4-pro",
   "small_model": "deepseek/deepseek-v4-pro",
   "lsp": true,
+  "formatter": true,
+  "plugin": [
+    "opencode-websearch-cited",
+    "@morphllm/opencode-morph-plugin",
+    "@nick-vi/opencode-type-inject",
+    "opencode-supermemory",
+    "@tarquinen/opencode-dcp",
+    "@f97/opencode-morph-fast-apply",
+    "opencode-helicone-session",
+    "opencode-goal-plugin",
+    "opencode-sentry-monitor",
+    "opencode-vibeguard",
+    "opencode-background-agents",
+    "@franlol/opencode-md-table-formatter",
+    "@zenobius/opencode-skillful",
+    "opencode-conductor",
+    "micode",
+    "@mohak34/opencode-notifier",
+    "opencode-wakatime"
+  ],
   "provider": {
     "deepseek": {
       "name": "DeepSeek",
