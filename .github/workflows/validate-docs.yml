@@ -1,0 +1,63 @@
+name: Validate Documentation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'configs/**'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'configs/**'
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check required docs exist
+        run: |
+          set -e
+          missing=0
+
+          required_docs=(
+            "docs/WORKBENCH_CHARTER.md"
+            "docs/security-model.md"
+            "docs/IMPROVEMENT_BACKLOG.md"
+            "docs/CHANGELOG_WORKBENCH.md"
+            "docs/architecture/workstation-inventory.md"
+            "docs/architecture/workstation-playbook.md"
+            "docs/architecture/software-inventory.md"
+            "docs/architecture/environment-inventory.md"
+            "docs/architecture/mcp-inventory.md"
+            "docs/architecture/ai-provider-inventory.md"
+            "docs/architecture/opencode-runtime-config.md"
+            "docs/architecture/opencode-runtime-snapshot.md"
+            "docs/architecture/codespaces-secrets.md"
+            "docs/recovery/RECOVERY_PLAYBOOK.md"
+            "docs/recovery/DISASTER_RECOVERY.md"
+            "docs/recovery/RECOVERY_CHECKLIST.md"
+            "docs/recovery/recovery-gap-analysis.md"
+            "docs/prompts/prompt-index.md"
+          )
+
+          for doc in "${required_docs[@]}"; do
+            if [ ! -f "$doc" ]; then
+              echo "MISSING: $doc"
+              missing=$((missing + 1))
+            else
+              echo "FOUND: $doc"
+            fi
+          done
+
+          if [ $missing -gt 0 ]; then
+            echo "ERROR: $missing required docs missing"
+            exit 1
+          fi
+          echo "All required docs present."
+
+      - name: Check Markdown links (optional)
+        run: |
+          echo "Skipping link check (no markdown-link-check installed)"

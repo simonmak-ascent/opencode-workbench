@@ -1,0 +1,61 @@
+name: Validate Inventory
+
+on:
+  pull_request:
+    paths:
+      - 'opencode.json'
+      - '.devcontainer/**'
+      - 'scripts/**'
+  push:
+    branches: [main]
+    paths:
+      - 'opencode.json'
+      - '.devcontainer/**'
+      - 'scripts/**'
+
+jobs:
+  validate-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate opencode.json schema
+        run: |
+          if [ -f opencode.json ]; then
+            python3 -c "import json; json.load(open('opencode.json'))" && echo "opencode.json: Valid JSON" || { echo "ERROR: Invalid JSON"; exit 1; }
+          fi
+
+      - name: Validate devcontainer.json schema
+        run: |
+          if [ -f .devcontainer/devcontainer.json ]; then
+            python3 -c "import json; json.load(open('.devcontainer/devcontainer.json'))" && echo "devcontainer.json: Valid JSON" || { echo "ERROR: Invalid JSON"; exit 1; }
+          fi
+
+      - name: Check MCP server count
+        run: |
+          python3 << 'PYEOF'
+          import json
+          with open('opencode.json') as f:
+              config = json.load(f)
+          mcp = config.get('mcp', {})
+          enabled = [k for k, v in mcp.items() if v.get('enabled', False)]
+          print(f"Enabled MCP servers: {len(enabled)}")
+          for s in enabled:
+              print(f"  MCP: {s}")
+          PYEOF
+
+      - name: Check skills count
+        run: |
+          count=$(find .opencode/skills -name "SKILL.md" 2>/dev/null | wc -l)
+          echo "Skills: $count"
+          if [ "$count" -lt 20 ]; then
+            echo "WARNING: Less than 20 skills detected"
+          fi
+
+      - name: Validate shell scripts syntax
+        run: |
+          for script in scripts/**/*.sh; do
+            if [ -f "$script" ]; then
+              bash -n "$script" && echo "OK: $script" || { echo "ERROR: $script has syntax errors"; exit 1; }
+            fi
+          done

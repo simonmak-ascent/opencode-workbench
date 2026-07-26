@@ -1,32 +1,44 @@
 # Prompt Index
 
-> Maintained as part of workstation preservation. Updated: 2026-07-26
+> Purpose: Catalog of all reusable prompts for workstation operations.
+> Updated: 2026-07-26
 
-## Active Prompts
+## Backup Prompts
 
-| # | Title | File | Purpose | When To Use | Owner | Modified |
-|---|-------|------|---------|-------------|-------|----------|
-| 1 | Software Bootstrap | software-bootstrap.md | Install data processing, ETL, and conversion tools | After fresh codespace creation | DevOps | 2026-07-25 |
-| 2 | Workstation Preservation | workstation-preservation.md | Full workstation backup and recovery procedure | Monthly or after major changes | DevOps | 2026-07-25 |
+| Prompt | Purpose | Usage | Dependencies |
+|--------|---------|-------|-------------|
+| [MASTER_WORKBENCH_BACKUP.md](MASTER_WORKBENCH_BACKUP.md) | Full inventory + security + commit prep | Major backup events | `scripts/backup/`, `scripts/inventory/`, `scripts/security/` |
+| [RUN_MASTER_BACKUP.md](RUN_MASTER_BACKUP.md) | Execute master backup via script | Routine backup | `scripts/backup/run-master-backup.sh` |
+| [QUICK_BACKUP.md](QUICK_BACKUP.md) | Rapid state preservation | Before risky operations | None |
 
-## Prompt Categories
+## Audit Prompts
 
-### Workstation Prompts
-- `workstation-preservation.md` — Complete preservation workflow (21-phase audit)
-- `software-bootstrap.md` — Data tooling installation (pandoc, miller, csvkit, etc.)
+| Prompt | Purpose | Usage | Dependencies |
+|--------|---------|-------|-------------|
+| [WORKSTATION_REVIEW.md](WORKSTATION_REVIEW.md) | Comprehensive workstation audit | Periodic review | `scripts/security/scan-secrets.sh` |
+| [SECURITY_AUDIT.md](SECURITY_AUDIT.md) | Deep security scan | Pre-push validation | `scripts/security/scan-secrets.sh` |
 
-### Maintenance Notes
+## Recovery Prompts
 
-- All prompts are stored as markdown files in `docs/prompts/`
-- Each prompt includes: title, purpose, when-to-use, author, modification date
-- Prompt changes are tracked in `docs/CHANGELOG_WORKBENCH.md`
-- New prompts should be added to this index immediately
+| Prompt | Purpose | Usage | Dependencies |
+|--------|---------|-------|-------------|
+| [DISASTER_RECOVERY_TEST.md](DISASTER_RECOVERY_TEST.md) | Validate recovery readiness | Post-config changes | `docs/recovery/` |
+
+## Operational Prompts
+
+| Prompt | Purpose | Usage | Dependencies |
+|--------|---------|-------|-------------|
+| [software-bootstrap.md](software-bootstrap.md) | Install data processing tools | Fresh codespace setup | `scripts/bootstrap-tools.sh` |
+| [workstation-preservation.md](workstation-preservation.md) | Full preservation as 10 DevOps roles | Comprehensive backup | All inventory scripts |
 
 ## Related Documentation
 
-- `docs/environment-inventory.md` — Environment variable map
-- `docs/codespaces-secrets.md` — Secrets management
-- `docs/recovery-gap-analysis.md` — Disaster recovery gaps
-- `configs/mcp/` — MCP server architecture
-- `configs/opencode/` — OpenCode configuration
-- `docs/backup-reports/` — Dated backup snapshots
+| Document | Location |
+|----------|----------|
+| Workstation Charter | `../WORKBENCH_CHARTER.md` |
+| Security Model | `../security-model.md` |
+| Recovery Playbook | `../recovery/RECOVERY_PLAYBOOK.md` |
+| Disaster Recovery | `../recovery/DISASTER_RECOVERY.md` |
+| Recovery Checklist | `../recovery/RECOVERY_CHECKLIST.md` |
+| Improvement Backlog | `../IMPROVEMENT_BACKLOG.md` |
+| Changelog | `../CHANGELOG_WORKBENCH.md` |
