@@ -16,7 +16,11 @@
     "n8n": {
       "type": "remote",
       "url": "https://simonmak.app.n8n.cloud/mcp-server/http",
-      "enabled": true
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:N8N_MCP_ACCESS_TOKEN}"
+      }
     },
     "clerk": {
       "type": "remote",

@@ -91,21 +91,19 @@ fi
 step "global opencode config"
 cp "$WORKSPACE/opencode.json" "$HOME/.config/opencode/opencode.json"
 
-step "MCP OAuth (n8n + vercel)"
-echo "Attempting non-interactive MCP OAuth — may require manual follow-up for 2FA."
-for svc in n8n vercel; do
-  timeout 30 opencode mcp auth "$svc" </dev/null >/tmp/mcp-auth-$svc.log 2>&1 &
-done
+step "MCP OAuth (vercel only)"
+echo "Attempting non-interactive MCP OAuth for vercel — may require manual follow-up for 2FA."
+timeout 30 opencode mcp auth vercel </dev/null >/tmp/mcp-auth-vercel.log 2>&1 &
 sleep 5
-echo "MCP OAuth started in background (check /tmp/mcp-auth-*.log)."
-echo "If auth fails, run manually: opencode mcp auth n8n ; opencode mcp auth vercel"
+echo "Vercel OAuth started in background (check /tmp/mcp-auth-vercel.log)."
+echo "n8n uses token auth — no OAuth needed."
+echo "If vercel auth fails, run manually: opencode mcp auth vercel"
 
 step "done"
 echo ""
 echo "Next steps:"
-echo "  1. Check MCP OAuth status: grep 'Done\|Error' /tmp/mcp-auth-*.log"
-echo "  2. If OAuth failed (expected without browser), run manually:"
-echo "       opencode mcp auth n8n"
-echo "       opencode mcp auth vercel"
-echo "  3. Restart codespace for FIGMA/SENTRY secrets to propagate"
-echo "  4. Start the server:  opencode serve --port 4096 --hostname 0.0.0.0"
+echo "  1. Check Vercel OAuth status: grep 'Done\|Error' /tmp/mcp-auth-vercel.log"
+echo "  2. If Vercel OAuth failed (expected without browser), run: opencode mcp auth vercel"
+echo "  3. n8n uses access token (N8N_MCP_ACCESS_TOKEN) — auto-authenticated"
+echo "  4. Restart codespace for FIGMA/SENTRY secrets to propagate"
+echo "  5. Start the server:  opencode serve --port 4096 --hostname 0.0.0.0"

@@ -1,4 +1,34 @@
 {
-  "name": "Codespace Workbench",
-  "postCreateCommand": "bash .devcontainer/setup-workbench.sh"
+  "name": "opencode-workbench",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:22",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false
+    },
+    "ghcr.io/devcontainers/features/sshd:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "forwardPorts": [3000, 4096, 5432],
+  "portsAttributes": {
+    "4096": {
+      "label": "opencode serve",
+      "onAutoForward": "notify"
+    },
+    "3000": {
+      "label": "browserless",
+      "onAutoForward": "silent"
+    },
+    "5432": {
+      "label": "postgres (memory)",
+      "onAutoForward": "silent"
+    }
+  },
+  "remoteEnv": {
+    "DATABASE_URL": "postgres://opencode:opencode@localhost:5432/memory",
+    "BROWSERLESS_HOST": "localhost",
+    "BROWSERLESS_PORT": "3000",
+    "BROWSERLESS_PROTOCOL": "http",
+    "N8N_MCP_ACCESS_TOKEN": "${localEnv:N8N_MCP_ACCESS_TOKEN}"
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh"
 }

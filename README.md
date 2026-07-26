@@ -63,6 +63,7 @@ codespace-workbench/
    | `BRAVE_API_KEY` | brave-search MCP |
    | `BROWSERLESS_TOKEN` | browserless MCP + container |
    | `KIMI_API_KEY` | LLM (Kimi K3) |
+   | `N8N_MCP_ACCESS_TOKEN` | n8n MCP (access token, replaces OAuth) |
    | `FIGMA_ACCESS_TOKEN` | figma MCP |
    | `SENTRY_ACCESS_TOKEN` | sentry MCP |
    | `CONVERTICA_API_KEY` | convertica MCP (optional) |
