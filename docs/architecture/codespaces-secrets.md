@@ -16,9 +16,15 @@
 | `FIGMA_ACCESS_TOKEN` | Figma Developer API | figma-developer-mcp | https://www.figma.com/settings (Personal Access Tokens) |
 | `SENTRY_ACCESS_TOKEN` | Sentry API auth token | @sentry/mcp-server | https://sentry.io/settings/account/api/auth-tokens/ |
 | `N8N_MCP_ACCESS_TOKEN` | n8n MCP server auth | n8n MCP (Bearer header) | n8n → Settings → API |
-| `KIMI_API_KEY` | Kimi K3 API (previous model, fallback) | OpenCode (alternate provider) | https://platform.moonshot.cn |
 
 (*) Perplexity key must start with `pplx-` prefix. Current key has wrong format — regenerate.
+
+## Optional / Alternate Provider Secrets
+
+| Secret | Purpose | Used By | Notes |
+|--------|---------|---------|-------|
+| `KIMI_API_KEY` | Kimi K3 API (previous primary, now fallback) | OpenCode (alternate provider) | https://platform.moonshot.cn |
+| `OPENCODE_API_KEY` | OpenCode Zen managed model service | OpenCode (Zen provider) | https://opencode.ai/auth |
 
 ## Optional / Legacy Secrets
 

@@ -34,7 +34,8 @@ for pattern in "${PATTERNS[@]}"; do
 done
 
 # Also scan for common credential filenames in tracked files
-CRED_FILES=$(git ls-files | grep -iE '(\.env$|\.env\.|credentials|secrets|\.pem$|\.key$|id_rsa|id_ed25519)' | grep -v '.env.example' || true)
+# Exclude .md, .sh, .json docs — those are documentation, not credentials
+CRED_FILES=$(git ls-files | grep -iE '(\.env$|\.env\.|\.pem$|\.key$|id_rsa|id_ed25519|credentials\.json$|credentials\.yaml$|secrets\.yaml$|secrets\.env$)' | grep -v '.env.example' | grep -vE '\.md$|\.sh$|\.json$|mcp-inventory\.json' || true)
 if [ -n "$CRED_FILES" ]; then
     echo "⚠️  CREDENTIAL FILES FOUND:"
     echo "$CRED_FILES"

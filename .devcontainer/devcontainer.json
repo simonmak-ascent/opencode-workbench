@@ -36,6 +36,8 @@
     "SENTRY_ACCESS_TOKEN": "${localEnv:SENTRY_ACCESS_TOKEN}",
     "SIMONPLMAK_CLOUD_PAT": "${localEnv:SIMONPLMAK_CLOUD_PAT}",
     "DEEPSEEK_API_KEY": "${localEnv:DEEPSEEK_API_KEY}",
+    "KIMI_API_KEY": "${localEnv:KIMI_API_KEY}",
+    "OPENCODE_API_KEY": "${localEnv:OPENCODE_API_KEY}",
     "DB_PATH": "/workspaces/codespace-workbench/.saga/.tracker.db"
   },
   "postCreateCommand": "bash .devcontainer/setup.sh"

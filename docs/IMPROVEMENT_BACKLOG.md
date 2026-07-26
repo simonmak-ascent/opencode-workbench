@@ -16,7 +16,6 @@
 | ID | Priority | Item | Discovered |
 |----|----------|------|------------|
 | I01 | 🔴 | Perplexity API key needs regeneration (wrong prefix) | 2026-07-26 |
-| I02 | 🟡 | Add `npx playwright install chrome` to setup.sh | 2026-07-26 |
 | I03 | 🟡 | Complete Vercel OAuth — run `opencode mcp auth vercel` | 2026-07-26 |
 | I04 | 🟡 | Set `STORYBOOK_URL` env var for design-system MCP | 2026-07-26 |
 | I05 | 🟢 | Add `OPENROUTER_API_KEY` as alternate AI provider | 2026-07-26 |
@@ -42,3 +41,7 @@
 | C08 | 🟡 | Switch active model to deepseek/deepseek-v4-pro | 2026-07-26 |
 | C09 | 🟡 | Add .saga/ to .gitignore | 2026-07-26 |
 | C10 | 🟡 | Unblock .opencode/skills from .gitignore | 2026-07-26 |
+| C11 | 🟡 | Chromium now auto-installed in setup.sh (line 44-45) — gap closed | 2026-07-26 |
+| C12 | 🟡 | DR test: recovery score improved 92→94 — Chromium auto-install confirmed | 2026-07-26 |
+| C13 | 🟡 | Added KIMI_API_KEY to devcontainer.json remoteEnv | 2026-07-26 |
+| C14 | 🟢 | Moved KIMI_API_KEY to Optional/Alternate in codespaces-secrets.md | 2026-07-26 |
