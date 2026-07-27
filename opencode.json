@@ -4,25 +4,7 @@
   "small_model": "deepseek/deepseek-v4-pro",
   "lsp": true,
   "formatter": true,
-  "plugin": [
-    "opencode-websearch-cited",
-    "@morphllm/opencode-morph-plugin",
-    "@nick-vi/opencode-type-inject",
-    "opencode-supermemory",
-    "@tarquinen/opencode-dcp",
-    "@f97/opencode-morph-fast-apply",
-    "opencode-helicone-session",
-    "opencode-goal-plugin",
-    "opencode-sentry-monitor",
-    "opencode-vibeguard",
-    "opencode-background-agents",
-    "@franlol/opencode-md-table-formatter",
-    "@zenobius/opencode-skillful",
-    "opencode-conductor",
-    "micode",
-    "@mohak34/opencode-notifier",
-    "opencode-wakatime"
-  ],
+  "plugin": [],
   "provider": {
     "deepseek": {
       "name": "DeepSeek",
@@ -79,7 +61,8 @@
     "vercel": {
       "type": "remote",
       "url": "https://mcp.vercel.com",
-      "enabled": true
+      "enabled": false,
+      "_disabled_reason": "OAuth expired — needs re-authentication"
     },
     "github": {
       "type": "local",
@@ -87,7 +70,8 @@
       "environment": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:SIMONPLMAK_CLOUD_PAT}"
       },
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     },
     "perplexity": {
       "type": "local",
@@ -110,7 +94,8 @@
     "postgres": {
       "type": "local",
       "command": ["node", "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-postgres/dist/index.js", "{env:DATABASE_URL}"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     },
     "browserless": {
       "type": "local",
@@ -121,12 +106,14 @@
         "BROWSERLESS_TOKEN": "{env:BROWSERLESS_TOKEN}",
         "BROWSERLESS_PROTOCOL": "{env:BROWSERLESS_PROTOCOL}"
       },
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     },
     "playwright": {
       "type": "local",
       "command": ["node", "/home/node/.npm-global/lib/node_modules/@playwright/mcp/cli.js"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 60000
     },
     "figma": {
       "type": "local",
@@ -134,12 +121,14 @@
       "environment": {
         "FIGMA_API_KEY": "{env:FIGMA_ACCESS_TOKEN}"
       },
-      "enabled": true
+      "enabled": false,
+      "_disabled_reason": "Consistently fails at startup — auth or network issue"
     },
     "mermaid": {
       "type": "local",
       "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-mermaid/build/index.js"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     },
     "saga": {
       "type": "local",
@@ -147,12 +136,14 @@
       "environment": {
         "DB_PATH": "{env:DB_PATH}"
       },
-      "enabled": true
+      "enabled": false,
+      "_disabled_reason": "DB_PATH environment variable is not set"
     },
     "echarts": {
       "type": "local",
       "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-echarts/build/index.js"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     },
     "shadcn": {
       "type": "local",
@@ -160,17 +151,20 @@
       "environment": {
         "GITHUB_TOKEN": "{env:SIMONPLMAK_CLOUD_PAT}"
       },
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     },
     "swagger-testcase": {
       "type": "local",
       "command": ["node", "/home/node/.npm-global/lib/node_modules/swagger-testcase-mcp/dist/index.js"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     },
     "design-system": {
       "type": "local",
       "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-design-system-extractor/dist/index.js"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     },
     "sentry": {
       "type": "local",
@@ -178,7 +172,8 @@
       "environment": {
         "SENTRY_ACCESS_TOKEN": "{env:SENTRY_ACCESS_TOKEN}"
       },
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     }
   }
 }
