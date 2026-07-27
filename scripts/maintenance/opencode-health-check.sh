@@ -149,6 +149,7 @@ echo "── Secret Dependencies ──"
 
 SECRET_CHECKS=(
   "DEEPSEEK_API_KEY:deepseek provider"
+  "OPENCODE_API_KEY:opencode-go provider"
   "N8N_MCP_ACCESS_TOKEN:n8n MCP"
   "SIMONPLMAK_CLOUD_PAT:github + shadcn MCP"
   "PERPLEXITY_API_KEY:perplexity MCP"
@@ -157,6 +158,7 @@ SECRET_CHECKS=(
   "SENTRY_ACCESS_TOKEN:sentry MCP"
   "FIGMA_ACCESS_TOKEN:figma MCP"
   "BROWSERLESS_TOKEN:browserless MCP"
+  "VERCEL_ACCESS_TOKEN:vercel MCP"
 )
 
 for entry in "${SECRET_CHECKS[@]}"; do
