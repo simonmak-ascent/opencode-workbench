@@ -35,7 +35,7 @@ The `postCreateCommand` runs `.devcontainer/setup.sh` which:
 ### Step 3: Post-Create Manual Steps
 
 ```bash
-# 1. Install Chromium for Playwright
+# 1. Install Chromium for Playwright (if setup.sh failed)
 npx playwright install chrome
 
 # 2. Verify everything
@@ -47,10 +47,7 @@ opencode --version
 cd /workspaces/codespace-workbench
 opencode
 
-# 4. Authenticate Vercel (if needed)
-opencode mcp auth vercel
-
-# 5. Bootstrap additional tools (optional)
+# 4. Bootstrap additional tools (optional)
 bash scripts/bootstrap-tools.sh
 ```
 
@@ -62,7 +59,7 @@ bash scripts/recovery/validate-recovery.sh
 ```
 
 Or manually verify:
-- [ ] 19 MCP servers connect
+- [ ] 18 MCP servers connect (19 configured, saga disabled)
 - [ ] 28 skills available
 - [ ] PostgreSQL database accessible
 - [ ] Browserless container responds
@@ -86,8 +83,8 @@ Or manually verify:
 | Saga tracker DB | ❌ Lost | Ephemeral — recreated on first use |
 | PostgreSQL data | ❌ Lost | Ephemeral — dev database |
 | Shell history | ❌ Lost | Local to codespace |
-| Playwright chromium | ⚠️ Manual | Must `npx playwright install chrome` |
-| Vercel OAuth | ⚠️ Manual | Must `opencode mcp auth vercel` |
+| Playwright chromium | ⚠️ Manual | Must `npx playwright install chrome` (or auto via setup.sh) |
+| Vercel token auth | ✅ Auto | Bearer {env:VERCEL_ACCESS_TOKEN} |
 
 ## What Is Lost (Acceptable)
 
@@ -102,8 +99,8 @@ Or manually verify:
 ## Recovery Time Objective (RTO)
 
 - **Automated portion**: ~5 minutes (postCreateCommand)
-- **Manual portion**: ~2 minutes (2 CLI commands)
-- **Total RTO**: < 10 minutes
+- **Manual portion**: ~1 minute (verify + optional playwright install)
+- **Total RTO**: < 7 minutes
 
 ## Recovery Point Objective (RPO)
 
