@@ -49,6 +49,74 @@
       "options": {
         "apiKey": "{env:OPENCODE_API_KEY}"
       }
+    },
+    "perplexity": {
+      "name": "Perplexity",
+      "api": "https://api.perplexity.ai",
+      "env": ["PERPLEXITY_API_KEY"],
+      "models": {
+        "sonar-pro": {
+          "id": "sonar-pro",
+          "name": "Sonar Pro",
+          "reasoning": false,
+          "cost": { "input": 0.003, "output": 0.015 },
+          "limit": { "context": 200000, "output": 8192 },
+          "modalities": { "input": ["text"], "output": ["text"] }
+        },
+        "sonar-reasoning-pro": {
+          "id": "sonar-reasoning-pro",
+          "name": "Sonar Reasoning Pro",
+          "reasoning": true,
+          "cost": { "input": 0.003, "output": 0.015 },
+          "limit": { "context": 127024, "output": 127024 },
+          "modalities": { "input": ["text"], "output": ["text"] }
+        },
+        "sonar": {
+          "id": "sonar",
+          "name": "Sonar",
+          "reasoning": false,
+          "cost": { "input": 0.001, "output": 0.001 },
+          "limit": { "context": 127024, "output": 8192 },
+          "modalities": { "input": ["text"], "output": ["text"] }
+        }
+      },
+      "options": {
+        "apiKey": "{env:PERPLEXITY_API_KEY}"
+      }
+    },
+    "openrouter": {
+      "name": "OpenRouter",
+      "api": "https://openrouter.ai/api/v1",
+      "env": ["OPENROUTER_API_KEY"],
+      "models": {
+        "anthropic/claude-sonnet-4-5": {
+          "id": "anthropic/claude-sonnet-4-5",
+          "name": "Claude Sonnet 4.5 (OpenRouter)",
+          "reasoning": true,
+          "cost": { "input": 0.003, "output": 0.015 },
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "google/gemini-2.5-pro": {
+          "id": "google/gemini-2.5-pro",
+          "name": "Gemini 2.5 Pro (OpenRouter)",
+          "reasoning": true,
+          "cost": { "input": 0.00125, "output": 0.01 },
+          "limit": { "context": 1048576, "output": 65536 },
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        },
+        "openai/gpt-5.5": {
+          "id": "openai/gpt-5.5",
+          "name": "GPT-5.5 (OpenRouter)",
+          "reasoning": true,
+          "cost": { "input": 0.005, "output": 0.03 },
+          "limit": { "context": 272000, "output": 128000 },
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        }
+      },
+      "options": {
+        "apiKey": "{env:OPENROUTER_API_KEY}"
+      }
     }
   },
   "mcp": {
