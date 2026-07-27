@@ -117,6 +117,24 @@
       "options": {
         "apiKey": "{env:OPENROUTER_API_KEY}"
       }
+    },
+    "zen": {
+      "name": "OpenCode Zen",
+      "api": "https://zen.opencode.ai/v1",
+      "env": ["OPENCODE_API_KEY"],
+      "models": {
+        "zen-medium": {
+          "id": "zen-medium",
+          "name": "Zen Medium",
+          "reasoning": true,
+          "cost": { "input": 0, "output": 0 },
+          "limit": { "context": 1048576, "output": 128000 },
+          "modalities": { "input": ["text"], "output": ["text"] }
+        }
+      },
+      "options": {
+        "apiKey": "{env:OPENCODE_API_KEY}"
+      }
     }
   },
   "mcp": {
