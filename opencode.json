@@ -116,13 +116,10 @@
       "timeout": 60000
     },
     "figma": {
-      "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/figma-developer-mcp/dist/index.js"],
-      "environment": {
-        "FIGMA_API_KEY": "{env:FIGMA_ACCESS_TOKEN}"
-      },
-      "enabled": false,
-      "_disabled_reason": "Consistently fails at startup — auth or network issue"
+      "type": "remote",
+      "url": "http://127.0.0.1:3333/mcp",
+      "enabled": true,
+      "_note": "Requires figma MCP HTTP server running: bash scripts/services/figma-mcp.sh start"
     },
     "mermaid": {
       "type": "local",

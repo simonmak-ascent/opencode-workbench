@@ -351,7 +351,21 @@ fi
 echo ""
 
 # ──────────────────────────────────────
-# 10. STARTUP READINESS SUMMARY
+# 10. FIGMA MCP SERVICE
+# ──────────────────────────────────────
+echo "── Figma MCP Service ──"
+
+FIGMA_SERVICE_PORT="${FIGMA_MCP_PORT:-3333}"
+if curl -s -o /dev/null "http://127.0.0.1:${FIGMA_SERVICE_PORT}/mcp" 2>/dev/null; then
+  pass "figma MCP HTTP server running on port $FIGMA_SERVICE_PORT"
+else
+  warn "figma MCP HTTP server not running on port $FIGMA_SERVICE_PORT — start with: bash scripts/services/figma-mcp.sh start"
+fi
+
+echo ""
+
+# ──────────────────────────────────────
+# 11. STARTUP READINESS SUMMARY
 # ──────────────────────────────────────
 echo "── Startup Readiness ──"
 
