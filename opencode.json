@@ -135,6 +135,24 @@
       "options": {
         "apiKey": "{env:OPENCODE_API_KEY}"
       }
+    },
+    "kimi": {
+      "name": "Kimi (Moonshot)",
+      "api": "https://api.moonshot.cn/v1",
+      "env": ["KIMI_API_KEY"],
+      "models": {
+        "kimi-k3": {
+          "id": "kimi-k3",
+          "name": "Kimi K3",
+          "reasoning": true,
+          "cost": { "input": 0.00087, "output": 0.00348 },
+          "limit": { "context": 262144, "output": 262144 },
+          "modalities": { "input": ["text", "image"], "output": ["text"] }
+        }
+      },
+      "options": {
+        "apiKey": "{env:KIMI_API_KEY}"
+      }
     }
   },
   "mcp": {
