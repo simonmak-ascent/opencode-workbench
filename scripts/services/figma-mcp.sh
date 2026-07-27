@@ -15,6 +15,7 @@ set -euo pipefail
 PORT="${FIGMA_MCP_PORT:-3333}"
 HOST="${FIGMA_MCP_HOST:-127.0.0.1}"
 PID_FILE="/tmp/figma-mcp.pid"
+LOG_FILE="/tmp/figma-mcp.log"
 SERVER_SCRIPT="/home/node/.npm-global/lib/node_modules/figma-developer-mcp/dist/bin.js"
 
 start_figma() {
@@ -28,18 +29,21 @@ start_figma() {
     return 1
   fi
 
-  if curl -s -o /dev/null "http://${HOST}:${PORT}/mcp" 2>/dev/null; then
-    echo "Figma MCP already running on http://${HOST}:${PORT}/mcp"
+  if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
+    echo "Figma MCP already running (PID $(cat "$PID_FILE")) on http://${HOST}:${PORT}/mcp"
     return 0
   fi
+  rm -f "$PID_FILE"
 
   echo "Starting Figma MCP server on http://${HOST}:${PORT}/mcp ..."
+  echo "--- $(date): starting figma mcp ---" >> "$LOG_FILE"
   FIGMA_API_KEY="$FIGMA_ACCESS_TOKEN" \
-    setsid node "$SERVER_SCRIPT" >/dev/null 2>/dev/null &
+  FRAMELINK_PORT="$PORT" \
+  FRAMELINK_HOST="$HOST" \
+    setsid node "$SERVER_SCRIPT" >> "$LOG_FILE" 2>> "$LOG_FILE" &
   local pid=$!
   echo "$pid" > "$PID_FILE"
 
-  # Wait for readiness
   for i in $(seq 1 20); do
     if curl -s -o /dev/null "http://${HOST}:${PORT}/mcp" 2>/dev/null; then
       echo "Figma MCP ready (PID $pid)"
@@ -48,7 +52,7 @@ start_figma() {
     sleep 0.5
   done
 
-  echo "WARNING: Figma MCP started but not responding after 10s"
+  echo "WARNING: Figma MCP started but not responding after 10s. Check $LOG_FILE"
   return 1
 }
 

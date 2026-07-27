@@ -105,11 +105,16 @@ echo "Vercel OAuth started in background (check /tmp/mcp-auth-vercel.log)."
 echo "n8n uses token auth — no OAuth needed."
 echo "If vercel auth fails, run manually: opencode mcp auth vercel"
 
+step "figma MCP server (auto-start)"
+if [ -f "$WORKSPACE/scripts/services/figma-mcp.sh" ]; then
+  bash "$WORKSPACE/scripts/services/figma-mcp.sh" start || echo "Figma MCP auto-start failed (may need FIGMA_ACCESS_TOKEN)"
+fi
+
 step "done"
 echo ""
 echo "Next steps:"
 echo "  1. Check Vercel OAuth status: grep 'Done\|Error' /tmp/mcp-auth-vercel.log"
 echo "  2. If Vercel OAuth failed (expected without browser), run: opencode mcp auth vercel"
 echo "  3. n8n uses access token (N8N_MCP_ACCESS_TOKEN) — auto-authenticated"
-echo "  4. Restart codespace for FIGMA/SENTRY secrets to propagate"
+echo "  4. If Figma MCP isn't running (token not yet propagated): bash scripts/services/figma-mcp.sh start"
 echo "  5. Start the server:  opencode serve --port 4096 --hostname 0.0.0.0"
