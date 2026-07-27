@@ -3,6 +3,25 @@
 > All notable changes to the codespace-workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-07-27] — Master Backup
+
+### Changed
+- OpenCode CLI: 1.18.5 → 1.18.7 (auto-updated)
+- docs/architecture/opencode-runtime-config.md: MCP count corrected (18 enabled, 1 disabled), date refreshed
+- docs/architecture/opencode-runtime-snapshot.md: Saga status corrected from "needs restart" to "disabled", date refreshed
+
+### Fixed
+- Docker containers (pg-memory, browserless) restarted after unexpected exit
+- Runtime-config docs: "all enabled" → "18 enabled, 1 disabled" (saga)
+
+### Known Issues
+- OPENCODE_API_KEY (`sk-J27...`) in git history — key already rotated, non-exploitable
+- DB_PATH missing at runtime (present in devcontainer.json but not in current shell)
+- Perplexity MCP: 401 — awaits codespace rebuild for `pplx-` key
+- Vercel MCP: OAuth not completed
+
+---
+
 ## [2026-07-26] — WORKSTATION_REVIEW Audit (Round 2)
 
 ### Added

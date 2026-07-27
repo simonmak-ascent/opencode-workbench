@@ -1,6 +1,6 @@
 # OpenCode Runtime Configuration
 
-> Generated: 2026-07-26
+> Generated: 2026-07-27
 > Source: `~/.config/opencode/opencode.json` (synced from repo `opencode.json`)
 
 ## Active Configuration
@@ -19,7 +19,7 @@
 - **Key env**: `DEEPSEEK_API_KEY`
 - **Source**: Codespaces Secret
 
-## MCP Server Assignments (19 configured, all enabled)
+## MCP Server Assignments (19 configured, 18 enabled, 1 disabled)
 
 ### Remote MCPs (5)
 | Server | URL | Auth Method |
@@ -30,7 +30,7 @@
 | clerk | `https://mcp.clerk.com/mcp` | None |
 | vercel | `https://mcp.vercel.com` | OAuth |
 
-### Local MCPs (14)
+### Local MCPs (14, 1 disabled)
 | Server | Binary/Entry Point | Secrets |
 |--------|-------------------|---------|
 | github | `/home/node/.local/bin/github-mcp-server` | `SIMONPLMAK_CLOUD_PAT` |

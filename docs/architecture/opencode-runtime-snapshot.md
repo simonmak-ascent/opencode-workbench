@@ -1,6 +1,6 @@
 # OpenCode Runtime Snapshot
 
-> Captured: 2026-07-26
+> Captured: 2026-07-27
 > Purpose: Preserve behavioural configuration at this point in time
 
 ## Active Profile
@@ -30,11 +30,11 @@
 | playwright | ✅ Active | Local, Chromium installed |
 | figma | ⚠️ Needs restart | Config fixed, old connection closed |
 | mermaid | ✅ Active | Local, diagram generation |
-| saga | ⚠️ Needs restart | DB_PATH fix applied, old session needs restart |
+| saga | ❌ Disabled | In config but `enabled: false` |
 | echarts | ✅ Active | Local, chart generation |
 | shadcn | ✅ Active | Local, PAT auth |
 | swagger-testcase | ✅ Active | Local, spec parsing |
-| design-system | ⚠️ Needs Storybook | Defaults to localhost:6006 |
+| design-system | ✅ Active (no Storybook) | Defaults to localhost:6006 |
 | sentry | ✅ Active | Local, token auth |
 
 ## Agent Configuration
