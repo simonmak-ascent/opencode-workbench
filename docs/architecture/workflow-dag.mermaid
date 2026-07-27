@@ -1,0 +1,97 @@
+# Workflow DAG (Mermaid)
+
+> Phase: #2 | Created: 2026-07-27
+
+```mermaid
+graph TD
+    %% Entry points
+    USER_APP["User: Build AI Web App"]
+    USER_MCP["User: Create MCP Skill"]
+    USER_SCRAPE["User: Configure Scraper"]
+
+    %% Supervisor
+    SUP["Supervisor Agent"]
+    USER_APP --> SUP
+    USER_MCP --> SUP
+    USER_SCRAPE --> SUP
+
+    %% AI Web App Track
+    subgraph "AI-Enabled Web App"
+        R["ResearchAgent<br/>perplexity + brave + context7"]
+        D["DesignAgent<br/>figma + context7"]
+        P["PromptAgent<br/>context7 + github"]
+        C["ConfigAgent<br/>github + context7"]
+        T["ToolingAgent<br/>brave + context7"]
+        B["BuildAgent<br/>github + vercel + sentry"]
+        TE["TestAgent<br/>playwright + sentry"]
+        DE["DeployAgent<br/>vercel + github + sentry"]
+
+        SUP --> R
+        R --> D
+        D --> P
+        P --> C
+        C --> B
+        C --> T
+        T --> B
+        B --> TE
+        TE --> DE
+    end
+
+    %% MCP Track
+    subgraph "MCP Server / Agent Skills"
+        SA["SkillAuthorAgent<br/>context7 + github"]
+        SV["SkillValidatorAgent<br/>playwright + sentry"]
+        SP["SkillPublisherAgent<br/>github + n8n"]
+
+        SUP --> SA
+        SA --> SV
+        SV --> SP
+    end
+
+    %% Scraper Track
+    subgraph "Web Scraper"
+        SC["ScrapeConfigAgent<br/>perplexity + brave"]
+        SE["ScrapeExecutorAgent<br/>playwright + browserless"]
+        SS["ScrapeStorageAgent<br/>surrealdb + n8n"]
+        SAL["ScrapeAlertAgent<br/>n8n + sentry"]
+
+        SUP --> SC
+        SC --> SE
+        SE --> SS
+        SS --> SAL
+    end
+
+    %% Shared infrastructure
+    subgraph "Shared Infrastructure"
+        DB[("SurrealDB<br/>Shared State")]
+        EVENTS[("Event Bus")]
+        N8N["n8n<br/>Orchestration"]
+        SENTRY["Sentry<br/>Observability"]
+    end
+
+    R --- DB
+    D --- DB
+    B --- DB
+    TE --- DB
+    DE --- DB
+    SA --- DB
+    SE --- DB
+    SS --- DB
+    SAL --- DB
+
+    SUP --- EVENTS
+    SAL --- N8N
+    SP --- N8N
+
+    R --- SENTRY
+    B --- SENTRY
+    TE --- SENTRY
+    DE --- SENTRY
+    SV --- SENTRY
+    SAL --- SENTRY
+
+    %% Outputs
+    DE --> PROD["Production URL"]
+    SP --> RELEASE["GitHub Release"]
+    SAL --> ALERT["Change Alert"]
+```
