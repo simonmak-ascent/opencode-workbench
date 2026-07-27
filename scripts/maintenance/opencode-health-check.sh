@@ -289,7 +289,12 @@ while IFS='|' read -r name enabled mtype timeout entry; do
     fi
   elif [ "$mtype" = "remote" ]; then
     REMOTE_HOST=$(echo "$entry" | sed 's|https\?://||' | cut -d/ -f1)
-    if curl -s -o /dev/null -w "%{http_code}" --connect-timeout 3 --max-time 8 "$entry" >/dev/null 2>&1; then
+    # Try bearer token if VERCEL_ACCESS_TOKEN is set and this is the vercel MCP
+    AUTH_HEADER=""
+    if [ "$name" = "vercel" ] && [ -n "${VERCEL_ACCESS_TOKEN:-}" ]; then
+      AUTH_HEADER="-H 'Authorization: Bearer $VERCEL_ACCESS_TOKEN'"
+    fi
+    if eval curl -s -o /dev/null -w \"%{http_code}\" --connect-timeout 3 --max-time 8 $AUTH_HEADER \"$entry\" >/dev/null 2>&1; then
       :
     else
       warn "MCP '$name': remote unreachable: $REMOTE_HOST"
