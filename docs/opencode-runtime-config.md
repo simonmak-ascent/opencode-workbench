@@ -57,11 +57,11 @@ Found in `auth.json` but NOT declared in config. This provider was used in prior
 {
   "opencode-go": {
     "type": "api",
-    "key": "sk-REDACTED-OPencode-Console-Go"
+    "key": "sk-REDACTED"
   }
 }
 ```
-Log evidence of usage: `Error from provider (Console Go): Upstream request failed` (2026-07-26T18:03:16).
+Log evidence of usage: `Error from provider (Console Go): Upstream request failed` (2026-07-26T18:03:16). Cleaned in commit f682d5f — `auth.json` is now empty.
 
 ---
 
