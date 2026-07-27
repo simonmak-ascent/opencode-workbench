@@ -38,7 +38,9 @@
     "DEEPSEEK_API_KEY": "${localEnv:DEEPSEEK_API_KEY}",
     "KIMI_API_KEY": "${localEnv:KIMI_API_KEY}",
     "OPENCODE_API_KEY": "${localEnv:OPENCODE_API_KEY}",
-    "DB_PATH": "/workspaces/codespace-workbench/.saga/.tracker.db"
+    "DB_PATH": "/workspaces/codespace-workbench/.saga/.tracker.db",
+    "VERCEL_ACCESS_TOKEN": "${localEnv:VERCEL_ACCESS_TOKEN}",
+    "OPENROUTER_API_KEY": "${localEnv:OPENROUTER_API_KEY}"
   },
   "postCreateCommand": "bash .devcontainer/setup.sh"
 }

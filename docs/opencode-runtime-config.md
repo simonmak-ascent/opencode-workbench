@@ -67,31 +67,11 @@ Log evidence of usage: `Error from provider (Console Go): Upstream request faile
 
 ## Plugin Configuration
 
-### Declared vs Installed
-
-| Plugin | State |
-|---|---|
-| opencode-websearch-cited | Declared, NOT installed |
-| @morphllm/opencode-morph-plugin | Declared, NOT installed |
-| @nick-vi/opencode-type-inject | Declared, NOT installed |
-| opencode-supermemory | Declared, NOT installed |
-| @tarquinen/opencode-dcp | Declared, NOT installed |
-| @f97/opencode-morph-fast-apply | Declared, NOT installed |
-| opencode-helicone-session | Declared, NOT installed |
-| opencode-goal-plugin | Declared, NOT installed |
-| opencode-sentry-monitor | Declared, NOT installed |
-| opencode-vibeguard | Declared, NOT installed |
-| opencode-background-agents | Declared, NOT installed |
-| @franlol/opencode-md-table-formatter | Declared, NOT installed |
-| @zenobius/opencode-skillful | Declared, NOT installed |
-| opencode-conductor | Declared, NOT installed |
-| micode | Declared, NOT installed |
-| @mohak34/opencode-notifier | Declared, NOT installed |
-| opencode-wakatime | Declared, NOT installed |
+**Plugin array:** `[]` — no plugins declared (17 removed in commit `f682d5f`).
 
 **Only installed package:** `@opencode-ai/plugin@1.18.5`
 **Plugin directory:** `~/.config/opencode/node_modules/`
-**Skills directory:** `/workspaces/codespace-workbench/.opencode/skills/` (30 skills)
+**Skills directory:** `/workspaces/codespace-workbench/.opencode/skills/` (28 skills)
 
 ---
 
@@ -132,7 +112,7 @@ zls, yaml-ls, vue, typescript, tinymist, texlab, terraform, svelte, sourcekit-ls
 | `BROWSERLESS_PORT` | Yes | Browserless MCP |
 | `BROWSERLESS_TOKEN` | Yes | Browserless MCP |
 | `BROWSERLESS_PROTOCOL` | Yes | Browserless MCP |
-| `DB_PATH` | **NO** | saga MCP |
+| `DB_PATH` | **YES** | saga MCP |
 | `WAKATIME_API_KEY` | **NO** | opencode-wakatime plugin |
 
 ---

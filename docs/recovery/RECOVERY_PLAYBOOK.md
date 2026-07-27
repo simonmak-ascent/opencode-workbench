@@ -57,11 +57,12 @@ cd /workspaces/codespace-workbench
 opencode
 ```
 
-## Phase 6: Authenticate Remote MCPs
+## Phase 6: Verify Remote MCP Authentication
 
 ```bash
-# Vercel OAuth (requires browser interaction)
-opencode mcp auth vercel
+# Vercel uses Bearer token auth (VERCEL_ACCESS_TOKEN) — no manual step needed
+# n8n uses access token (N8N_MCP_ACCESS_TOKEN) — no manual step needed
+# All other remote MCPs (context7, gh_grep, clerk) use no auth
 ```
 
 ## Phase 7: Verify MCP Servers
@@ -108,7 +109,7 @@ bash scripts/bootstrap-tools.sh
 - [ ] All MCP servers connect
 - [ ] 28 skills available
 - [ ] Playwright chromium installed
-- [ ] Vercel OAuth completed (optional)
+- [ ] Vercel token auth (automatic if VERCEL_ACCESS_TOKEN set)
 
 ## Troubleshooting
 
@@ -123,4 +124,4 @@ bash scripts/bootstrap-tools.sh
 ## Time Estimate
 
 - Full recovery: ~10 minutes (mostly automated)
-- Manual steps: ~2 minutes (playwright install, vercel auth)
+- Manual steps: ~1 minute (playwright install)

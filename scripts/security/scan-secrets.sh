@@ -46,10 +46,38 @@ fi
 
 echo "---"
 if [ $FOUND -eq 0 ]; then
-    echo "✅ SECURITY SCAN CLEAN — No secrets detected in tracked files."
+    echo "✅ Working tree scan clean."
+else
+    echo "❌ WORKING TREE SCAN FAILED — $FOUND potential secret(s) detected."
+fi
+
+# Git history scan (checks for keys that were redacted but persist in history)
+echo ""
+echo "=== Git History Scan ==="
+HIST_FOUND=0
+for pattern in "${PATTERNS[@]}"; do
+    hist_matches=$(git log --all -p --format="" 2>/dev/null | grep -oE "$pattern" | sort -u || true)
+    if [ -n "$hist_matches" ]; then
+        echo "⚠️  PATTERN IN GIT HISTORY: $pattern"
+        echo "$hist_matches"
+        echo ""
+        HIST_FOUND=$((HIST_FOUND + 1))
+    fi
+done
+
+if [ $HIST_FOUND -eq 0 ]; then
+    echo "✅ Git history scan clean."
+else
+    echo "❌ GIT HISTORY SCAN FAILED — $HIST_FOUND pattern(s) found in history."
+    echo "Keys in history persist even after redaction. Rotate them and consider git filter-branch."
+fi
+
+echo ""
+echo "---"
+if [ $FOUND -eq 0 ] && [ $HIST_FOUND -eq 0 ]; then
+    echo "✅ OVERALL SECURITY SCAN CLEAN"
     exit 0
 else
-    echo "❌ SECURITY SCAN FAILED — $FOUND potential secret(s) detected."
-    echo "Review findings above. Do NOT commit until resolved."
+    echo "❌ OVERALL SECURITY SCAN FAILED"
     exit 1
 fi
