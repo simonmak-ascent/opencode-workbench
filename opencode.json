@@ -240,10 +240,13 @@
       "timeout": 60000
     },
     "figma": {
-      "type": "remote",
-      "url": "http://127.0.0.1:3333/mcp",
+      "type": "local",
+      "command": ["figma-developer-mcp", "--stdio"],
+      "environment": {
+        "FIGMA_API_KEY": "{env:FIGMA_ACCESS_TOKEN}"
+      },
       "enabled": true,
-      "_note": "Requires figma MCP HTTP server running: bash scripts/services/figma-mcp.sh start"
+      "timeout": 60000
     },
     "mermaid": {
       "type": "local",
