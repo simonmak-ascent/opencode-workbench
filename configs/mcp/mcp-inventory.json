@@ -36,6 +36,9 @@
     "vendored": [
       {"name": "perplexity", "source": "vendor/perplexity-agent-mcp/", "auth_var": "PERPLEXITY_API_KEY", "enabled": true},
       {"name": "browserless", "source": "vendor/browserless-mcp/", "auth_var": "BROWSERLESS_TOKEN", "enabled": true}
+    ],
+    "local_bun": [
+      {"name": "figma-write", "pkg": "cursor-talk-to-figma-mcp", "ver": "latest", "auth_var": null, "enabled": true, "notes": "write-capable Figma MCP (grab/cursor-talk-to-figma-mcp); needs relay on :3055 (scripts/services/figma-relay.sh) + Figma Desktop plugin on the local machine joining a channel"}
     ]
   }
 }

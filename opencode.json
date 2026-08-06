@@ -9,23 +9,51 @@
     "deepseek": {
       "name": "DeepSeek",
       "api": "https://api.deepseek.com/v1",
-      "env": ["DEEPSEEK_API_KEY"],
+      "env": [
+        "DEEPSEEK_API_KEY"
+      ],
       "models": {
         "deepseek-v4-pro": {
           "id": "deepseek-v4-pro",
           "name": "DeepSeek V4 Pro",
           "reasoning": true,
-          "cost": { "input": 0.000435, "output": 0.00087 },
-          "limit": { "context": 1048576, "output": 393216 },
-          "modalities": { "input": ["text"], "output": ["text"] }
+          "cost": {
+            "input": 0.000435,
+            "output": 0.00087
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 393216
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         },
         "deepseek-v4-flash": {
           "id": "deepseek-v4-flash",
           "name": "DeepSeek V4 Flash",
           "reasoning": true,
-          "cost": { "input": 0.00014, "output": 0.00028 },
-          "limit": { "context": 1048576, "output": 393216 },
-          "modalities": { "input": ["text"], "output": ["text"] }
+          "cost": {
+            "input": 0.00014,
+            "output": 0.00028
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 393216
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         }
       },
       "options": {
@@ -35,15 +63,30 @@
     "opencode-go": {
       "name": "OpenCode Console Go",
       "api": "https://api.opencode.ai/v1",
-      "env": ["OPENCODE_API_KEY"],
+      "env": [
+        "OPENCODE_API_KEY"
+      ],
       "models": {
         "kimi-k3": {
           "id": "kimi-k3",
           "name": "Kimi K3 (via OpenCode)",
           "reasoning": true,
-          "cost": { "input": 0.00087, "output": 0.00348 },
-          "limit": { "context": 262144, "output": 262144 },
-          "modalities": { "input": ["text"], "output": ["text"] }
+          "cost": {
+            "input": 0.00087,
+            "output": 0.00348
+          },
+          "limit": {
+            "context": 262144,
+            "output": 262144
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         }
       },
       "options": {
@@ -53,31 +96,72 @@
     "perplexity": {
       "name": "Perplexity",
       "api": "https://api.perplexity.ai",
-      "env": ["PERPLEXITY_API_KEY"],
+      "env": [
+        "PERPLEXITY_API_KEY"
+      ],
       "models": {
         "sonar-pro": {
           "id": "sonar-pro",
           "name": "Sonar Pro",
           "reasoning": false,
-          "cost": { "input": 0.003, "output": 0.015 },
-          "limit": { "context": 200000, "output": 8192 },
-          "modalities": { "input": ["text"], "output": ["text"] }
+          "cost": {
+            "input": 0.003,
+            "output": 0.015
+          },
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         },
         "sonar-reasoning-pro": {
           "id": "sonar-reasoning-pro",
           "name": "Sonar Reasoning Pro",
           "reasoning": true,
-          "cost": { "input": 0.003, "output": 0.015 },
-          "limit": { "context": 127024, "output": 127024 },
-          "modalities": { "input": ["text"], "output": ["text"] }
+          "cost": {
+            "input": 0.003,
+            "output": 0.015
+          },
+          "limit": {
+            "context": 127024,
+            "output": 127024
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         },
         "sonar": {
           "id": "sonar",
           "name": "Sonar",
           "reasoning": false,
-          "cost": { "input": 0.001, "output": 0.001 },
-          "limit": { "context": 127024, "output": 8192 },
-          "modalities": { "input": ["text"], "output": ["text"] }
+          "cost": {
+            "input": 0.001,
+            "output": 0.001
+          },
+          "limit": {
+            "context": 127024,
+            "output": 8192
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         }
       },
       "options": {
@@ -87,31 +171,75 @@
     "openrouter": {
       "name": "OpenRouter",
       "api": "https://openrouter.ai/api/v1",
-      "env": ["OPENROUTER_API_KEY"],
+      "env": [
+        "OPENROUTER_API_KEY"
+      ],
       "models": {
         "anthropic/claude-sonnet-4-5": {
           "id": "anthropic/claude-sonnet-4-5",
           "name": "Claude Sonnet 4.5 (OpenRouter)",
           "reasoning": true,
-          "cost": { "input": 0.003, "output": 0.015 },
-          "limit": { "context": 200000, "output": 64000 },
-          "modalities": { "input": ["text", "image"], "output": ["text"] }
+          "cost": {
+            "input": 0.003,
+            "output": 0.015
+          },
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         },
         "google/gemini-2.5-pro": {
           "id": "google/gemini-2.5-pro",
           "name": "Gemini 2.5 Pro (OpenRouter)",
           "reasoning": true,
-          "cost": { "input": 0.00125, "output": 0.01 },
-          "limit": { "context": 1048576, "output": 65536 },
-          "modalities": { "input": ["text", "image"], "output": ["text"] }
+          "cost": {
+            "input": 0.00125,
+            "output": 0.01
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 65536
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         },
         "openai/gpt-5.5": {
           "id": "openai/gpt-5.5",
           "name": "GPT-5.5 (OpenRouter)",
           "reasoning": true,
-          "cost": { "input": 0.005, "output": 0.03 },
-          "limit": { "context": 272000, "output": 128000 },
-          "modalities": { "input": ["text", "image"], "output": ["text"] }
+          "cost": {
+            "input": 0.005,
+            "output": 0.03
+          },
+          "limit": {
+            "context": 272000,
+            "output": 128000
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         }
       },
       "options": {
@@ -121,15 +249,30 @@
     "zen": {
       "name": "OpenCode Zen",
       "api": "https://zen.opencode.ai/v1",
-      "env": ["OPENCODE_API_KEY"],
+      "env": [
+        "OPENCODE_API_KEY"
+      ],
       "models": {
         "zen-medium": {
           "id": "zen-medium",
           "name": "Zen Medium",
           "reasoning": true,
-          "cost": { "input": 0, "output": 0 },
-          "limit": { "context": 1048576, "output": 128000 },
-          "modalities": { "input": ["text"], "output": ["text"] }
+          "cost": {
+            "input": 0,
+            "output": 0
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 128000
+          },
+          "modalities": {
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         }
       },
       "options": {
@@ -139,15 +282,31 @@
     "kimi": {
       "name": "Kimi (Moonshot)",
       "api": "https://api.moonshot.cn/v1",
-      "env": ["KIMI_API_KEY"],
+      "env": [
+        "KIMI_API_KEY"
+      ],
       "models": {
         "kimi-k3": {
           "id": "kimi-k3",
           "name": "Kimi K3",
           "reasoning": true,
-          "cost": { "input": 0.00087, "output": 0.00348 },
-          "limit": { "context": 262144, "output": 262144 },
-          "modalities": { "input": ["text", "image"], "output": ["text"] }
+          "cost": {
+            "input": 0.00087,
+            "output": 0.00348
+          },
+          "limit": {
+            "context": 262144,
+            "output": 262144
+          },
+          "modalities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
         }
       },
       "options": {
@@ -190,7 +349,10 @@
     },
     "github": {
       "type": "local",
-      "command": ["/home/node/.local/bin/github-mcp-server", "stdio"],
+      "command": [
+        "/home/node/.local/bin/github-mcp-server",
+        "stdio"
+      ],
       "environment": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:SIMONPLMAK_CLOUD_PAT}"
       },
@@ -199,7 +361,10 @@
     },
     "perplexity": {
       "type": "local",
-      "command": ["node", "/home/node/.local/bin/perplexity-agent-mcp/index.js"],
+      "command": [
+        "node",
+        "/home/node/.local/bin/perplexity-agent-mcp/index.js"
+      ],
       "environment": {
         "PERPLEXITY_API_KEY": "{env:PERPLEXITY_API_KEY}"
       },
@@ -208,7 +373,10 @@
     },
     "brave-search": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-brave-search/dist/index.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-brave-search/dist/index.js"
+      ],
       "environment": {
         "BRAVE_API_KEY": "{env:BRAVE_API_KEY}"
       },
@@ -217,13 +385,20 @@
     },
     "postgres": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-postgres/dist/index.js", "{env:DATABASE_URL}"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-postgres/dist/index.js",
+        "{env:DATABASE_URL}"
+      ],
       "enabled": true,
       "timeout": 30000
     },
     "browserless": {
       "type": "local",
-      "command": ["node", "/home/node/.local/bin/browserless-mcp/dist/index.js"],
+      "command": [
+        "node",
+        "/home/node/.local/bin/browserless-mcp/dist/index.js"
+      ],
       "environment": {
         "BROWSERLESS_HOST": "{env:BROWSERLESS_HOST}",
         "BROWSERLESS_PORT": "{env:BROWSERLESS_PORT}",
@@ -235,13 +410,19 @@
     },
     "playwright": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/@playwright/mcp/cli.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/@playwright/mcp/cli.js"
+      ],
       "enabled": true,
       "timeout": 60000
     },
     "figma": {
       "type": "local",
-      "command": ["figma-developer-mcp", "--stdio"],
+      "command": [
+        "figma-developer-mcp",
+        "--stdio"
+      ],
       "environment": {
         "FIGMA_API_KEY": "{env:FIGMA_ACCESS_TOKEN}"
       },
@@ -250,13 +431,19 @@
     },
     "mermaid": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-mermaid/build/index.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/mcp-mermaid/build/index.js"
+      ],
       "enabled": true,
       "timeout": 30000
     },
     "saga": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/saga-mcp/dist/index.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/saga-mcp/dist/index.js"
+      ],
       "environment": {
         "DB_PATH": "{env:DB_PATH}"
       },
@@ -265,13 +452,19 @@
     },
     "echarts": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-echarts/build/index.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/mcp-echarts/build/index.js"
+      ],
       "enabled": true,
       "timeout": 30000
     },
     "shadcn": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/@jpisnice/shadcn-ui-mcp-server/build/index.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/@jpisnice/shadcn-ui-mcp-server/build/index.js"
+      ],
       "environment": {
         "GITHUB_TOKEN": "{env:SIMONPLMAK_CLOUD_PAT}"
       },
@@ -280,24 +473,42 @@
     },
     "swagger-testcase": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/swagger-testcase-mcp/dist/index.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/swagger-testcase-mcp/dist/index.js"
+      ],
       "enabled": true,
       "timeout": 30000
     },
     "design-system": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/mcp-design-system-extractor/dist/index.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/mcp-design-system-extractor/dist/index.js"
+      ],
       "enabled": true,
       "timeout": 30000
     },
     "sentry": {
       "type": "local",
-      "command": ["node", "/home/node/.npm-global/lib/node_modules/@sentry/mcp-server/dist/index.js"],
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/@sentry/mcp-server/dist/index.js"
+      ],
       "environment": {
         "SENTRY_ACCESS_TOKEN": "{env:SENTRY_ACCESS_TOKEN}"
       },
       "enabled": true,
       "timeout": 30000
+    },
+    "figma-write": {
+      "type": "local",
+      "command": [
+        "bunx",
+        "cursor-talk-to-figma-mcp@latest"
+      ],
+      "enabled": true,
+      "timeout": 60000
     }
   }
 }
