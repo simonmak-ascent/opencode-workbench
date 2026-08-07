@@ -34,16 +34,6 @@ if ! command -v surreal >/dev/null 2>&1; then
   sudo ln -sf "$HOME/.surrealdb/surreal" /usr/local/bin/surreal 2>/dev/null || true
 fi
 
-# --- bun + talk-to-figma relay (write-capable Figma MCP) ---
-echo "[6/6] bun + talk-to-figma relay..."
-if ! command -v bun >/dev/null 2>&1; then
-  curl -fsSL https://bun.sh/install | bash
-fi
-if [ ! -d "$HOME/.local/share/talk-to-figma" ]; then
-  git clone -q --depth 1 https://github.com/grab/cursor-talk-to-figma-mcp.git "$HOME/.local/share/talk-to-figma"
-fi
-echo "  figma relay: bash scripts/services/figma-relay.sh start  (port 3055)"
-
 echo ""
 echo "=== Bootstrap complete ==="
 echo "Installed: pandoc, miller (mlr), jq, csvkit, sqlite3, duckdb, polars, datasette,"

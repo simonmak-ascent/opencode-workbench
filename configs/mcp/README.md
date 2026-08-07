@@ -29,7 +29,6 @@
 | shadcn | npm global | PAT | active |
 | swagger-testcase | npm global | none | active |
 | design-system | npm global | none | active |
-| figma | npm global | API key | active |
 | sentry | npm global | API key | active |
 | surrealdb | npm global | credentials | disabled |
 | storybook | npm global | n/a | disabled (library) |
@@ -62,7 +61,6 @@
 | Saga | saga-mcp | 1.6.0 | none |
 | Swagger Testcase | swagger-testcase-mcp | 1.0.0 | none |
 | Design System | mcp-design-system-extractor | 1.1.1 | none |
-| Figma | figma-developer-mcp | 0.13.2 | FIGMA_ACCESS_TOKEN |
 | Sentry | @sentry/mcp-server | 0.37.0 | SENTRY_ACCESS_TOKEN |
 
 ### Vendored (custom, stored in vendor/)
@@ -84,7 +82,6 @@
 | BRAVE_API_KEY | brave-search |
 | BROWSERLESS_TOKEN | browserless |
 | KIMI_API_KEY | opencode (LLM model) |
-| FIGMA_ACCESS_TOKEN | figma |
 | SENTRY_ACCESS_TOKEN | sentry |
 | DATABASE_URL | postgres |
 
@@ -108,7 +105,7 @@
 │          │ saga     │          │            │
 │          │ swagger  │          │            │
 │          │ design   │          │            │
-│          │ figma    │          │            │
+│          │ v0       │          │            │
 │          │ sentry   │          │            │
 └──────────┴──────────┴──────────┴────────────┘
   * OAuth authenticated
