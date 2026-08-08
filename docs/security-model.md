@@ -41,7 +41,7 @@
 |------|-------------|----------|---------|
 | **Tier 0 — Platform** | GitHub-injected tokens | `GITHUB_TOKEN`, `GH_TOKEN` | Automatic |
 | **Tier 1 — Critical** | Required for core function | `DEEPSEEK_API_KEY`, `SIMONPLMAK_CLOUD_PAT` | Codespaces Secrets |
-| **Tier 2 — Operational** | Required for MCP servers | `BRAVE_API_KEY`, `SENTRY_ACCESS_TOKEN`, `FIGMA_ACCESS_TOKEN`, `N8N_MCP_ACCESS_TOKEN`, `PERPLEXITY_API_KEY`, `BROWSERLESS_TOKEN` | Codespaces Secrets |
+| **Tier 2 — Operational** | Required for MCP servers | `BRAVE_API_KEY`, `SENTRY_AUTH_TOKEN`, `FIGMA_TOKEN`, `N8N_MCP_ACCESS_TOKEN`, `PERPLEXITY_API_KEY`, `BROWSERLESS_TOKEN` | Codespaces Secrets |
 | **Tier 3 — Optional** | Nice to have, not critical | `OPENROUTER_API_KEY`, `GOOGLE_API_KEY`, `KIMI_API_KEY` | Codespaces Secrets |
 | **Tier 4 — Non-Secret** | Configuration only | `DATABASE_URL`, `DB_PATH`, `BROWSERLESS_HOST` | `devcontainer.json` |
 

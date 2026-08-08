@@ -283,7 +283,7 @@
       "name": "Kimi (Moonshot)",
       "api": "https://api.moonshot.cn/v1",
       "env": [
-        "KIMI_API_KEY"
+        "MOONSHOT_API_KEY"
       ],
       "models": {
         "kimi-k3": {
@@ -310,7 +310,7 @@
         }
       },
       "options": {
-        "apiKey": "{env:KIMI_API_KEY}"
+        "apiKey": "{env:MOONSHOT_API_KEY}"
       }
     }
   },
@@ -484,7 +484,7 @@
         "/home/node/.npm-global/lib/node_modules/@sentry/mcp-server/dist/index.js"
       ],
       "environment": {
-        "SENTRY_ACCESS_TOKEN": "{env:SENTRY_ACCESS_TOKEN}"
+        "SENTRY_AUTH_TOKEN": "{env:SENTRY_AUTH_TOKEN}"
       },
       "enabled": true,
       "timeout": 30000

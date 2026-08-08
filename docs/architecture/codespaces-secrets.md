@@ -13,8 +13,8 @@
 | `PERPLEXITY_API_KEY` | Perplexity Agent API | perplexity-agent-mcp | https://perplexity.ai/settings/api (*) |
 | `BRAVE_API_KEY` | Brave Search API | brave-search MCP | https://brave.com/search/api/ |
 | `BROWSERLESS_TOKEN` | Browserless auth token | browserless MCP + Docker container | https://browserless.io/account |
-| `FIGMA_ACCESS_TOKEN` | Figma Developer API | figma-developer-mcp | https://www.figma.com/settings (Personal Access Tokens) |
-| `SENTRY_ACCESS_TOKEN` | Sentry API auth token | @sentry/mcp-server | https://sentry.io/settings/account/api/auth-tokens/ |
+| `FIGMA_TOKEN` | Figma Developer API | figma-developer-mcp | https://www.figma.com/settings (Personal Access Tokens) |
+| `SENTRY_AUTH_TOKEN` | Sentry API auth token | @sentry/mcp-server | https://sentry.io/settings/account/api/auth-tokens/ |
 | `N8N_MCP_ACCESS_TOKEN` | n8n MCP server auth | n8n MCP (Bearer header) | n8n → Settings → API |
 
 (*) Perplexity key must start with `pplx-` prefix. Current key has wrong format — regenerate.
@@ -32,7 +32,7 @@
 |--------|---------|---------|-------|
 | `WCAGC_MCP_KEY` | WCAGC accessibility MCP | @wcagc/mcp (disabled) | Not enabled in opencode.json |
 | `CONVERTICA_API_KEY` | Convertica conversion MCP | convertica-mcp (disabled) | Not enabled in opencode.json |
-| `SURREAL_ENDPOINT` | SurrealDB endpoint | surrealdb-mcp-server (disabled) | Not enabled in opencode.json |
+| `SURREAL_URL` | SurrealDB endpoint | surrealdb-mcp-server (disabled) | Not enabled in opencode.json |
 | `SURREAL_USERNAME` | SurrealDB username | surrealdb-mcp-server (disabled) | Not enabled in opencode.json |
 | `SURREAL_PASSWORD` | SurrealDB password | surrealdb-mcp-server (disabled) | Not enabled in opencode.json |
 | `SURREAL_NAMESPACE` | SurrealDB namespace | surrealdb-mcp-server (disabled) | Not enabled in opencode.json |

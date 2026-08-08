@@ -61,7 +61,7 @@
 | Saga | saga-mcp | 1.6.0 | none |
 | Swagger Testcase | swagger-testcase-mcp | 1.0.0 | none |
 | Design System | mcp-design-system-extractor | 1.1.1 | none |
-| Sentry | @sentry/mcp-server | 0.37.0 | SENTRY_ACCESS_TOKEN |
+| Sentry | @sentry/mcp-server | 0.37.0 | SENTRY_AUTH_TOKEN |
 
 ### Vendored (custom, stored in vendor/)
 - `perplexity-agent-mcp` — Perplexity Agent API wrapper
@@ -81,8 +81,8 @@
 | PERPLEXITY_API_KEY | perplexity |
 | BRAVE_API_KEY | brave-search |
 | BROWSERLESS_TOKEN | browserless |
-| KIMI_API_KEY | opencode (LLM model) |
-| SENTRY_ACCESS_TOKEN | sentry |
+| MOONSHOT_API_KEY | opencode (LLM model) |
+| SENTRY_AUTH_TOKEN | sentry |
 | DATABASE_URL | postgres |
 
 ## Architecture Diagram

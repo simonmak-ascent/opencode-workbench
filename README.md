@@ -145,8 +145,8 @@ All secrets stored in GitHub Codespaces Secrets. Never in repository files.
 | 3 | `PERPLEXITY_API_KEY` | Perplexity MCP |
 | 4 | `BRAVE_API_KEY` | Brave Search MCP |
 | 5 | `BROWSERLESS_TOKEN` | Browserless MCP + container |
-| 6 | `FIGMA_ACCESS_TOKEN` | Figma MCP |
-| 7 | `SENTRY_ACCESS_TOKEN` | Sentry MCP |
+| 6 | `FIGMA_TOKEN` | Figma MCP |
+| 7 | `SENTRY_AUTH_TOKEN` | Sentry MCP |
 | 8 | `N8N_MCP_ACCESS_TOKEN` | n8n MCP |
 | 9 | `KIMI_API_KEY` | Alternate provider (legacy) |
 

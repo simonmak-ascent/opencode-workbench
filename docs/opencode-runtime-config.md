@@ -106,8 +106,8 @@ zls, yaml-ls, vue, typescript, tinymist, texlab, terraform, svelte, sourcekit-ls
 | `PERPLEXITY_API_KEY` | Yes | Perplexity MCP |
 | `BRAVE_API_KEY` | Yes | Brave Search MCP |
 | `DATABASE_URL` | Yes | Postgres MCP |
-| `SENTRY_ACCESS_TOKEN` | Yes | Sentry MCP |
-| `FIGMA_ACCESS_TOKEN` | Yes | Figma MCP |
+| `SENTRY_AUTH_TOKEN` | Yes | Sentry MCP |
+| `FIGMA_TOKEN` | Yes | Figma MCP |
 | `BROWSERLESS_HOST` | Yes | Browserless MCP |
 | `BROWSERLESS_PORT` | Yes | Browserless MCP |
 | `BROWSERLESS_TOKEN` | Yes | Browserless MCP |

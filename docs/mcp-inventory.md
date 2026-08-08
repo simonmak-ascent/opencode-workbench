@@ -40,14 +40,14 @@
 | 11 | `shadcn` | `node .../@jpisnice/shadcn-ui-mcp-server/build/index.js` | Yes | None | `GITHUB_TOKEN` (set) | OK |
 | 12 | `swagger-testcase` | `node .../swagger-testcase-mcp/dist/index.js` | Yes | None | None | OK |
 | 13 | `design-system` | `node .../mcp-design-system-extractor/dist/index.js` | Yes | None | None | OK |
-| 14 | `sentry` | `node .../@sentry/mcp-server/dist/index.js` | Yes | None | `SENTRY_ACCESS_TOKEN` (set) | OK |
+| 14 | `sentry` | `node .../@sentry/mcp-server/dist/index.js` | Yes | None | `SENTRY_AUTH_TOKEN` (set) | OK |
 
 ### Local MCP Health Issues
 
 **figma (CRITICAL):**
 - Consistently fails on **every** startup across all runs in the logs
 - Status: `failed`
-- The entry point exists, `FIGMA_ACCESS_TOKEN` is set
+- The entry point exists, `FIGMA_TOKEN` is set
 - Possible causes: invalid token, network restrictions, or upstream API issues
 
 **saga (WARNING):**

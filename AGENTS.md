@@ -47,7 +47,7 @@ All secrets originate from Codespaces secrets → `devcontainer.json` `remoteEnv
 | `DEEPSEEK_API_KEY` | primary model: `deepseek/deepseek-v4-pro` |
 | `OPENCODE_API_KEY` | OpenCode Zen + Console Go providers |
 | `SIMONPLMAK_CLOUD_PAT` | GitHub MCP (binary) + shadcn MCP |
-| `VERCEL_ACCESS_TOKEN`, `OPENROUTER_API_KEY`, `N8N_MCP_ACCESS_TOKEN`, `PERPLEXITY_API_KEY`, `BRAVE_API_KEY`, `FIGMA_ACCESS_TOKEN`, `SENTRY_ACCESS_TOKEN`, `KIMI_API_KEY` | respective MCP servers/providers |
+| `VERCEL_ACCESS_TOKEN`, `OPENROUTER_API_KEY`, `N8N_MCP_ACCESS_TOKEN`, `PERPLEXITY_API_KEY`, `BRAVE_API_KEY`, `FIGMA_TOKEN`, `SENTRY_AUTH_TOKEN`, `KIMI_API_KEY` | respective MCP servers/providers |
 
 ## Docker containers (always running)
 

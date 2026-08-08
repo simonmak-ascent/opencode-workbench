@@ -12,7 +12,7 @@ echo "## OpenCode / AI"
 echo ""
 echo "| Variable | Value |"
 echo "|----------|-------|"
-for VAR in DEEPSEEK_API_KEY OPENROUTER_API_KEY GOOGLE_API_KEY KIMI_API_KEY OPENCODE OPENCODE_PID; do
+for VAR in DEEPSEEK_API_KEY OPENROUTER_API_KEY GOOGLE_API_KEY MOONSHOT_API_KEY OPENCODE OPENCODE_PID; do
     if [ -n "${!VAR:-}" ]; then
         echo "| $VAR | **present** |"
     else
@@ -25,7 +25,7 @@ echo "## MCP Secrets"
 echo ""
 echo "| Variable | Value |"
 echo "|----------|-------|"
-for VAR in SIMONPLMAK_CLOUD_PAT PERPLEXITY_API_KEY BRAVE_API_KEY BROWSERLESS_TOKEN FIGMA_ACCESS_TOKEN SENTRY_ACCESS_TOKEN N8N_MCP_ACCESS_TOKEN; do
+for VAR in SIMONPLMAK_CLOUD_PAT PERPLEXITY_API_KEY BRAVE_API_KEY BROWSERLESS_TOKEN FIGMA_TOKEN SENTRY_AUTH_TOKEN N8N_MCP_ACCESS_TOKEN; do
     if [ -n "${!VAR:-}" ]; then
         echo "| $VAR | **present** |"
     else

@@ -113,7 +113,7 @@
         "name": "sentry",
         "pkg": "@sentry/mcp-server",
         "ver": "0.37.0",
-        "auth_var": "SENTRY_ACCESS_TOKEN",
+        "auth_var": "SENTRY_AUTH_TOKEN",
         "enabled": true
       }
     ],

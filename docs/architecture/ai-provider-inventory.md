@@ -23,7 +23,7 @@
 |----------|-----------|----------------|--------|-------|
 | **Perplexity** | `perplexity-agent-mcp` (local) | `PERPLEXITY_API_KEY` | ✅ Key regenerated (pending rebuild) | Regenerated 2026-07-26 with `pplx-` prefix. Requires codespace rebuild to take effect |
 | **Brave Search** | `server-brave-search` (local) | `BRAVE_API_KEY` | ✅ Working | Search API, key format `BSA...` |
-| **Sentry** | `@sentry/mcp-server` (local) | `SENTRY_ACCESS_TOKEN` | ✅ Working | Key format `sntryu_...` |
+| **Sentry** | `@sentry/mcp-server` (local) | `SENTRY_AUTH_TOKEN` | ✅ Working | Key format `sntryu_...` |
 
 ## Additional Env-Detected Providers (unconfigured in OpenCode)
 
