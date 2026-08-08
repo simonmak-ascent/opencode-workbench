@@ -20,8 +20,8 @@
 | `BRAVE_API_KEY` | Brave Search MCP | Codespaces Secret |
 | `BROWSERLESS_TOKEN` | Browserless MCP + container | Codespaces Secret |
 | `N8N_MCP_ACCESS_TOKEN` | n8n MCP | Codespaces Secret |
-| `SENTRY_ACCESS_TOKEN` | Sentry MCP | Codespaces Secret |
-| `FIGMA_ACCESS_TOKEN` | Figma MCP | Codespaces Secret |
+| `SENTRY_AUTH_TOKEN` | Sentry MCP | Codespaces Secret |
+| `FIGMA_TOKEN` | Figma MCP | Codespaces Secret |
 
 ## Optional (enhanced functionality)
 

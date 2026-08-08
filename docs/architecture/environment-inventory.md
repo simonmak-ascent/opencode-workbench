@@ -24,8 +24,8 @@
 | `BROWSERLESS_HOST` | Browserless hostname | devcontainer.json | Yes |
 | `BROWSERLESS_PORT` | Browserless port | devcontainer.json | Yes |
 | `BROWSERLESS_PROTOCOL` | Browserless protocol | devcontainer.json | Yes |
-| `FIGMA_ACCESS_TOKEN` | Figma API (figma-developer-mcp) | Codespaces Secret | Yes |
-| `SENTRY_ACCESS_TOKEN` | Sentry API (@sentry/mcp-server) | Codespaces Secret | Yes |
+| `FIGMA_TOKEN` | Figma API (figma-developer-mcp) | Codespaces Secret | Yes |
+| `SENTRY_AUTH_TOKEN` | Sentry API (@sentry/mcp-server) | Codespaces Secret | Yes |
 | `DATABASE_URL` | Postgres connection (postgres MCP) | devcontainer.json | Yes |
 | `N8N_MCP_ACCESS_TOKEN` | n8n MCP auth token | Codespaces Secret | Yes |
 | `DB_PATH` | Saga tracker SQLite database path | devcontainer.json | Yes |

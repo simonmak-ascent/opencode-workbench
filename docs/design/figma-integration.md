@@ -42,8 +42,8 @@ Figma Design File
 ### Step 1: Export from Figma
 Use Figma Variables API or approved plugin to export W3C DTCG-compliant JSON:
 ```bash
-# Via Figma Variables REST API (requires FIGMA_ACCESS_TOKEN)
-curl -H "X-Figma-Token: $FIGMA_ACCESS_TOKEN" \
+# Via Figma Variables REST API (requires FIGMA_TOKEN)
+curl -H "X-Figma-Token: $FIGMA_TOKEN" \
   "https://api.figma.com/v1/files/$FILE_KEY/variables/local"
 ```
 
@@ -137,5 +137,5 @@ Figma component → Figma MCP query → DesignAgent
 - **Type**: Local (npm global)
 - **Package**: `figma-developer-mcp`
 - **Transport**: HTTP on `localhost:3333`
-- **Auth**: `FIGMA_ACCESS_TOKEN` env var
+- **Auth**: `FIGMA_TOKEN` env var
 - **Start**: `bash scripts/services/figma-mcp.sh start`

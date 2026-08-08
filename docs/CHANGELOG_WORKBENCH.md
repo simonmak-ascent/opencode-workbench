@@ -51,8 +51,8 @@
 
 ### Changed
 - **Active model**: `kimi-for-coding/k3` → `deepseek/deepseek-v4-pro`
-- **devcontainer.json `remoteEnv`**: Added 6 missing env vars (BROWSERLESS_TOKEN, PERPLEXITY_API_KEY, BRAVE_API_KEY, FIGMA_ACCESS_TOKEN, SENTRY_ACCESS_TOKEN, SIMONPLMAK_CLOUD_PAT, DEEPSEEK_API_KEY, DB_PATH)
-- **Figma MCP**: Fixed env var name from `FIGMA_ACCESS_TOKEN` → `FIGMA_API_KEY`
+- **devcontainer.json `remoteEnv`**: Added 6 missing env vars (BROWSERLESS_TOKEN, PERPLEXITY_API_KEY, BRAVE_API_KEY, FIGMA_TOKEN, SENTRY_AUTH_TOKEN, SIMONPLMAK_CLOUD_PAT, DEEPSEEK_API_KEY, DB_PATH)
+- **Figma MCP**: Fixed env var name from `FIGMA_TOKEN` → `FIGMA_API_KEY`
 - Runtime sync: `~/.config/opencode/opencode.json` synced from repo
 - Updated `docs/environment-inventory.md` — reflected model change, added new vars
 - Updated `docs/codespaces-secrets.md` — DEEPSEEK_API_KEY moved to Required

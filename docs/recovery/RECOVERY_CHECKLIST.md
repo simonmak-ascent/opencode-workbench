@@ -42,8 +42,8 @@
 - [ ] `PERPLEXITY_API_KEY` present
 - [ ] `BRAVE_API_KEY` present
 - [ ] `BROWSERLESS_TOKEN` present
-- [ ] `FIGMA_ACCESS_TOKEN` present
-- [ ] `SENTRY_ACCESS_TOKEN` present
+- [ ] `FIGMA_TOKEN` present
+- [ ] `SENTRY_AUTH_TOKEN` present
 - [ ] `N8N_MCP_ACCESS_TOKEN` present
 - [ ] `DATABASE_URL` present
 - [ ] `DB_PATH` present

@@ -18,14 +18,14 @@
 | postgres | local (npm) | stdio | DATABASE_URL | query |
 | browserless | local (vendored) | stdio | BROWSERLESS_TOKEN | screenshot, pdf, content, function, performance |
 | playwright | local (npm) | stdio | None | navigate, click, type, snapshot, screenshot, evaluate |
-| figma | local (npm) | HTTP (localhost:3333) | FIGMA_ACCESS_TOKEN | design tokens, components |
+| figma | local (npm) | HTTP (localhost:3333) | FIGMA_TOKEN | design tokens, components |
 | mermaid | local (npm) | stdio | None | generate diagrams |
 | saga | local (npm) | stdio | DB_PATH | task tracking (disabled) |
 | echarts | local (npm) | stdio | None | charts (bar, line, pie, scatter, etc.) |
 | shadcn | local (npm) | stdio | PAT (SIMONPLMAK_CLOUD_PAT) | components, blocks, themes |
 | swagger-testcase | local (npm) | stdio | None | test case generation, API analysis |
 | design-system | local (npm) | stdio | None | component HTML, CSS tokens, themes |
-| sentry | local (npm) | stdio | SENTRY_ACCESS_TOKEN | issues, events, traces, analysis |
+| sentry | local (npm) | stdio | SENTRY_AUTH_TOKEN | issues, events, traces, analysis |
 
 ## Tool Discovery
 

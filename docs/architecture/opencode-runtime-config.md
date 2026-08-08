@@ -39,14 +39,14 @@
 | postgres | `@modelcontextprotocol/server-postgres` | `DATABASE_URL` |
 | browserless | `vendor/browserless-mcp/dist/index.js` | `BROWSERLESS_TOKEN` |
 | playwright | `@playwright/mcp/cli.js` | None |
-| figma | `figma-developer-mcp` | `FIGMA_ACCESS_TOKEN` (mapped to `FIGMA_API_KEY`) |
+| figma | `figma-developer-mcp` | `FIGMA_TOKEN` (mapped to `FIGMA_API_KEY`) |
 | mermaid | `mcp-mermaid` | None |
 | saga | `saga-mcp` | `DB_PATH` |
 | echarts | `mcp-echarts` | None |
 | shadcn | `@jpisnice/shadcn-ui-mcp-server` | `SIMONPLMAK_CLOUD_PAT` |
 | swagger-testcase | `swagger-testcase-mcp` | None |
 | design-system | `mcp-design-system-extractor` | None (needs `STORYBOOK_URL`) |
-| sentry | `@sentry/mcp-server` | `SENTRY_ACCESS_TOKEN` |
+| sentry | `@sentry/mcp-server` | `SENTRY_AUTH_TOKEN` |
 
 ## Recovery Method
 

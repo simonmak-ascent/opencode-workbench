@@ -58,8 +58,8 @@
 | Saga | saga-mcp | 1.6.0 | Yes | No |
 | Swagger Testcase | swagger-testcase-mcp | 1.0.0 | Yes | No |
 | Design System | mcp-design-system-extractor | 1.1.1 | Yes | No |
-| Figma | figma-developer-mcp | 0.13.2 | Yes | FIGMA_ACCESS_TOKEN |
-| Sentry | @sentry/mcp-server | 0.37.0 | Yes | SENTRY_ACCESS_TOKEN |
+| Figma | figma-developer-mcp | 0.13.2 | Yes | FIGMA_TOKEN |
+| Sentry | @sentry/mcp-server | 0.37.0 | Yes | SENTRY_AUTH_TOKEN |
 
 ## MCP Servers (npm global, disabled)
 
