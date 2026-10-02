@@ -124,10 +124,10 @@ No new URLs, IPs, or internal identifiers discovered since last audit.
 
 | Email | Count | Type | Status |
 |---|---|---|---|
-| `246365505+simonplmak-cloud@users.noreply.github.com` | 26 | GitHub noreply | ✅ Current (since commit after last audit) |
+| `246365505+simonmak-ascent@users.noreply.github.com` | 26 | GitHub noreply | ✅ Current (since commit after last audit) |
 | `simon.pl.mak@gmail.com` | 28 | Personal email | ⚠️ Historical — git config fixed, but history retains old commits |
 
-**Mitigation applied**: `git config user.email` now set to `246365505+simonplmak-cloud@users.noreply.github.com`. All new commits use noreply. Historical commits with personal email remain and are visible in the public history; rewriting history is possible but was judged low-ROI given the address is already public elsewhere in the org's repos.
+**Mitigation applied**: `git config user.email` now set to `246365505+simonmak-ascent@users.noreply.github.com`. All new commits use noreply. Historical commits with personal email remain and are visible in the public history; rewriting history is possible but was judged low-ROI given the address is already public elsewhere in the org's repos.
 
 **Severity unchanged**: MEDIUM due to historical exposure, but mitigated forward-going.
 
