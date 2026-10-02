@@ -2,12 +2,17 @@
 
 ## Reporting a vulnerability
 
-Please do **not** open a public issue for security problems. Report privately via
+Do **not** open a public issue for security problems. Report privately, either via
 GitHub's [private vulnerability reporting](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability)
-on this repository (Security → Report a vulnerability).
+on this repository (Security → Report a vulnerability), or by emailing
+**simon.pl.mak@gmail.com** with `SECURITY` in the subject.
 
 Include: affected component (`mcp-server/`, scripts, `opencode.json`), reproduction
 steps, and impact. We aim to acknowledge within 3 business days.
+
+## Supported versions
+
+The latest commit on `main` is the only supported version.
 
 ## Secrets
 

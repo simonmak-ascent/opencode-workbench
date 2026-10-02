@@ -6,7 +6,7 @@
   ],
   "autoupdate": true,
   "small_model": "deepseek/deepseek-v4-flash",
-  "subagent_depth": 2,
+  "subagent_depth": 3,
   "permission": {
     "read": {
       "*": "allow",
@@ -49,22 +49,34 @@
       "npx vitest*": "allow",
       "npx eslint*": "allow",
       "npx jest*": "allow",
-      "git push*": "ask",
-      "git commit*": "ask",
-      "rm -rf *": "ask",
+      "git commit*": "allow",
+      "git push*": "allow",
+      "git push --force*": "deny",
+      "git push -f*": "deny",
+      "rm -rf *": "allow",
+      "rm -rf /": "deny",
+      "rm -rf /*": "deny",
+      "rm -rf /workspaces*": "allow",
+      "rm -rf /tmp*": "allow",
+      "rm -rf ~*": "deny",
+      "rm -rf /root*": "deny",
+      "rm -rf /etc*": "deny",
+      "rm -rf /var/lib/postgresql*": "deny",
       "sudo *": "deny"
     },
     "edit": "allow",
-    "external_directory": "ask",
+    "external_directory": "allow",
     "task": {
       "code-reviewer": "allow",
       "test-writer": "allow",
-      "security-reviewer": "ask",
+      "security-reviewer": "allow",
       "explorer": "allow",
       "explore": "allow",
       "general": "allow",
-      "*": "deny"
-    }
+      "scout": "allow",
+      "*": "allow"
+    },
+    "question": "deny"
   },
   "formatter": true,
   "lsp": true,
@@ -676,6 +688,13 @@
       },
       "enabled": true,
       "timeout": 120000
+    }
+  },
+  "default_agent": "vdd",
+  "agent": {
+    "vdd": {
+      "description": "Vision-driven development: start every task by establishing vision and traceability via the vdd MCP chain",
+      "prompt": "You are a vision-driven development agent. Before implementing, establish vision.md, spec, plan and tasks with bidirectional traceability using the vdd MCP phase tools (vdd_e2e is retired; use vdd_init, vdd_vision, vdd_strategize, vdd_tactics, vdd_specify, vdd_plan, vdd_tasks, then vdd_validate). Prefer the spec-first workflow and reference file:line. Operate autonomously: do not ask for confirmation on reversible actions; decide, record the decision in the repo's register or memory, and continue. Fail closed only on the irreversible (production writes, destructive migrations, secret rotation, force-push, sudo). Keep text output to the minimum: no preamble, no narration of tool calls, no restating the task, no summaries; emit at most a one-line status and stop. Quote only the few relevant lines with path/to/file:line."
     }
   }
 }
