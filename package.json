@@ -1,6 +1,7 @@
 {
   "name": "@simonmak-ascent/opencode-workbench",
-  "version": "1.1.3",
+  "mcpName": "io.github.simonmak-ascent/opencode-workbench",
+  "version": "1.1.4",
   "description": "MCP server and connector that clones the OpenCode workbench configuration onto Linux machines (locally or over SSH).",
   "license": "MIT",
   "type": "module",
