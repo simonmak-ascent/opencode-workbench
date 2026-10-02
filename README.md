@@ -1,7 +1,7 @@
 # OpenCode Workbench
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Secret Scan](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/secret-scan.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/secret-scan.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![MCP Server](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/mcp-server.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/mcp-server.yml)
 [![Validate Documentation](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/validate-docs.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/validate-docs.yml)
 [![MCP Tool Definition Quality](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/tdqs.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/tdqs.yml)
@@ -22,7 +22,7 @@ This repository is the **single source of truth** for a complete cloud developme
 
 **No important knowledge exists only in human memory.**
 
-## Clone this workbench to another Linux machine
+## Clone This Workbench to Another Linux Machine
 
 Register the MCP server with OpenCode:
 
