@@ -391,6 +391,17 @@
       "oauth": false,
       "timeout": 120000
     },
+    "primary-sources": {
+      "type": "local",
+      "command": ["npx", "-y", "@simonmak-ascent/primary-sources-mcp@1.0.0"],
+      "environment": {
+        "FRED_API_KEY": "{env:FRED_API_KEY}",
+        "COMPANIES_HOUSE_API_KEY": "{env:COMPANIES_HOUSE_API_KEY}",
+        "RESEARCH_CONTACT": "{env:RESEARCH_CONTACT}"
+      },
+      "enabled": true,
+      "timeout": 120000
+    },
     "arxiv": {
       "type": "local",
       "command": ["uvx", "arxiv-mcp-server"],

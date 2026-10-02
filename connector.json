@@ -37,7 +37,7 @@
   },
   "components": {
     "required": ["git", "curl", "node", "opencode"],
-    "core": ["pnpm", "uv", "gh", "npm-mcps", "vendored-mcps", "skills", "plugins", "playwright-browsers"],
-    "optional": ["github-mcp", "docker", "docker-containers", "data-tools", "research-mcps"]
+    "core": ["pnpm", "uv", "gh", "npm-mcps", "vendored-mcps", "research-mcps", "skills", "plugins", "playwright-browsers"],
+    "optional": ["github-mcp", "docker", "docker-containers", "data-tools"]
   }
 }
