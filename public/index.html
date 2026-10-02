@@ -157,7 +157,7 @@
               <tr><th>Tool</th><th>What it does</th><th>Mode</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>get_workbench_info</code></td><td>Repo, components by tier, optional MCP add-ons.</td><td>read-only</td></tr>
+              <tr><td><code>describe_workbench</code></td><td>Repo, components by tier, optional MCP add-ons.</td><td>read-only</td></tr>
               <tr><td><code>inspect_target</code></td><td>OS, kernel, arch, package manager, Node, Docker, OpenCode, credential <em>names</em>.</td><td>read-only</td></tr>
               <tr><td><code>plan_clone</code></td><td>Diff a target against the profile → install / present / manual steps.</td><td>read-only</td></tr>
               <tr><td><code>apply_clone</code></td><td>Clone the profile + install missing components; consent-gated.</td><td>mutating</td></tr>
@@ -167,7 +167,7 @@
               <tr><td><code>verify_clone</code></td><td>Re-check config, env template, and every component.</td><td>read-only</td></tr>
               <tr><td><code>list_required_credentials</code></td><td>Which credentials are missing and how to acquire each (value-blind).</td><td>read-only</td></tr>
               <tr><td><code>run_auth_flow</code></td><td>Emit-and-verify acquisition guidance for one credential.</td><td>read-only</td></tr>
-              <tr><td><code>bootstrap_host</code></td><td>One-call end-to-end provision: platform scan + upgrade plan, latest-stable OpenCode with recorded version, apply, verify; <code>help:true</code>.</td><td>mutating</td></tr>
+              <tr><td><code>provision_host</code></td><td>One-call end-to-end provision: platform scan + upgrade plan, latest-stable OpenCode with recorded version, apply, verify; <code>help:true</code>.</td><td>mutating</td></tr>
             </tbody>
           </table>
         </div>
@@ -202,10 +202,10 @@
         <pre><code>inspect_target  →  plan_clone  →  apply_clone { confirm: true }  →  verify_clone
 
 # or one call, end to end:
-bootstrap_host  { target: { mode: "ssh", host: "box", user: "me" }, confirm: true }
+provision_host  { target: { mode: "ssh", host: "box", user: "me" }, confirm: true }
 
 # see every parameter:
-bootstrap_host  { help: true }</code></pre>
+provision_host  { help: true }</code></pre>
       </section>
 
       <section id="security">

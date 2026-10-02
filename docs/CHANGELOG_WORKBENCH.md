@@ -3,6 +3,27 @@
 > All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-10-03] — v3.0.0
+
+### Breaking
+- Renamed the MCP tool `bootstrap_host` → **`provision_host`** for a clearer
+  standard provisioning verb (TDQS naming). Clients that call `bootstrap_host`
+  must update.
+- Renamed the MCP tool `get_workbench_info` → **`describe_workbench`** (the tool
+  describes the server; "describe" reads as its verb). Clients that call
+  `get_workbench_info` must update.
+
+### Added
+- (none)
+
+### Changed
+- TDQS description pass: behavioral transparency (what is overwritten/destroyed,
+  auth prerequisites, duration) and parameter semantics across the tool set;
+  boundary phrasing replaces "do not combine" prohibitions (disambiguation).
+- `get_component_status` was prototyped and removed as redundant with
+  `verify_clone`/`describe_workbench` (it lowered TDQS coherence). Tool count
+  remains 11.
+
 ## [2026-10-03] — v2.1.0
 
 ### Added
