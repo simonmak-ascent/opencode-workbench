@@ -1,0 +1,40 @@
+{
+  "name": "workbench-mcp",
+  "version": "1.0.0",
+  "description": "MCP server and connector that clones the OpenCode workbench configuration onto Linux machines (locally or over SSH).",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "workbench-mcp": "mcp-server/dist/index.js"
+  },
+  "main": "mcp-server/dist/index.js",
+  "files": [
+    "mcp-server/dist",
+    "mcp-server/README.md",
+    "opencode.json",
+    ".opencode/skills",
+    "vendor",
+    "connector.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p mcp-server/tsconfig.json",
+    "prepare": "npm run build",
+    "typecheck": "tsc -p mcp-server/tsconfig.json --noEmit",
+    "test": "vitest run --root mcp-server",
+    "test:coverage": "vitest run --root mcp-server --coverage"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  }
+}

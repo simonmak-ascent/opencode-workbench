@@ -1,13 +1,24 @@
 # SWAS Workbench (SWAS)
 
-**This is the workstation configuration — not an application.** It is the
-source of truth for the AliCloud SWAS build box (host name is operator-specific
-and lives outside this repo), which replaced the SWAS box as the cloud dev environment. There is no root `package.json`,
-no build system, no test framework, no linter. Do not run `npm install`,
-`npm test`, `npm run build`, or similar at repo root — they don't exist.
+**This is the workstation configuration plus the `workbench-mcp` clone tool.**
+It is the source of truth for the AliCloud SWAS build box (host name is
+operator-specific and lives outside this repo), and it doubles as an MCP server
+that clones this configuration onto other Linux machines (see `mcp-server/`).
+
+The root `package.json` exists **only** for `workbench-mcp` (thin launcher:
+`bin` → `mcp-server/dist/index.js`, `files`, `prepare` build). It is not an
+application: there is no app code outside `mcp-server/`. Builds and tests are
+offloaded to a compute box (`cs run "pnpm test"`) or CI — do not run them locally.
 
 ## Repo structure
 
+- `mcp-server/` — the `workbench-mcp` MCP server + connector (TypeScript).
+  Tools: `inspect_target`, `plan_clone`, `apply_clone`, `verify_clone`,
+  `install_component`, `workbench_info`. Local + SSH transports.
+  See `mcp-server/README.md` and `docs/architecture/clone-mcp.md`.
+- `connector.json` — connector manifest / registration snippet.
+- `plugins/` — the `memory.ts` + `doc-tools.ts` OpenCode plugins (portable,
+  `$HOME`-relative) referenced by `opencode.json`.
 - `.devcontainer/setup.sh` — the devcontainer/SWAS automation (legacy path).
   The SWAS box is provisioned by the equivalent manual steps documented here
   (opencode CLI, npm-global MCP servers, vendored MCPs, Docker containers,
@@ -30,6 +41,9 @@ cs host                                          # workbench (set once)
 cs run "pnpm check && pnpm test"                 # sync + run on SWAS
 cs provision                                     # sync + install deps on SWAS
 cs ssh "<cmd>"                                   # raw command on SWAS
+
+# MCP server (workbench-mcp) — verify on a compute box, never locally
+cs run "pnpm install && pnpm typecheck && pnpm test && pnpm build"
 
 # On the SWAS box itself
 opencode serve --port 4096 --hostname 0.0.0.0    # start the dev server
@@ -80,8 +94,9 @@ bash .devcontainer/start-browserless.sh
 ## CI
 
 `.github/workflows/validate-docs.yml` and `validate-inventory.yml` validate doc
-presence and inventory completeness only. No app-level CI — this repo has no
-application code.
+presence and inventory completeness. `secret-scan.yml` (gitleaks) gates every
+push/PR. `mcp-server.yml` builds, typechecks and tests the MCP server. There is
+no other app-level CI.
 
 ## External repos
 

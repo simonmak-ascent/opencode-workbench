@@ -1,6 +1,6 @@
 # SWAS Workbench
 
-A fully reproducible, self-documenting, and recoverable development workstation operating system for the SWAS box and OpenCode.
+A fully reproducible, self-documenting, and recoverable development workstation operating system for the SWAS box and OpenCode — plus **`workbench-mcp`**, an MCP server and connector that clones this installation onto other Linux machines (locally or over SSH).
 
 ## Purpose
 
@@ -12,8 +12,30 @@ This repository is the **single source of truth** for a complete cloud developme
 - Operational prompts (disaster recovery, backup, security)
 - Recovery procedures (playbook, checklist, gap analysis)
 - Security governance (secret management, threat model)
+- **`workbench-mcp`** — an MCP server that installs this profile on any Linux box
 
 **No important knowledge exists only in human memory.**
+
+## Clone this workbench to another Linux machine
+
+Register the MCP server with OpenCode:
+
+```json
+{
+  "mcp": {
+    "workbench": {
+      "type": "local",
+      "command": ["npx", "-y", "github:simonplmak-cloud/workbench"],
+      "enabled": true,
+      "timeout": 600000
+    }
+  }
+}
+```
+
+Then ask the agent to `inspect_target` → `plan_clone` → `apply_clone` → `verify_clone`, for `{ "mode": "local" }` or `{ "mode": "ssh", "host": "box", "user": "admin" }`. See [`mcp-server/README.md`](mcp-server/README.md) and [`docs/architecture/clone-mcp.md`](docs/architecture/clone-mcp.md).
+
+The connector never reads or transmits secret values; it writes an empty `~/.env.workbench` template for you to fill in.
 
 ## Quick Start
 
@@ -30,6 +52,13 @@ opencode
 
 ```
 workbench/
+├── mcp-server/                     # workbench-mcp: clone this profile onto Linux
+│   ├── src/                        # inspect / plan / apply / verify, local + SSH
+│   ├── test/                       # unit tests (vitest)
+│   └── README.md
+├── connector.json                  # MCP connector manifest / registration snippet
+├── plugins/                        # memory.ts + doc-tools.ts OpenCode plugins
+├── package.json                    # thin launcher for workbench-mcp (bin + prepare)
 ├── .devcontainer/                  # SWAS definition & bootstrap
 │   ├── devcontainer.json           # Container image, features, ports, remoteEnv
 │   ├── setup.sh                    # Post-create: installs opencode, MCPs, Docker infra
@@ -50,7 +79,7 @@ workbench/
 │   ├── security-model.md           # Security architecture & threat model
 │   ├── IMPROVEMENT_BACKLOG.md      # Tracked improvements and fixes
 │   ├── CHANGELOG_WORKBENCH.md      # Append-only change history
-│   ├── architecture/               # System documentation (10 docs)
+│   ├── architecture/               # System documentation (incl. clone-mcp.md)
 │   ├── recovery/                   # Recovery procedures (4 docs)
 │   ├── prompts/                    # Operational prompt library (9 prompts)
 │   └── backup-reports/             # Dated backup snapshots
@@ -60,8 +89,8 @@ workbench/
 │   ├── security/                   # Secret pattern scanner
 │   ├── recovery/                   # Recovery validation
 │   └── maintenance/                # Config sync, routine tasks
-├── .github/workflows/              # CI validation (docs, inventory, config)
-├── opencode.json                   # OpenCode configuration (19 MCP servers)
+├── .github/workflows/              # CI (docs, inventory, gitleaks, mcp-server)
+├── opencode.json                   # OpenCode configuration (MCP servers)
 ├── AGENTS.md                       # OpenCode agent instructions
 └── README.md                       # This file
 ```

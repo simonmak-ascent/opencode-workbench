@@ -1,0 +1,77 @@
+# workbench-mcp
+
+An MCP server **and connector** that clones the [OpenCode](../../README.md) workbench
+installation onto Linux machines — the machine it runs on (`local`) or a remote host
+over SSH (`ssh`). It reproduces the same settings: the profile `opencode.json`
+(rendered for the target's paths), agent skills, plugins, MCP servers, and optional
+Docker/tooling.
+
+## Quick start
+
+Register it with OpenCode (or any MCP client):
+
+```json
+{
+  "mcp": {
+    "workbench": {
+      "type": "local",
+      "command": ["npx", "-y", "github:simonplmak-cloud/workbench"],
+      "enabled": true,
+      "timeout": 600000
+    }
+  }
+}
+```
+
+From a checkout, use the local build instead:
+
+```json
+{ "command": ["node", "/path/to/workbench/mcp-server/dist/index.js"] }
+```
+
+## Tools
+
+| Tool | Purpose |
+|------|---------|
+| `workbench_info` | Repo, components by tier, optional MCP add-ons. |
+| `inspect_target` | OS/arch/pkg-manager/Node/Docker/OpenCode/home/npm paths. |
+| `plan_clone` | Diff the target against the profile → steps to install / present / manual. |
+| `apply_clone` | Clone the profile + install missing components + write rendered config. Idempotent. |
+| `install_component` | Install a single component by id. |
+| `verify_clone` | Re-check config, env template, and every component. |
+
+Every tool takes a `target`:
+
+```json
+{ "target": { "mode": "ssh", "host": "box", "user": "admin", "identityFile": "~/.ssh/id_ed25519" } }
+```
+
+`apply_clone` options: `components[]`, `workspace`, `profileUrl`, `skipRepo`, `dryRun`.
+
+## Components
+
+- **required** — `git`, `curl`, `node` (>=20), `opencode`
+- **core** — `pnpm`, `uv`, `gh`, `npm-mcps`, `vendored-mcps`, `skills`, `plugins`, `playwright-browsers`
+- **optional** — `github-mcp`, `docker`, `docker-containers`, `data-tools`
+
+Add-ons (esg-hub, humanity4ai, vdd, saga, stripe, alibaba, ms-365, google-workspace,
+surrealdb, designlang, difflens) are omitted from the rendered config unless you pass
+`enabledMcp`/run with the full profile.
+
+## Security
+
+The connector **never reads, transmits, or writes secret values**. It writes an empty
+`~/.env.workbench` template (mode `600`) listing the `{env:VAR}` names the rendered
+config references. Fill them on the target.
+
+## Development
+
+```bash
+pnpm install     # runs prepare -> tsc build
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+Builds/tests run in CI (`.github/workflows/mcp-server.yml`) and on a compute box
+(`cs run "pnpm test"`) — never on the local workstation.
