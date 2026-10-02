@@ -35,7 +35,7 @@ Notes:
 
 ## MCP Tool Surface
 
-The server exposes **9 tools**: `workbench_info`, `inspect_target`, `plan_clone`,
+The server exposes **9 tools**: `get_workbench_info`, `inspect_target`, `plan_clone`,
 `apply_clone`, `verify_clone`, `install_component`, `list_required_credentials`,
 `run_auth_flow`, `bootstrap_host`.
 

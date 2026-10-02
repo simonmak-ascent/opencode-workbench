@@ -3,6 +3,19 @@
 > All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-10-03] — v2.0.0
+
+### Breaking
+- Renamed the MCP tool `workbench_info` → `get_workbench_info` for a consistent
+  `verb_noun` naming pattern (TDQS coherence). Clients that call `workbench_info`
+  must update. All other tools are unchanged.
+
+### Changed
+- TDQS description pass across all 9 tools: explicit purpose, usage (use/do-not-use),
+  behavioral transparency, and sibling disambiguation.
+- Official MCP Registry: added `mcpName` to `package.json`, `server.json`
+  description within the 100-char limit, workflow uses `login github-oidc`.
+
 ## [2026-10-03] — VDD-ready, key-resilient profile
 
 ### Added

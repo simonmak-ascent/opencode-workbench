@@ -53,6 +53,11 @@ the registries my client reads, so I can discover and invoke it correctly.
 - Invent quality scores; only report measured values.
 - Commit registry API keys.
 
+> **Decision (2026-10-03):** the original boundary "never rename tools" was
+> superseded. TDQS flagged `workbench_info` as the lone non-`verb_noun` name, so it
+> was renamed to `get_workbench_info` as a **breaking change in v2.0.0** (recorded
+> in `docs/CHANGELOG_WORKBENCH.md`).
+
 ## Acceptance Criteria
 
 ### AC-1: TDQS lint clean [MUST]

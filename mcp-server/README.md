@@ -34,7 +34,7 @@ From a checkout, use the local build instead:
 
 | Tool | Purpose |
 |------|---------|
-| `workbench_info` | Repo, components by tier, optional MCP add-ons. |
+| `get_workbench_info` | Repo, components by tier, optional MCP add-ons. |
 | `inspect_target` | OS/arch/pkg-manager/Node/Docker/OpenCode/home/npm paths. |
 | `plan_clone` | Diff the target against the profile → steps to install / present / manual. |
 | `apply_clone` | Clone the profile + install missing components + write rendered config. Idempotent. |

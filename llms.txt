@@ -15,7 +15,7 @@
 
 ## MCP tools (9)
 
-- `workbench_info` — describe this server: repo, components by tier, optional MCP add-ons
+- `get_workbench_info` — describe this server: repo, components by tier, optional MCP add-ons
 - `inspect_target` — probe a machine: OS, arch, package manager, Node, Docker, OpenCode, home and npm-global paths
 - `plan_clone` — diff the target against the profile → install / present / manual steps (with command previews)
 - `apply_clone` — consent-gated: without `confirm:true` returns the plan; with it, clones + installs the profile (idempotent)
