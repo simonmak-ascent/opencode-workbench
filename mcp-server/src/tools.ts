@@ -230,7 +230,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Inspect a Linux target",
       description:
-        "Probe a target machine — this host or a remote one over SSH — and report its OS, architecture, package manager, Node/npm, OpenCode, Docker and per-tool detection flags. Read-only: runs a single shell probe and changes nothing. Requires SSH access for `mode: ssh`. Use it before plan_clone to understand what a clone would touch.",
+        "Probe a target machine — this host or a remote one over SSH — and report its OS, architecture, package manager, Node/npm, OpenCode, Docker and per-tool detection flags. Read-only: runs a single shell probe and changes nothing. Requires SSH access for `mode: ssh`. Use it before plan_clone to understand what a clone would touch. Report-only: it does not provision — for a one-call provision use bootstrap_host.",
       inputSchema: { target: targetShape },
       outputSchema: inspectOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -249,7 +249,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Plan a Workbench clone",
       description:
-        "Compare a target against the portable Workbench profile and return each component as 'install', 'present', or 'manual', plus the list to install. Read-only: it installs nothing; requires SSH access for `mode: ssh`. Restrict the plan with `components`. Use this before apply_clone; use verify_clone after to confirm the result.",
+        "Compare a target against the portable Workbench profile and return each component as 'install', 'present', or 'manual', plus the list to install. Read-only: it installs nothing; requires SSH access for `mode: ssh`. Restrict the plan with `components`. Use this before apply_clone; use verify_clone after to confirm the result. For granular control of an existing profile use this; for a first-time end-to-end provision use bootstrap_host instead.",
       inputSchema: { target: targetShape, ...optionsShape },
       outputSchema: planOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -268,7 +268,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Apply a Workbench clone",
       description:
-        "Clone the Workbench profile onto a target and install missing components: repo, OpenCode CLI, Node/pnpm, npm MCPs, vendored MCPs, research MCPs, skills, plugins, and optionally Docker. Idempotent — already-present components are skipped. Requires SSH access and write permission on the target; installs can take several minutes. Consent-gated: without `confirm:true` it returns a plan (components + privileged-command preview) and changes nothing. Writes a rendered opencode.json and an empty ~/.env.workbench template (mode 600), never secret values. Restrict with `components`, preview with `dryRun:true`, then confirm with verify_clone.",
+        "Clone the Workbench profile onto a target and install missing components: repo, OpenCode CLI, Node/pnpm, npm MCPs, vendored MCPs, research MCPs, skills, plugins, and optionally Docker. Idempotent — already-present components are skipped. Requires SSH access and write permission on the target; installs can take several minutes. Consent-gated: without `confirm:true` it returns a plan (components + privileged-command preview) and changes nothing. Writes a rendered opencode.json and an empty ~/.env.workbench template (mode 600), never secret values. Restrict with `components`, preview with `dryRun:true`, then confirm with verify_clone. Prefer bootstrap_host for a first-time provision; use apply_clone for a specific component subset or per-component control.",
       inputSchema: {
         target: targetShape,
         confirm: z.boolean().optional().describe("Set true to actually install. When absent, the call returns a plan and makes no changes."),
@@ -304,7 +304,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Verify a Workbench clone",
       description:
-        "Re-check a target after cloning: presence of opencode.json and ~/.env.workbench plus per-component detection, returning a missing list. Read-only; requires SSH access for `mode: ssh`. Restrict the check with `components`. Use this after apply_clone; for a pre-clone preview use plan_clone.",
+        "Re-check a target after cloning: presence of opencode.json and ~/.env.workbench plus per-component detection, returning a missing list. Read-only; requires SSH access for `mode: ssh`. Restrict the check with `components`. Use this after apply_clone; for a pre-clone preview use plan_clone. bootstrap_host runs this automatically, so call verify_clone directly only for a targeted re-check.",
       inputSchema: { target: targetShape, ...optionsShape },
       outputSchema: verifyOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -511,7 +511,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Bootstrap a bare Linux host",
       description:
-        "Provision a bare Linux target into a VDD-configured OpenCode workstation in one call: scan the platform from the kernel up, return a dry-run upgrade plan, install the latest stable OpenCode and record its version, apply the VDD profile config, and verify parity. Pass help:true for full parameter documentation without contacting the target. Consent-gated: without confirm:true it returns a plan (platform + upgrade commands + components) and changes nothing. Set upgrade:true (requires root/sudo) to execute the platform upgrade; default is plan-only. Never reads or transmits secret values.",
+        "Provision a bare Linux target into a VDD-configured OpenCode workstation in one call: scan the platform from the kernel up, return a dry-run upgrade plan, install the latest stable OpenCode and record its version, apply the VDD profile config, and verify parity. Pass help:true for full parameter documentation without contacting the target. Consent-gated: without confirm:true it returns a plan (platform + upgrade commands + components) and changes nothing. Set upgrade:true (requires root/sudo) to execute the platform upgrade; default is plan-only. Never reads or transmits secret values. Use bootstrap_host for a first-time, end-to-end provision of a bare host; for granular control of an already-provisioned profile call inspect_target, plan_clone, apply_clone or verify_clone individually instead — bootstrap_host composes them, so do not call both for the same change.",
       inputSchema: {
         target: targetShape.optional(),
         help: z.boolean().optional().describe("Return parameter documentation and skip all target access."),

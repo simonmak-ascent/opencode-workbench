@@ -43,6 +43,8 @@ configuration, on localhost or a remote SSH target.
 | I-003 | Latest stable OpenCode installed (version recorded) | Target host | Version freshness at run + captured pin record |
 | I-004 | VDD MCP/skill/`AGENTS.md`/config applied on local **and** remote | Operator | Config-parity/drift check clean after apply |
 | I-005 | Self-describing interface (`-help`) | Operator | Success reached without reading source |
+| I-006 | Every MCP tool passes TDQS with no defects (target 5/5; floor tier A) | Operator / agent consumers | `mcp-tdqs lint` 0 errors; `mcp-tdqs score` tier + score |
+| I-007 | Server discoverable in the top free MCP registries | Operator | Listed/live in Official MCP Registry + Glama + Smithery + PulseMCP + mcp.so |
 
 ## Stakeholder Map
 
