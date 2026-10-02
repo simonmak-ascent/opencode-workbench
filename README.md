@@ -222,3 +222,9 @@ use library /simonplmak-cloud/opencode-workbench for API and docs
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+---
+
+A tool by [Simon Mak](https://github.com/simonplmak-cloud).
+
+If this saves you time, a ⭐ on GitHub helps others find it.
