@@ -45,6 +45,7 @@ mcp-server/src/
 | `verify_clone` | Re-check config, env template, and every component. |
 | `list_required_credentials` | Value-blind: which keys are missing and how to acquire each. |
 | `run_auth_flow` | Emit-and-verify acquisition guidance for one credential. |
+| `bootstrap_host` | One-call provisioning: kernel-up platform scan + dry-run upgrade plan, latest-stable OpenCode with recorded version, apply + verify; `help:true` documents every parameter without touching the target. Consent-gated. |
 
 ### Connector model
 

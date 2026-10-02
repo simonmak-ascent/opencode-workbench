@@ -1,21 +1,29 @@
 # OpenCode Workbench (opencode-workbench)
 
-> Open-source (MIT) MCP server + connector that clones the OpenCode workbench installation onto Linux machines — locally or over SSH — reproducing the same OpenCode config, MCP servers, agent skills, plugins, and Docker tooling. Works with Claude Code, Cursor, OpenCode, VS Code and other MCP clients.
+> Open-source (MIT) MCP server + connector that provisions and clones the OpenCode
+> workbench onto Linux machines — locally or over SSH. Nine tools cover a
+> kernel-up platform scan, a one-call bootstrap, an idempotent, consent-gated
+> clone, and value-blind credential guidance. No secret values are ever read,
+> transmitted, or written.
 
 ## Connect
 
-- Local stdio server (no API key): `npx -y github:simonmak-ascent/opencode-workbench`
-- Glama listing: https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench
+- Local stdio server: `npx -y @simonmak-ascent/opencode-workbench`
+- Hosted (Streamable HTTP): `https://opencode-workbench.simonmak.com/mcp`
+- Glama: https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench
 - Context7 library ID: `/simonmak-ascent/opencode-workbench`
 
-## MCP tools (6)
+## MCP tools (9)
 
-- `workbench_info`: describe this server — repo, components by tier, optional MCP add-ons
-- `inspect_target`: probe a machine — OS, arch, package manager, Node, Docker, OpenCode, home and npm-global paths
-- `plan_clone`: diff the target against the profile → install / present / manual steps
-- `apply_clone`: clone the profile + install missing components + write rendered config (idempotent)
-- `verify_clone`: re-check config, env template, and every component's detection
-- `install_component`: install a single component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`)
+- `workbench_info` — describe this server: repo, components by tier, optional MCP add-ons
+- `inspect_target` — probe a machine: OS, arch, package manager, Node, Docker, OpenCode, home and npm-global paths
+- `plan_clone` — diff the target against the profile → install / present / manual steps (with command previews)
+- `apply_clone` — consent-gated: without `confirm:true` returns the plan; with it, clones + installs the profile (idempotent)
+- `verify_clone` — re-check config, env template, and every component's detection
+- `install_component` — install a single component by id (also `confirm`-gated)
+- `list_required_credentials` — value-blind: which credentials are missing and how to acquire each
+- `run_auth_flow` — emit-and-verify acquisition guidance for one credential
+- `bootstrap_host` — one-call provisioning: kernel-up platform scan + dry-run upgrade plan, latest-stable OpenCode with recorded version, apply + verify; `help:true` documents every parameter without touching the target
 
 Every tool takes a `target`:
 
@@ -23,10 +31,20 @@ Every tool takes a `target`:
 { "target": { "mode": "ssh", "host": "<your-box>", "user": "<your-user>", "identityFile": "~/.ssh/id_ed25519" } }
 ```
 
-`apply_clone` options: `components[]`, `workspace`, `profileUrl`, `skipRepo`, `dryRun`.
+`apply_clone` options: `components[]`, `workspace`, `profileUrl`, `skipRepo`, `dryRun`, `confirm`.
+`bootstrap_host` options: `help`, `confirm`, `upgrade`, `assumeYes`, `opencodeVersion`, `dryRun`.
 
 ## Docs
 
 - [README and quick start](https://github.com/simonmak-ascent/opencode-workbench#readme)
 - [MCP server README](https://github.com/simonmak-ascent/opencode-workbench/tree/main/mcp-server)
 - [Clone architecture](https://github.com/simonmak-ascent/opencode-workbench/blob/main/docs/architecture/clone-mcp.md)
+- [Registry listing runbook](https://github.com/simonmak-ascent/opencode-workbench/blob/main/docs/publishing/registry-listing.md)
+- [VDD vision](https://github.com/simonmak-ascent/opencode-workbench/blob/main/vdd/vision.md)
+- [Constitution](https://github.com/simonmak-ascent/opencode-workbench/blob/main/constitution.md)
+
+## Quality
+
+- Tool descriptions target the Tool Definition Quality Score (TDQS); `mcp-tdqs lint` reports 0 errors.
+- CI: `mcp-server.yml` (build/typecheck/test), `secret-scan.yml` (gitleaks),
+  `validate-docs.yml`, `validate-inventory.yml` (config/doc parity).

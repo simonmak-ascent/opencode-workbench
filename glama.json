@@ -2,7 +2,7 @@
   "$schema": "https://glama.ai/mcp/schemas/server.json",
   "maintainers": ["simonmak-ascent"],
   "name": "opencode-workbench",
-  "description": "One-command reproducibility for your AI-agent workstation. Six tools let an agent inspect, plan, apply, and verify an idempotent clone of the full OpenCode stack — the OpenCode CLI, 29 MCP servers, agent skills, plugins, and Docker infrastructure — onto any Linux machine, over SSH or locally, with zero secrets ever written.",
+  "description": "One-command reproducibility for your AI-agent workstation. Nine tools let an agent inspect, plan, apply, and verify an idempotent, consent-gated clone of the full OpenCode stack — the OpenCode CLI, 35 MCP servers, agent skills, plugins, and Docker infrastructure — onto any Linux machine, over SSH or locally, with zero secrets ever written. bootstrap_host does it end-to-end, including a kernel-up platform scan and a recorded OpenCode version pin.",
   "repository": "https://github.com/simonmak-ascent/opencode-workbench",
   "license": "MIT",
   "runtime": "node",

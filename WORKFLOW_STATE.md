@@ -1,76 +1,72 @@
 # Workflow State
 
-> Auto-generated and auto-updated. Read FIRST on every session start.
-> Last updated: 2026-07-27T00:00:00Z
+> Auto-updated. Read FIRST on every session start.
+> Last updated: 2026-10-03
 
 ## Current Status
 
 | Item | Status |
 |------|--------|
-| Phase #0 — Verify Docs | **COMPLETED** 2026-07-27 |
-| Phase #1 — Research | **COMPLETED** 2026-07-27 |
-| Phase #2 — Architecture | **COMPLETED** 2026-07-27 |
-| Phase #3 — Implementation | **IN PROGRESS** 2026-07-27 |
+| Phase #0 — Verify Docs | **COMPLETED** |
+| Phase #1 — Research | **COMPLETED** |
+| Phase #2 — Architecture | **COMPLETED** |
+| Phase #3 — Implementation | **COMPLETED** (clone MCP + bootstrap_host shipped) |
+| VDD chain (Phase 0–8) | **COMPLETED** — `constitution.md` + `vdd/` (gates G1–G7 PASS) |
+| Distribution | In progress — npm published; Vercel live; registry publish prepared |
 
 ## Last Checkpoint
 
 ```
-Phase: #3 — Implementation
-Status: Infrastructure + config complete; app/MCP/scraper source pending
-Timestamp: 2026-07-27
-Correlation ID: workflow-init-2026-07-27
+Phase: #3 — Implementation (complete)
+Status: opencode-workbench v1.1.2 shipped; VDD chain complete; docs refreshed
+Timestamp: 2026-10-03
 ```
 
-## Track Status
+## Tracks
 
-### AI-Enabled Web App
-| Step | Agent | Status | Output |
-|------|-------|--------|--------|
-| 1 | ResearchAgent | NOT STARTED | — |
-| 2 | DesignAgent | NOT STARTED | — |
-| 3 | PromptAgent | NOT STARTED | — |
-| 4 | ConfigAgent | NOT STARTED | — |
-| 5 | ToolingAgent | NOT STARTED | — |
-| 6 | BuildAgent | NOT STARTED | — |
-| 7 | TestAgent | NOT STARTED | — |
-| 8 | DeployAgent | NOT STARTED | — |
+### opencode-workbench (clone MCP) — DELIVERED
+| Item | Status | Output |
+|------|--------|--------|
+| Clone engine (inspect/plan/apply/verify) | DONE | `mcp-server/src/clone.ts` |
+| Consent gate + value-blind credentials | DONE | `apply_clone`/`install_component` `confirm:true`; `list_required_credentials`, `run_auth_flow` |
+| One-call provisioning | DONE | `bootstrap_host` (platform scan + upgrade plan + OpenCode pin + verify + `help`) |
+| Tests + CI | DONE | 49 tests; `mcp-server.yml` |
 
-### MCP Server / Agent Skills
-| Step | Agent | Status | Output |
-|------|-------|--------|--------|
-| 1 | SkillAuthorAgent | NOT STARTED | — |
-| 2 | SkillValidatorAgent | NOT STARTED | — |
-| 3 | SkillPublisherAgent | NOT STARTED | — |
+### VDD chain — DELIVERED
+| Phase | Artifact |
+|-------|----------|
+| 0 Init | `constitution.md` |
+| 1 Vision | `vdd/vision.md` (V-001; I-001…I-007) |
+| 2 Strategy | `vdd/strategy.md` (S-002) |
+| 3 Tactics | `vdd/tactics.md` (T-003; A-001…A-011) |
+| 4–6 Spec/Plan/Tasks | `vdd/specs/bootstrap-bare-host/`, `vdd/specs/mcp-quality-and-registry/` |
+| 7 Implement | `mcp-server/src/{platform,bootstrap,version}.ts` |
+| 8 Validate | `vdd/impact-report.generated.md`, `vdd/gates/G1–G7.md` |
 
-### Web Scraper
-| Step | Agent | Status | Output |
-|------|-------|--------|--------|
-| 1 | ScrapeConfigAgent | NOT STARTED | — |
-| 2 | ScrapeExecutorAgent | NOT STARTED | — |
-| 3 | ScrapeStorageAgent | NOT STARTED | — |
-| 4 | ScrapeAlertAgent | NOT STARTED | — |
+### Registry distribution
+| Registry | Status |
+|----------|--------|
+| npm | ✅ `@simonmak-ascent/opencode-workbench@1.1.2` |
+| Vercel (hosted connector) | ✅ live at `https://opencode-workbench.simonmak.com/mcp` |
+| Official MCP Registry | manifest ready (`server.json`) + OIDC workflow |
+| Glama | ✅ claim file live |
+| Smithery / PulseMCP / mcp.so | prepared (`docs/publishing/registry-listing.md`) |
 
 ## Infrastructure Status
 
-| Component | Status | Verified |
-|-----------|--------|----------|
-| Docker (pg-memory) | Running | 2026-07-27 |
-| Docker (browserless) | Running | 2026-07-27 |
-| MCP servers (18 enabled) | Connected | 2026-07-27 |
-| SurrealDB | Not yet provisioned | — |
-| Vercel project | Not yet created | — |
-| Sentry project | Not yet created | — |
+| Component | Status |
+|-----------|--------|
+| Docker (pg-memory, browserless) | Running (build box) |
+| MCP servers | 35 configured, 33 enabled (2 disabled: `google-search`, `google-workspace`) |
+| Vercel project | `opencode-workbench` (AP Team) — production live |
+| npm package | `@simonmak-ascent/opencode-workbench@1.1.2` |
 
 ## Instructions
 
 ### On Session Start
-1. Read this file FIRST
-2. Check current phase and last checkpoint
-3. Resume from the first incomplete agent
-4. Update this file after each agent completion
+1. Read this file FIRST.
+2. Check phase/tracks above.
+3. For repo facts, treat `opencode.json` and `package.json` as source of truth.
 
-### On Agent Completion
-Update the corresponding track status above and move to next checkpoint.
-
-### On Infrastructure Change
-Update the Infrastructure Status table above.
+### On Change
+Update the relevant track and `docs/CHANGELOG_WORKBENCH.md`.
