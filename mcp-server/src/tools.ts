@@ -13,14 +13,16 @@ import { COMPONENTS, componentById, defaultComponentIds } from "./components.js"
 import { OPTIONAL_MCP_IDS } from "./render.js";
 import { REPO_URL, REPO_WEB, packageRoot } from "./profile.js";
 
-const targetShape = z.object({
-  mode: z.enum(["local", "ssh"]).describe("Run on this machine (local) or a remote host (ssh)."),
-  host: z.string().optional().describe("SSH host (required when mode=ssh)."),
-  user: z.string().optional().describe("SSH user (defaults to ssh config / current user)."),
-  port: z.number().int().positive().optional().describe("SSH port."),
-  identityFile: z.string().optional().describe("SSH private key path."),
-  cwd: z.string().optional().describe("Working directory on the target."),
-});
+const targetShape = z
+  .object({
+    mode: z.enum(["local", "ssh"]).describe("Run on this machine (local) or a remote host (ssh)."),
+    host: z.string().optional().describe("SSH host (required when mode=ssh)."),
+    user: z.string().optional().describe("SSH user (defaults to ssh config / current user)."),
+    port: z.number().int().positive().optional().describe("SSH port."),
+    identityFile: z.string().optional().describe("SSH private key path."),
+    cwd: z.string().optional().describe("Working directory on the target."),
+  })
+  .describe("The machine to operate on: this host (local) or a remote host over SSH (ssh).");
 
 type TargetArg = z.infer<typeof targetShape>;
 
@@ -75,6 +77,7 @@ export function registerTools(server: McpServer): void {
       title: "Workbench server info",
       description: "Describe this MCP server: repo, available components, tiers and optional MCP add-ons.",
       inputSchema: {},
+      annotations: { readOnlyHint: true, idempotentHint: true },
     },
     async () =>
       json({
@@ -100,6 +103,7 @@ export function registerTools(server: McpServer): void {
       description:
         "Probe a machine (local or over SSH): OS, arch, package manager, Node, Docker, OpenCode, home and npm-global paths.",
       inputSchema: { target: targetShape },
+      annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
     },
     async ({ target }: { target: TargetArg }) => {
       try {
@@ -117,6 +121,7 @@ export function registerTools(server: McpServer): void {
       description:
         "Compare the target against the portable Workbench profile and list the components to install, already present, or requiring manual steps.",
       inputSchema: { target: targetShape, ...optionsShape },
+      annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
     },
     async ({ target, ...opts }: { target: TargetArg } & Partial<CloneOptions>) => {
       try {
@@ -134,6 +139,7 @@ export function registerTools(server: McpServer): void {
       description:
         "Clone the Workbench profile onto the target and install missing components: repo, OpenCode CLI, Node/pnpm, npm MCPs, vendored MCPs, skills, plugins, and (optionally) Docker. Writes a rendered opencode.json and an empty ~/.env.workbench template. Idempotent.",
       inputSchema: { target: targetShape, ...optionsShape },
+      annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: true },
     },
     async ({ target, ...opts }: { target: TargetArg } & Partial<CloneOptions>) => {
       try {
@@ -150,6 +156,7 @@ export function registerTools(server: McpServer): void {
       title: "Verify a Workbench clone",
       description: "Re-check the target: config file, env template, and every component's detection.",
       inputSchema: { target: targetShape, ...optionsShape },
+      annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
     },
     async ({ target, ...opts }: { target: TargetArg } & Partial<CloneOptions>) => {
       try {
@@ -168,8 +175,9 @@ export function registerTools(server: McpServer): void {
       inputSchema: {
         target: targetShape,
         component: z.string().describe("Component id from workbench_info."),
-        workspace: z.string().optional(),
+        workspace: z.string().optional().describe("Target directory for the profile repo."),
       },
+      annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: true },
     },
     async ({ target, component, workspace }: { target: TargetArg; component: string; workspace?: string }) => {
       try {
