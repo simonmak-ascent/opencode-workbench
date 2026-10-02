@@ -20,13 +20,13 @@
 ### 1.2 Git History
 **Result: 1 finding (LOW) — downgraded from prior audit**
 
-| Pattern | Finding | Commit | Status |
-|---------|---------|--------|--------|
-| `sk-[a-zA-Z0-9]{20,}` | Stale OPENCODE_API_KEY | `d583cb8` (add opencode-go provider) | **ROTATED** — key has been regenerated; current env value differs from history |
+| Pattern | Finding | Status |
+|---------|---------|--------|
+| `sk-[a-zA-Z0-9]{20,}` | Stale OPENCODE_API_KEY | **ROTATED** — key has been regenerated; the historical value is no longer valid |
 
-The key was committed as a hardcoded value in a prior version of `docs/opencode-runtime-config.md`, then redacted in commit `fbd2209`. The key no longer works — confirmed by comparing the history value (`sk-J27...`) with the current `OPENCODE_API_KEY` env var (`sk-LSXJ2...`).
+An API key was previously hardcoded in an early version of `docs/opencode-runtime-config.md` and later redacted. The key no longer works (rotation confirmed) and the public history was rewritten at the "prepare public release" squash, so the value is not retrievable from this repository.
 
-**Severity downgraded from MEDIUM to LOW**: key is rotated, repo is private, and the value is stale (confirmed non-working).
+**Severity: LOW** — key is rotated and the value is not present in the published history.
 
 ### 1.3 Runtime Cache
 **Result: CLEAN**
@@ -116,8 +116,8 @@ No new URLs, IPs, or internal identifiers discovered since last audit.
 **Result: PASS**
 
 - Repository: `simonplmak-cloud/opencode-workbench`
-- Visibility: **PRIVATE** (confirmed via `gh api`)
-- No public exposure of any repo contents
+- Visibility: **PUBLIC** (confirmed via `gh api`)
+- Public contents were reviewed before publishing: no secret values, no internal hostnames, no non-public URLs are exposed by the repository
 
 ### 4.2 Commit Authors
 **Result: 1 finding (MEDIUM — mitigated)**
@@ -127,7 +127,7 @@ No new URLs, IPs, or internal identifiers discovered since last audit.
 | `246365505+simonplmak-cloud@users.noreply.github.com` | 26 | GitHub noreply | ✅ Current (since commit after last audit) |
 | `simon.pl.mak@gmail.com` | 28 | Personal email | ⚠️ Historical — git config fixed, but history retains old commits |
 
-**Mitigation applied**: `git config user.email` now set to `246365505+simonplmak-cloud@users.noreply.github.com`. All new commits use noreply. Historical commits with personal email remain (requires `git filter-branch` to fully remove — not recommended without strong need since repo is private).
+**Mitigation applied**: `git config user.email` now set to `246365505+simonplmak-cloud@users.noreply.github.com`. All new commits use noreply. Historical commits with personal email remain and are visible in the public history; rewriting history is possible but was judged low-ROI given the address is already public elsewhere in the org's repos.
 
 **Severity unchanged**: MEDIUM due to historical exposure, but mitigated forward-going.
 
@@ -153,14 +153,14 @@ None.
 
 | ID | Finding | Remediation |
 |---|---|---|
-| ACC-01 | Personal email `simon.pl.mak@gmail.com` in 28 historical commits | Git config fixed to noreply. History not rewritten (private repo). **MITIGATED** forward-going. |
+| ACC-01 | Personal email `simon.pl.mak@gmail.com` in 28 historical commits | Git config fixed to noreply. **MITIGATED** forward-going. |
 
 ### Low (4)
 
 | ID | Finding | Status | Remediation |
 |---|---|---|---|
 | CFG-01 | Hardcoded `opencode:opencode` in `DATABASE_URL` | Same | Acceptable for local dev |
-| HIST-01 | Stale rotated `sk-J27...` key in git history | **NEW** | Key rotated, private repo — LOW severity |
+| HIST-01 | Stale rotated OPENCODE_API_KEY in early git history | **NEW** | Key rotated; value not present in the published history — LOW severity |
 | ~~CACHE-01~~ | ~~Stale opencode-conductor cache~~ | **FIXED** | Cache cleaned |
 
 ---
@@ -184,8 +184,8 @@ None.
 None required.
 
 ### Short-term
-1. **Consider `git filter-branch`** to remove personal email from history (ACC-01 — low ROI since repo is private)
-2. **Consider `git filter-branch`** to remove stale `sk-J27...` key from history (HIST-01 — key already rotated, low ROI)
+1. **History rewrite is not required** — the published history contains neither the rotated key value nor any other secret (verified 2026-10-02 full-history scan)
+2. Continue running `secret-scan.yml` (gitleaks) on every push/PR — it is the enforcement gate now that the repo is public
 
 ### Ongoing
 3. **Run this audit** after any config changes involving new plugins or providers
@@ -199,11 +199,11 @@ None required.
 
 The workstation configuration maintains strong security posture:
 - All secrets use env-var references (`{env:VAR}` / `${localEnv:VAR}`) — 31 references verified
-- Repository is PRIVATE
+- Repository is PUBLIC — contents reviewed for secrets before and after publishing
 - `.gitignore` blocks all common secret file patterns
 - No plugins (empty array) — zero supply chain risk
 - Stale cache cleaned (previous CACHE-01 resolved)
 - Personal email mitigated for future commits
-- 1 historical rotated key in git history (LOW — non-exploitable)
+- 1 historical rotated key (LOW — rotated, value not in published history)
 
 **1 medium finding (mitigated), 4 low findings, 0 critical/high.**

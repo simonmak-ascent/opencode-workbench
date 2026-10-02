@@ -15,7 +15,7 @@
 - Runtime-config docs: "all enabled" → "18 enabled, 1 disabled" (saga)
 
 ### Known Issues
-- OPENCODE_API_KEY (`sk-J27...`) in git history — key already rotated, non-exploitable
+- OPENCODE_API_KEY in early git history — key already rotated, non-exploitable
 - DB_PATH missing at runtime (present in devcontainer.json but not in current shell)
 - Perplexity MCP: 401 — awaits codespace rebuild for `pplx-` key
 - Vercel MCP: OAuth not completed

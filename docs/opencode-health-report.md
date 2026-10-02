@@ -68,7 +68,7 @@ This is consistent across all runs. The hang scenario described by the user woul
 |---|---|---|---|
 | 17 uninstalled plugins cause npm resolution hang | **HIGH** | Likely (intermittent, network-dependent) | OpenCode hangs at startup indefinitely |
 | MCP server startup hang (no timeout) | **HIGH** | Moderate (figma always fails, saga has missing env) | Cold start hangs waiting for MCP child process |
-| Hardcoded API key in auth.json | **CRITICAL** | Confirmed | Key `sk-J27PV...` exposed in `/home/node/.local/share/opencode/auth.json` |
+| Hardcoded API key in auth.json | **CRITICAL** | Confirmed | API key exposed in `/home/node/.local/share/opencode/auth.json` |
 | `DB_PATH` missing for saga MCP | **MEDIUM** | Certain | saga MCP fails to start or starts with undefined behavior |
 | `WAKATIME_API_KEY` missing | **LOW** | Certain | wakatime plugin non-functional |
 | 19 MCP servers (14 local + 5 remote) | **MEDIUM** | Certain | Heavy cold-start overhead, 24 subprocesses launched |
@@ -77,7 +77,7 @@ This is consistent across all runs. The hang scenario described by the user woul
 
 ### Security Finding
 
-`/home/node/.local/share/opencode/auth.json` contains a hardcoded `opencode-go` API key. This provider is not defined in the config file but exists in auth state from prior sessions. The key `sk-J27PV...` should be rotated immediately.
+`/home/node/.local/share/opencode/auth.json` contains a hardcoded `opencode-go` API key. This provider is not defined in the config file but exists in auth state from prior sessions. The key has since been rotated.
 
 ---
 
