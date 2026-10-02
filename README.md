@@ -1,6 +1,12 @@
 # OpenCode Workbench
 
-A fully reproducible, self-documenting, and recoverable development workstation operating system for the build box and OpenCode — plus **`opencode-workbench`**, an MCP server and connector that clones this installation onto other Linux machines (locally or over SSH).
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Secret Scan](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/secret-scan.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/secret-scan.yml)
+[![MCP Server](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/mcp-server.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/mcp-server.yml)
+[![Validate Documentation](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/validate-docs.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/validate-docs.yml)
+[![MCP Tool Definition Quality](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/tdqs.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/tdqs.yml)
+
+> **A reproducible, self-documenting, and recoverable OpenCode development workstation** — configuration, agent skills, MCP stack, and an MCP server that clones the entire setup onto any Linux machine (locally or over SSH).
 
 ## Purpose
 
@@ -51,7 +57,7 @@ opencode
 ## Architecture
 
 ```
-workbench/
+opencode-workbench/
 ├── mcp-server/                     # opencode-workbench: clone this profile onto Linux
 │   ├── src/                        # inspect / plan / apply / verify, local + SSH
 │   ├── test/                       # unit tests (vitest)
@@ -176,7 +182,7 @@ All secrets stored in the build box Secrets. Never in repository files.
 | 5 | `BROWSERLESS_TOKEN` | Browserless MCP + container |
 | 6 | `FIGMA_TOKEN` | Figma MCP |
 | 7 | `SENTRY_AUTH_TOKEN` | Sentry MCP |
-| 9 | `KIMI_API_KEY` | Alternate provider (legacy) |
+| 8 | `KIMI_API_KEY` | Alternate provider (legacy) |
 
 See: [`docs/architecture/secrets.md`](docs/architecture/secrets.md)
 
@@ -204,3 +210,15 @@ See: [`docs/architecture/secrets.md`](docs/architecture/secrets.md)
 ## Recovery Score: 92/100
 
 Validated disaster recovery within < 10 minutes using repository + build box Secrets alone.
+
+## Use with Context7
+
+Up-to-date OpenCode Workbench documentation is indexed on [Context7](https://context7.com/simonplmak-cloud/opencode-workbench), so coding agents can pull it into context on demand. With the Context7 MCP server or `ctx7` CLI installed, name the library in your prompt:
+
+```text
+use library /simonplmak-cloud/opencode-workbench for API and docs
+```
+
+## License
+
+MIT — see [LICENSE](LICENSE).
