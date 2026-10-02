@@ -37,7 +37,7 @@ offloaded to a compute box (`cs run "pnpm test"`) or CI — do not run them loca
 
 ```bash
 # Local thin client → build box
-cs host                                          # workbench (set once)
+cs host                                          # set the active box once
 cs run "pnpm typecheck && pnpm test"             # sync + run on the build box (no `check` script)
 cs provision                                     # sync + install deps on the build box
 cs ssh "<cmd>"                                   # raw command on the build box

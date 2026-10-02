@@ -43,7 +43,7 @@ From a checkout, use the local build instead:
 Every tool takes a `target`:
 
 ```json
-{ "target": { "mode": "ssh", "host": "box", "user": "admin", "identityFile": "~/.ssh/id_ed25519" } }
+{ "target": { "mode": "ssh", "host": "<your-box>", "user": "<your-user>", "identityFile": "~/.ssh/id_ed25519" } }
 ```
 
 `apply_clone` options: `components[]`, `workspace`, `profileUrl`, `skipRepo`, `dryRun`.

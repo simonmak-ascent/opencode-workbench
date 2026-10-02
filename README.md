@@ -33,7 +33,7 @@ Register the MCP server with OpenCode:
 }
 ```
 
-Then ask the agent to `inspect_target` → `plan_clone` → `apply_clone` → `verify_clone`, for `{ "mode": "local" }` or `{ "mode": "ssh", "host": "box", "user": "admin" }`. See [`mcp-server/README.md`](mcp-server/README.md) and [`docs/architecture/clone-mcp.md`](docs/architecture/clone-mcp.md).
+Then ask the agent to `inspect_target` → `plan_clone` → `apply_clone` → `verify_clone`, for `{ "mode": "local" }` or `{ "mode": "ssh", "host": "<your-box>", "user": "<your-user>" }`. See [`mcp-server/README.md`](mcp-server/README.md) and [`docs/architecture/clone-mcp.md`](docs/architecture/clone-mcp.md).
 
 The connector never reads or transmits secret values; it writes an empty `~/.env.workbench` template for you to fill in.
 

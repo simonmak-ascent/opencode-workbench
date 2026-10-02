@@ -55,7 +55,7 @@
 Secrets live in `~/.env.workbench` on the build box (sourced by `.bashrc`), never
 in the repository:
 
-1. SSH to the build box (`cs ssh` / `ssh workbench`)
+1. SSH to the build box (`cs ssh` / `ssh <build-box>`)
 2. Populate `~/.env.workbench` with each "Required" secret from the table above
    (`VAR="value"` lines, `chmod 600`)
 3. The local `~/.env.opencode` is the source for values — transfer with
