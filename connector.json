@@ -3,7 +3,7 @@
   "name": "opencode-workbench",
   "title": "OpenCode Workbench",
   "description": "Clones the OpenCode workbench installation onto Linux machines, locally or over SSH.",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "transport": {
     "type": "stdio",
     "command": "npx",

@@ -1,7 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "OpenCode Workbench (opencode-workbench)",
-  "description": "Provisions and clones the OpenCode workbench onto Linux machines — locally or over SSH — reproducing the config, MCP servers (35), agent skills (45), plugins and Docker tooling. Exposes 9 tools over stdio, including bootstrap_host for one-call provisioning.",
+  "description": "Provisions and clones the OpenCode workbench onto Linux machines — locally or over SSH — reproducing the config, MCP servers (35), agent skills (45), plugins and Docker tooling. Exposes 11 tools over stdio, including bootstrap_host for one-call provisioning and remove_component/update_component for the lifecycle.",
   "folders": [
     "mcp-server",
     "docs",

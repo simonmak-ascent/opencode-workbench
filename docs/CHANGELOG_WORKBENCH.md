@@ -3,6 +3,24 @@
 > All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-10-03] — v2.1.0
+
+### Added
+- **Web introduction page** at `/` on the hosted connector — `public/index.html`
+  (self-contained, responsive, no build step) plus `public/favicon.svg`. Fixes
+  the 404 at `https://opencode-workbench.simonmak.com/`.
+- **`remove_component`** and **`update_component`** MCP tools (consent-gated,
+  value-blind, idempotent) — completing the install → update → remove lifecycle
+  (raises TDQS server coherence "completeness").
+
+### Changed
+- TDQS description pass across tools (behavioral transparency for the mutating
+  tools: exactly what is overwritten/destroyed, auth prerequisites, duration).
+- Tool count 9 → 11 across `README`, `AGENTS.md`, `mcp-server/README.md`,
+  `docs/architecture/clone-mcp.md`, `docs/architecture/opencode-runtime-snapshot.md`,
+  `llms.txt`, `context7.json`, `glama.json`.
+- `vercel.json`: `GET /` rewrite + `X-Content-Type-Options` / `Referrer-Policy` headers.
+
 ## [2026-10-03] — v2.0.0
 
 ### Breaking
