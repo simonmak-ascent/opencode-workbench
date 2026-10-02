@@ -5,6 +5,7 @@
     }
   },
   "rewrites": [
+    { "source": "/.well-known/glama.json", "destination": "/api/glama" },
     { "source": "/mcp", "destination": "/api/mcp" }
   ]
 }
