@@ -6,7 +6,7 @@ Changes to the profile and to the MCP server are reviewed the same way.
 ## Setup
 
 ```bash
-git clone https://github.com/simonplmak-cloud/workbench.git
+git clone https://github.com/simonplmak-cloud/opencode-workbench.git
 cd workbench
 ```
 

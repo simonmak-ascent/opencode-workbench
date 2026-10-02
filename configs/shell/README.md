@@ -1,7 +1,7 @@
 # Shell Configuration
 
 > Purpose: Shell aliases, functions, and environment customizations for the workstation.
-> Source: Sourced by ~/.bashrc during SWAS startup.
+> Source: Sourced by ~/.bashrc at box startup.
 
 ## Files
 

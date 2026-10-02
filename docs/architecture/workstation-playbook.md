@@ -41,7 +41,7 @@ opencode mcp auth vercel
 2. Add to `opencode.json` under `mcp` with proper config
 3. If it needs secrets, add env var to `devcontainer.json` `remoteEnv`
 4. Update `docs/mcp-inventory.md` and `docs/software-inventory.md`
-5. Update `docs/SWAS-secrets.md` if new secret needed
+5. Update `docs/architecture/secrets.md` if new secret needed
 6. Commit all changes
 
 ### Adding a New Skill
@@ -63,14 +63,14 @@ opencode mcp auth vercel
 | Design-system CORS | Needs `STORYBOOK_URL` env pointing to a live Storybook instance |
 | Postgres connection | Verify Docker container: `docker ps \| grep pg-memory` |
 
-### Before SWAS Rebuild
+### Before build box rebuild
 
 1. Commit and push all changes
 2. Verify `devcontainer.json` has all needed `remoteEnv` entries
-3. Verify all SWAS secrets exist in GitHub
+3. Verify all build box secrets exist in GitHub
 4. Run through the recovery checklist in `docs/recovery-gap-analysis.md`
 
-### After SWAS Rebuild
+### After build box rebuild
 
 1. Wait for `postCreateCommand` (setup.sh) to complete
 2. Verify Docker containers: `docker ps`

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Workbench setup: installs opencode + MCP stack inside the SWAS.
+# Workbench setup: installs opencode + MCP stack inside the build box.
 # Runs as postCreateCommand (user: node, home: /home/node).
 set -uo pipefail
 

@@ -1,4 +1,4 @@
-# Workbench Clone MCP (`workbench-mcp`)
+# Workbench Clone MCP (`opencode-workbench`)
 
 > Repositions this repository from a single workstation's configuration into a
 > distributable **MCP server + connector** that clones that configuration onto
@@ -6,16 +6,16 @@
 
 ## Purpose
 
-The repository is the source of truth for the workbench profile. `workbench-mcp`
+The repository is the source of truth for the workbench profile. `opencode-workbench`
 turns that profile into an installable capability: an agent can inspect a target
 Linux machine, plan the delta against the profile, apply the delta, and verify the
 result — locally or over SSH.
 
 ## Distribution
 
-- Public repo: `https://github.com/simonplmak-cloud/workbench`
-- Entry point: `node mcp-server/dist/index.js` (bin: `workbench-mcp`)
-- Run without installing: `npx -y github:simonplmak-cloud/workbench`
+- Public repo: `https://github.com/simonplmak-cloud/opencode-workbench`
+- Entry point: `node mcp-server/dist/index.js` (bin: `opencode-workbench`)
+- Run without installing: `npx -y github:simonplmak-cloud/opencode-workbench`
 - Registration snippet and connector manifest: [`connector.json`](../../connector.json)
 
 ## Architecture

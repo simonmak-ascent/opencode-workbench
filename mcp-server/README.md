@@ -1,4 +1,4 @@
-# workbench-mcp
+# opencode-workbench
 
 An MCP server **and connector** that clones the [OpenCode](../../README.md) workbench
 installation onto Linux machines — the machine it runs on (`local`) or a remote host
@@ -15,7 +15,7 @@ Register it with OpenCode (or any MCP client):
   "mcp": {
     "workbench": {
       "type": "local",
-      "command": ["npx", "-y", "github:simonplmak-cloud/workbench"],
+      "command": ["npx", "-y", "github:simonplmak-cloud/opencode-workbench"],
       "enabled": true,
       "timeout": 600000
     }

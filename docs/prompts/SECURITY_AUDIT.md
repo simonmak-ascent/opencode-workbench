@@ -13,14 +13,14 @@ ROLE: Security Auditor
 Perform a deep security audit of this repository:
 
 1. SECRET SCANNING:
-   - Read docs/architecture/SWAS-secrets.md to discover active secret variable names
+   - Read docs/architecture/secrets.md to discover active secret variable names
    - Dynamically derive secret patterns from the env vars actually in use (check prefixes/patterns in live env)
    - Search all tracked files for those patterns
    - Also check for generic credential patterns: api_key=, token=, password=, secret=, bearer
    - Search for common credential filenames: .env, credentials.json, secrets.yaml, *.pem, *.key
    - Search ~/.cache/opencode/ for cached credentials or plugin-stored secrets
    - Check git history for any previously committed secrets
-   - Note: if you discover a new secret pattern not in the docs, flag it AND recommend updating docs/architecture/SWAS-secrets.md
+   - Note: if you discover a new secret pattern not in the docs, flag it AND recommend updating docs/architecture/secrets.md
 
 2. CONFIGURATION AUDIT:
    - Verify .gitignore blocks all sensitive file patterns including .cache artifacts

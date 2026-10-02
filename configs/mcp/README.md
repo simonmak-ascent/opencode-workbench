@@ -116,7 +116,7 @@
 3. If local npm: add `npm install -g <package>` to `.devcontainer/setup.sh`
 4. If vendored: add source to `vendor/` and copy to `~/.local/bin/` in setup.sh
 5. If binary: add download step to `.devcontainer/setup.sh`
-6. If auth required: add secret to `docs/SWAS-secrets.md`
+6. If auth required: add secret to `docs/architecture/secrets.md`
 7. Update `configs/mcp/mcp-inventory.json`
 8. Update `docs/software-inventory.md`
 
@@ -124,12 +124,12 @@
 
 All MCP server configurations are in `opencode.json`.
 All are reinstalled by `.devcontainer/setup.sh` during postCreate.
-Secrets must be configured via the SWAS box Secrets.
+Secrets must be configured via the build box Secrets.
 
 ## Related Documentation
 
 - `docs/software-inventory.md` — Full inventory with versions
 - `docs/environment-inventory.md` — Environment variable map
-- `docs/SWAS-secrets.md` — Secrets management
+- `docs/architecture/secrets.md` — Secrets management
 - `docs/recovery-gap-analysis.md` — Disaster recovery gaps
 - `configs/mcp/mcp-inventory.json` — Machine-readable inventory

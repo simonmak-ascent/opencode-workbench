@@ -5,15 +5,15 @@
 
 ## Prerequisites
 
-1. Access to `https://github.com/simonplmak-cloud/workbench`
-2. All required the SWAS box Secrets configured (see `docs/architecture/SWAS-secrets.md`)
-3. GitHub account with SWAS access
+1. Access to `https://github.com/simonplmak-cloud/opencode-workbench`
+2. All required the build box Secrets configured (see `docs/architecture/secrets.md`)
+3. GitHub account with build box platform access
 
-## Phase 1: Create New SWAS
+## Phase 1: Create New build box
 
-1. Navigate to `https://github.com/simonplmak-cloud/workbench`
+1. Navigate to `https://github.com/simonplmak-cloud/opencode-workbench`
 2. Click **Code** → **SWAS** → **Create SWAS on main**
-3. Wait for the SWAS to initialize (~3-5 minutes)
+3. Wait for the build box to initialize (~3-5 minutes)
 4. The `postCreateCommand` will run `bash .devcontainer/setup.sh` automatically
 
 ## Phase 2: Verify Infrastructure

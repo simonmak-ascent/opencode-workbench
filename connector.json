@@ -1,18 +1,18 @@
 {
-  "$schema": "https://raw.githubusercontent.com/simonplmak-cloud/workbench/main/connector.schema.json",
-  "name": "workbench",
+  "$schema": "https://raw.githubusercontent.com/simonplmak-cloud/opencode-workbench/main/connector.schema.json",
+  "name": "opencode-workbench",
   "title": "OpenCode Workbench",
   "description": "Clones the OpenCode workbench installation onto Linux machines, locally or over SSH.",
   "version": "1.0.0",
   "transport": {
     "type": "stdio",
     "command": "npx",
-    "args": ["-y", "github:simonplmak-cloud/workbench"],
+    "args": ["-y", "github:simonplmak-cloud/opencode-workbench"],
     "env": []
   },
   "mcp": {
     "type": "local",
-    "command": ["npx", "-y", "github:simonplmak-cloud/workbench"],
+    "command": ["npx", "-y", "github:simonplmak-cloud/opencode-workbench"],
     "enabled": true,
     "timeout": 600000
   },

@@ -17,7 +17,7 @@
 ### DeepSeek
 - **API**: `https://api.deepseek.com/v1`
 - **Key env**: `DEEPSEEK_API_KEY`
-- **Source**: SWAS Secret
+- **Source**: build box Secret
 
 ## MCP Server Assignments (19 configured, 18 enabled, 1 disabled)
 
@@ -50,7 +50,7 @@
 ## Recovery Method
 
 1. Clone this repository
-2. SWAS secrets auto-propagate via `devcontainer.json` `remoteEnv`
+2. build box secrets auto-propagate via `devcontainer.json` `remoteEnv`
 3. `.devcontainer/setup.sh` installs MCP servers and copies config
 4. `opencode.json` is the single source of truth for MCP configuration
 5. Runtime copy at `~/.config/opencode/opencode.json` is synced from repo

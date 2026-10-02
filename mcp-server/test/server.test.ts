@@ -5,7 +5,7 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { registerTools } from "../src/tools";
 
 async function connect(): Promise<Client> {
-  const server = new McpServer({ name: "workbench-mcp", version: "0.0.0-test" });
+  const server = new McpServer({ name: "opencode-workbench", version: "0.0.0-test" });
   registerTools(server);
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await server.connect(serverTransport);
@@ -14,7 +14,7 @@ async function connect(): Promise<Client> {
   return client;
 }
 
-describe("workbench-mcp server", () => {
+describe("opencode-workbench server", () => {
   it("registers the expected tools", async () => {
     const client = await connect();
     const { tools } = await client.listTools();

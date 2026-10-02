@@ -2,7 +2,7 @@
 
 **Purpose:** Full workstation backup, audit, and recovery workflow.
 
-**When To Use:** Periodic maintenance, before major changes, or when setting up a new SWAS.
+**When To Use:** Periodic maintenance, before major changes, or when setting up a new build box.
 
 **Author:** DevOps  
 **Date Modified:** 2026-07-25
@@ -28,7 +28,7 @@ Your mission is to preserve the entire workstation.
 
 The objective is:
 
-If this SWAS is permanently deleted today, I must be able to create a brand-new SWAS and recover everything important with minimal manual effort.
+If this build box is permanently deleted today, I must be able to create a brand-new build box and recover everything important with minimal manual effort.
 
 Treat this repository as the single source of truth.
 

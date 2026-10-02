@@ -1,23 +1,23 @@
 # Disaster Recovery
 
 > Purpose: Complete recovery procedure assuming total loss of the workstation.
-> Scenario: SWAS deleted, VM deleted, all local state lost.
-> Survivors: Git repository, GitHub account, the SWAS box Secrets.
+> Scenario: build box deleted, VM deleted, all local state lost.
+> Survivors: Git repository, GitHub account, the build box Secrets.
 
 ## Pre-Flight: Verify Survivors
 
 Before attempting recovery, verify these assets exist:
 
-1. **Repository**: `https://github.com/simonplmak-cloud/workbench` exists
-2. **Secrets**: At least 10 critical secrets configured at https://github.com/settings/SWAS/secrets
+1. **Repository**: `https://github.com/simonplmak-cloud/opencode-workbench` exists
+2. **Secrets**: At least 10 critical secrets configured in the build box Secrets
 3. **PAT**: `SIMONPLMAK_CLOUD_PAT` is active (check: https://github.com/settings/tokens)
 4. **Machine type**: Recommended `4-core` (`basicLinux32gb`) at minimum
 
 ## Recovery Procedure
 
-### Step 1: Create New SWAS
+### Step 1: Create New build box
 ```
-https://github.com/simonplmak-cloud/workbench → Code → SWAS → Create
+https://github.com/simonplmak-cloud/opencode-workbench → Code → SWAS → Create
 ```
 
 ### Step 2: Wait for Automation
@@ -79,10 +79,10 @@ Or manually verify:
 | Prompt library | ✅ Full | docs/prompts/ in repo |
 | Shell aliases | ✅ Full | .devcontainer/aliases.sh |
 | npm global packages | ✅ Auto | Installed by setup.sh |
-| API keys | ✅ If secrets exist | SWAS Secrets |
+| API keys | ✅ If secrets exist | build box Secrets |
 | Saga tracker DB | ❌ Lost | Ephemeral — recreated on first use |
 | PostgreSQL data | ❌ Lost | Ephemeral — dev database |
-| Shell history | ❌ Lost | Local to SWAS |
+| Shell history | ❌ Lost | Local to the build box |
 | Playwright chromium | ⚠️ Manual | Must `npx playwright install chrome` (or auto via setup.sh) |
 | Vercel token auth | ✅ Auto | Bearer {env:VERCEL_ACCESS_TOKEN} |
 
@@ -105,5 +105,5 @@ Or manually verify:
 ## Recovery Point Objective (RPO)
 
 - **Configuration**: 0 data loss (fully in Git)
-- **Secrets**: 0 data loss (in SWAS Secrets)
+- **Secrets**: 0 data loss (in build box Secrets)
 - **Application data**: Loss acceptable (dev environment)

@@ -1,6 +1,6 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
-  "projectTitle": "OpenCode Workbench (workbench-mcp)",
+  "projectTitle": "OpenCode Workbench (opencode-workbench)",
   "description": "MCP server and connector that clones the OpenCode workbench installation onto Linux machines — locally or over SSH — reproducing the OpenCode config, MCP servers, agent skills, plugins and Docker tooling. Exposes 6 tools over stdio.",
   "folders": [
     "mcp-server",
@@ -8,7 +8,7 @@
     "configs"
   ],
   "rules": [
-    "Run locally with `npx -y github:simonplmak-cloud/workbench` (Node stdio MCP server; no API key).",
+    "Run locally with `npx -y github:simonplmak-cloud/opencode-workbench` (Node stdio MCP server; no API key).",
     "Drive a clone with the tool order `workbench_info` → `inspect_target` → `plan_clone` → `apply_clone` → `verify_clone`; use `install_component` to install a single component by id.",
     "Every tool takes a `target` of `{mode: \"local\"}` or `{mode: \"ssh\", host, user, port?, identityFile?}`.",
     "The connector never reads, transmits or writes secret values; `apply_clone` writes an empty `~/.env.workbench` template (mode 600) listing the `{env:VAR}` names to fill in.",

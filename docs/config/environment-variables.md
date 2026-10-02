@@ -7,28 +7,28 @@
 
 | Variable | Purpose | Set By |
 |----------|---------|--------|
-| `DEEPSEEK_API_KEY` | Primary AI model | SWAS Secret |
+| `DEEPSEEK_API_KEY` | Primary AI model | build box Secret |
 | `DATABASE_URL` | PostgreSQL connection | `devcontainer.json` |
-| `OPENCODE_API_KEY` | OpenCode Zen + Console Go | SWAS Secret |
-| `SIMONPLMAK_CLOUD_PAT` | GitHub + shadcn MCP auth | SWAS Secret |
+| `OPENCODE_API_KEY` | OpenCode Zen + Console Go | build box Secret |
+| `SIMONPLMAK_CLOUD_PAT` | GitHub + shadcn MCP auth | build box Secret |
 
 ## Required (Operational — MCP servers fail without)
 
 | Variable | Purpose | Set By |
 |----------|---------|--------|
-| `PERPLEXITY_API_KEY` | Perplexity MCP | SWAS Secret |
-| `BRAVE_API_KEY` | Brave Search MCP | SWAS Secret |
-| `BROWSERLESS_TOKEN` | Browserless MCP + container | SWAS Secret |
-| `SENTRY_AUTH_TOKEN` | Sentry MCP | SWAS Secret |
-| `FIGMA_TOKEN` | Figma MCP | SWAS Secret |
+| `PERPLEXITY_API_KEY` | Perplexity MCP | build box Secret |
+| `BRAVE_API_KEY` | Brave Search MCP | build box Secret |
+| `BROWSERLESS_TOKEN` | Browserless MCP + container | build box Secret |
+| `SENTRY_AUTH_TOKEN` | Sentry MCP | build box Secret |
+| `FIGMA_TOKEN` | Figma MCP | build box Secret |
 
 ## Optional (enhanced functionality)
 
 | Variable | Purpose | Set By |
 |----------|---------|--------|
-| `VERCEL_ACCESS_TOKEN` | Vercel MCP | SWAS Secret |
-| `OPENROUTER_API_KEY` | Alternative AI models | SWAS Secret |
-| `KIMI_API_KEY` | Alternative provider | SWAS Secret |
+| `VERCEL_ACCESS_TOKEN` | Vercel MCP | build box Secret |
+| `OPENROUTER_API_KEY` | Alternative AI models | build box Secret |
+| `KIMI_API_KEY` | Alternative provider | build box Secret |
 
 ## Non-Secret Configuration
 
@@ -43,12 +43,12 @@
 ## Secret Flow
 
 ```
-the SWAS box Secrets → devcontainer.json remoteEnv → Process Environment → {env:VAR} in opencode.json
+the build box Secrets → devcontainer.json remoteEnv → Process Environment → {env:VAR} in opencode.json
 ```
 
 ## Bootstrap Fallback
 
-`~/.bashrc` sources `~/.env.workbench` if present (legacy mechanism for secret injection when SWAS Secrets are unavailable).
+`~/.bashrc` sources `~/.env.workbench` if present (legacy mechanism for secret injection when build box Secrets are unavailable).
 
 ## Validation
 

@@ -1,6 +1,6 @@
-# SWAS Workbench
+# OpenCode Workbench
 
-A fully reproducible, self-documenting, and recoverable development workstation operating system for the SWAS box and OpenCode — plus **`workbench-mcp`**, an MCP server and connector that clones this installation onto other Linux machines (locally or over SSH).
+A fully reproducible, self-documenting, and recoverable development workstation operating system for the build box and OpenCode — plus **`opencode-workbench`**, an MCP server and connector that clones this installation onto other Linux machines (locally or over SSH).
 
 ## Purpose
 
@@ -12,7 +12,7 @@ This repository is the **single source of truth** for a complete cloud developme
 - Operational prompts (disaster recovery, backup, security)
 - Recovery procedures (playbook, checklist, gap analysis)
 - Security governance (secret management, threat model)
-- **`workbench-mcp`** — an MCP server that installs this profile on any Linux box
+- **`opencode-workbench`** — an MCP server that installs this profile on any Linux box
 
 **No important knowledge exists only in human memory.**
 
@@ -23,9 +23,9 @@ Register the MCP server with OpenCode:
 ```json
 {
   "mcp": {
-    "workbench": {
+    "opencode-workbench": {
       "type": "local",
-      "command": ["npx", "-y", "github:simonplmak-cloud/workbench"],
+      "command": ["npx", "-y", "github:simonplmak-cloud/opencode-workbench"],
       "enabled": true,
       "timeout": 600000
     }
@@ -40,8 +40,8 @@ The connector never reads or transmits secret values; it writes an empty `~/.env
 ## Quick Start
 
 ```bash
-# Create a new SWAS
-gh SWAS create --repo simonplmak-cloud/workbench --machine basicLinux32gb
+# Create a new build box
+gh SWAS create --repo simonplmak-cloud/opencode-workbench --machine basicLinux32gb
 
 # Wait for postCreate (3-5 min) — installs everything automatically
 # Then start coding:
@@ -52,14 +52,14 @@ opencode
 
 ```
 workbench/
-├── mcp-server/                     # workbench-mcp: clone this profile onto Linux
+├── mcp-server/                     # opencode-workbench: clone this profile onto Linux
 │   ├── src/                        # inspect / plan / apply / verify, local + SSH
 │   ├── test/                       # unit tests (vitest)
 │   └── README.md
 ├── connector.json                  # MCP connector manifest / registration snippet
 ├── plugins/                        # memory.ts + doc-tools.ts OpenCode plugins
-├── package.json                    # thin launcher for workbench-mcp (bin + prepare)
-├── .devcontainer/                  # SWAS definition & bootstrap
+├── package.json                    # thin launcher for opencode-workbench (bin + prepare)
+├── .devcontainer/                  # build box definition & bootstrap
 │   ├── devcontainer.json           # Container image, features, ports, remoteEnv
 │   ├── setup.sh                    # Post-create: installs opencode, MCPs, Docker infra
 │   └── aliases.sh                  # Shell aliases sourced at runtime
@@ -111,7 +111,7 @@ workbench/
 This workstation operates under a formal charter. Key principles:
 
 - **Single Source of Truth**: Runtime must match repository. Drift is a bug.
-- **Secrets Never Touch Disk**: All secrets flow through the SWAS box Secrets.
+- **Secrets Never Touch Disk**: All secrets flow through the build box Secrets.
 - **Immutable History**: Changelog is append-only. Every change is traceable.
 - **Documentation Lives With Code**: Docs describe the system as it is, not as imagined.
 
@@ -134,11 +134,11 @@ Or use OpenCode prompts:
 
 ## Recovery Workflow
 
-Assume the SWAS is deleted. Only Git repo + SWAS Secrets survive.
+Assume the build box is deleted. Only Git repo + build box Secrets survive.
 
 ```bash
-# 1. Create new SWAS
-gh SWAS create --repo simonplmak-cloud/workbench --machine basicLinux32gb
+# 1. Create new build box
+gh SWAS create --repo simonplmak-cloud/opencode-workbench --machine basicLinux32gb
 
 # 2. Wait for automation (3-5 min)
 
@@ -165,7 +165,7 @@ See: [`docs/architecture/mcp-inventory.md`](docs/architecture/mcp-inventory.md)
 
 ## Secrets Management
 
-All secrets stored in the SWAS box Secrets. Never in repository files.
+All secrets stored in the build box Secrets. Never in repository files.
 
 | # | Secret | Used By |
 |---|--------|---------|
@@ -178,7 +178,7 @@ All secrets stored in the SWAS box Secrets. Never in repository files.
 | 7 | `SENTRY_AUTH_TOKEN` | Sentry MCP |
 | 9 | `KIMI_API_KEY` | Alternate provider (legacy) |
 
-See: [`docs/architecture/SWAS-secrets.md`](docs/architecture/SWAS-secrets.md)
+See: [`docs/architecture/secrets.md`](docs/architecture/secrets.md)
 
 ## Documentation Index
 
@@ -203,4 +203,4 @@ See: [`docs/architecture/SWAS-secrets.md`](docs/architecture/SWAS-secrets.md)
 
 ## Recovery Score: 92/100
 
-Validated disaster recovery within < 10 minutes using repository + SWAS Secrets alone.
+Validated disaster recovery within < 10 minutes using repository + build box Secrets alone.

@@ -47,7 +47,7 @@ for VAR in DATABASE_URL DB_PATH BROWSERLESS_HOST BROWSERLESS_PORT BROWSERLESS_PR
 done
 echo ""
 
-echo "## GitHub / SWAS"
+echo "## GitHub / platform-injected"
 echo ""
 echo "| Variable | Value |"
 echo "|----------|-------|"

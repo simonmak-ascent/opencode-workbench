@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * workbench-mcp — MCP server + connector that clones the OpenCode workbench
+ * opencode-workbench — MCP server + connector that clones the OpenCode workbench
  * configuration onto Linux machines, locally or over SSH.
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -10,7 +10,7 @@ import { registerTools } from "./tools.js";
 const VERSION = "1.0.0";
 
 async function main(): Promise<void> {
-  const server = new McpServer({ name: "workbench-mcp", version: VERSION });
+  const server = new McpServer({ name: "opencode-workbench", version: VERSION });
   registerTools(server);
   const transport = new StdioServerTransport();
   await server.connect(transport);
@@ -18,6 +18,6 @@ async function main(): Promise<void> {
 }
 
 main().catch((err) => {
-  process.stderr.write(`workbench-mcp fatal: ${(err as Error).stack ?? String(err)}\n`);
+  process.stderr.write(`opencode-workbench fatal: ${(err as Error).stack ?? String(err)}\n`);
   process.exit(1);
 });

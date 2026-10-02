@@ -1,13 +1,13 @@
 # Software Inventory
 
-> Generated: 2026-07-26 | SWAS: workbench
+> Generated: 2026-07-26 | build box: opencode-workbench
 > Captures exact versions. Update when tools are added, removed, or upgraded.
 
 ## Core Platform
 
 | Tool | Version | Purpose | Install Method |
 |------|---------|---------|---------------|
-| Debian | 13 (trixie) | OS | the SWAS box base |
+| Debian | 13 (trixie) | OS | the build box base |
 | Node.js | 22.23.1 | JS runtime | devcontainer image |
 | npm | 10.9.8 | Package manager | devcontainer image |
 | Python | 3.13.5 | Python runtime | devcontainer image |

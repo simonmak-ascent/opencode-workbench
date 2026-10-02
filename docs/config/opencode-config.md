@@ -65,5 +65,5 @@ All secrets use `{env:VAR}` syntax. Example:
 ```
 
 Secrets originate from:
-1. the SWAS box Secrets → `devcontainer.json` `remoteEnv`
+1. the build box Secrets → `devcontainer.json` `remoteEnv`
 2. Legacy fallback: `~/.env.workbench` (sourced by `~/.bashrc`)

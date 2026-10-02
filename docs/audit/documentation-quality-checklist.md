@@ -49,7 +49,7 @@
 | Doc | Acc | Com | Cla | Con | Rep | Tra | Mai | Rea | Avg | Pass |
 |-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|
 | `ai-provider-inventory.md` | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | **3.0** | YES |
-| `SWAS-secrets.md` | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | **3.0** | YES |
+| `secrets.md` | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | **3.0** | YES |
 | `environment-inventory.md` | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | **3.0** | YES |
 | `home-directory-audit.md` | 2 | 2 | 3 | 2 | 2 | 2 | 2 | 2 | **2.1** | NO |
 | `mcp-inventory.md` | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | **3.0** | YES |

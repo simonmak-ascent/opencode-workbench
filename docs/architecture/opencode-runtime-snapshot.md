@@ -45,7 +45,7 @@
 
 ## Shell Environment
 
-- **Shell**: bash (via SWAS)
+- **Shell**: bash (via the build box)
 - **OpenCode binary**: `/home/node/.opencode/bin/opencode`
 - **Node version**: 22 (via devcontainer image)
 - **npm global prefix**: `/home/node/.npm-global`

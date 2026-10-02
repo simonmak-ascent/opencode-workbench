@@ -55,8 +55,8 @@ Files already in or should be in the repository:
 
 1. **~/.npmrc**: Move `npm config set prefix` to `.devcontainer/setup.sh`
 2. **~/.bashrc PATH entries**: Move `export PATH="$HOME/.opencode/bin:$PATH"` to `.devcontainer/aliases.sh`
-3. **~/.env.workbench**: All vars documented in `docs/environment-inventory.md` and `docs/SWAS-secrets.md`
+3. **~/.env.workbench**: All vars documented in `docs/environment-inventory.md` and `docs/architecture/secrets.md`
 4. **~/.docker/config.json**: Never commit; Docker credential helpers recommended
-5. **~/.ssh/**: Never commit; SSH is handled by SWAS automatically
+5. **~/.ssh/**: Never commit; SSH is handled by the build box automatically
 6. **~/.surrealdb/**: Already gitignorable; downloaded on-demand by setup.sh
 7. **~/.local/share/opencode/**: Runtime data; exclude from backups

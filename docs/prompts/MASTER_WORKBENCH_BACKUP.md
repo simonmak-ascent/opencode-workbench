@@ -28,7 +28,7 @@ PHASE 2 — SECURITY:
 10. Verify .gitignore blocks all sensitive patterns (check against actual repo contents, not just the file)
 
 PHASE 3 — VALIDATION:
-11. Compare current env vars against documented secrets in docs/architecture/SWAS-secrets.md
+11. Compare current env vars against documented secrets in docs/architecture/secrets.md
 12. Compare installed packages against docs/architecture/software-inventory.md
 13. Flag any mismatches. Distinguish between: (a) new additions to document, (b) removals to flag, (c) actual drift to fix.
 

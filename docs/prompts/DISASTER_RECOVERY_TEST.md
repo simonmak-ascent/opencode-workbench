@@ -1,7 +1,7 @@
 # DISASTER_RECOVERY_TEST
 
 ## Purpose
-Simulate a disaster recovery scenario to validate that a fresh SWAS can be fully recovered.
+Simulate a disaster recovery scenario to validate that a fresh build box can be fully recovered.
 
 ## Usage
 Run after major configuration changes to verify recoverability.
@@ -13,7 +13,7 @@ ROLE: Disaster Recovery Engineer
 Perform a disaster recovery validation for this workstation:
 
 1. REVIEW RECOVERY ASSETS:
-   - Verify all SWAS secrets documented in docs/architecture/SWAS-secrets.md
+   - Verify all build box secrets documented in docs/architecture/secrets.md
    - Verify devcontainer.json has complete remoteEnv coverage
    - Verify setup.sh installs everything needed
    - Verify recovery playbook is complete and accurate
@@ -47,5 +47,5 @@ Perform a disaster recovery validation for this workstation:
    - Changes since last validation
    - Recommended improvements
 
-Assume the current SWAS is destroyed and a new one must be built.
+Assume the current build box is destroyed and a new one must be built.
 ```

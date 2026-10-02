@@ -1,7 +1,7 @@
-# SWAS Secrets Inventory
+# build box Secrets Inventory
 
 > Generated: 2026-07-26 | Updated: 2026-07-26 (post-audit)
-> Purpose: Track all the SWAS box Secrets required for workstation operation.
+> Purpose: Track all the build box Secrets required for workstation operation.
 > CRITICAL: This file documents secret NAMES and USAGE only. Never record values.
 
 ## Required Secrets (Active)
@@ -40,7 +40,7 @@
 | `GOOGLE_API_KEY` | Google AI API | Not configured | Available in env |
 | `VERCEL_ACCESS_TOKEN` | Vercel API token | Not configured (Vercel MCP uses OAuth) | Available in env |
 
-## Non-Secret Env Vars (set in `~/.env.workbench` on SWAS)
+## Non-Secret Env Vars (set in `~/.env.workbench` on the build box)
 
 | Variable | Value | Purpose |
 |----------|-------|---------|
@@ -52,10 +52,10 @@
 
 ## Setup Instructions
 
-Secrets live in `~/.env.workbench` on the SWAS box (sourced by `.bashrc`), never
+Secrets live in `~/.env.workbench` on the build box (sourced by `.bashrc`), never
 in the repository:
 
-1. SSH to the SWAS box (`cs ssh` / `ssh workbench`)
+1. SSH to the build box (`cs ssh` / `ssh workbench`)
 2. Populate `~/.env.workbench` with each "Required" secret from the table above
    (`VAR="value"` lines, `chmod 600`)
 3. The local `~/.env.opencode` is the source for values — transfer with
@@ -65,7 +65,7 @@ in the repository:
 ## Recovery Verification
 
 ```bash
-# After SWAS rebuild, verify secrets are present:
+# After build box rebuild, verify secrets are present:
 env | grep -E '^(DEEPSEEK_|SIMONPLMAK_|PERPLEXITY_|BRAVE_|BROWSERLESS_|SENTRY_|SURREAL_|NPM_)'
 ```
 

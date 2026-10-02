@@ -19,7 +19,7 @@
 | Scripts | `scripts/` | Repo files |
 | CI | `.github/workflows/` | Repo files |
 | Workflow state | `WORKFLOW_STATE.md` | Repo file |
-| Secrets | the SWAS box Secrets | Must be re-created from docs |
+| Secrets | the build box Secrets | Must be re-created from docs |
 | Docker containers | Setup scripts | `bash .devcontainer/setup.sh` |
 | npm packages | Setup scripts | `bash .devcontainer/setup.sh` |
 | pip packages | Bootstrap script | `bash scripts/bootstrap-tools.sh` |
@@ -31,10 +31,10 @@
 
 ```bash
 # 1. Clone repo
-git clone https://github.com/simonplmak-cloud/workbench
+git clone https://github.com/simonplmak-cloud/opencode-workbench
 
-# 2. Create SWAS with secrets configured
-gh SWAS create --repo simonplmak-cloud/workbench --machine basicLinux32gb
+# 2. Create the build box with secrets configured
+gh SWAS create --repo simonplmak-cloud/opencode-workbench --machine basicLinux32gb
 
 # 3. Wait for postCreate (3-5 min)
 #    - setup.sh runs automatically
@@ -77,7 +77,7 @@ bash scripts/inventory/inventory-software.sh
 
 | Asset | Why | Mitigation |
 |-------|-----|-----------|
-| SurrealDB state | Docker volume, deleted with SWAS | All agents are idempotent — re-run will regenerate state |
+| SurrealDB state | Docker volume, deleted with the build box | All agents are idempotent — re-run will regenerate state |
 | Browserless sessions | Ephemeral | Re-run scraper jobs |
 | Vercel preview URLs | Ephemeral, expire | Re-build from code |
 | Playwright browser binaries | Installed at runtime | `npx playwright install chrome` |

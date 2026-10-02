@@ -1,7 +1,7 @@
 # Recovery Checklist
 
 > Purpose: Verifiable checklist for workstation recovery validation.
-> Use after SWAS rebuild or disaster recovery.
+> Use after build box rebuild or disaster recovery.
 
 ## Infrastructure
 

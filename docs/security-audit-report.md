@@ -115,7 +115,7 @@ No new URLs, IPs, or internal identifiers discovered since last audit.
 ### 4.1 Repository Visibility
 **Result: PASS**
 
-- Repository: `simonplmak-cloud/workbench`
+- Repository: `simonplmak-cloud/opencode-workbench`
 - Visibility: **PRIVATE** (confirmed via `gh api`)
 - No public exposure of any repo contents
 

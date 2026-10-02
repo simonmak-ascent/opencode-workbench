@@ -1,14 +1,14 @@
 # Recovery Gap Analysis
 
 > Updated: 2026-07-27 (post-DR-test round 2)
-> Purpose: Validate whether a fresh SWAS can be fully recovered from repo + secrets alone
+> Purpose: Validate whether a fresh build box can be fully recovered from repo + secrets alone
 
 ## Recovery Requirements Checklist
 
 | # | Requirement | Status | Notes |
 |---|-------------|--------|-------|
 | 1 | Repository contains devcontainer.json | ✅ Pass | Full remoteEnv coverage (17 entries) |
-| 2 | All SWAS secrets documented | ✅ Pass | 10 required/alternate secrets in docs/SWAS-secrets.md |
+| 2 | All build box secrets documented | ✅ Pass | 10 required/alternate secrets in docs/architecture/secrets.md |
 | 3 | setup.sh installs all MCP servers | ✅ Pass | npm global + vendored MCPs |
 | 4 | setup.sh starts Docker containers | ✅ Pass | pg-memory + browserless |
 | 5 | setup.sh copies opencode.json | ✅ Pass | Copies to ~/.config/opencode/ |
@@ -19,7 +19,7 @@
 | 10 | AI provider configuration documented | ✅ Pass | docs/architecture/ai-provider-inventory.md |
 | 11 | Runtime config snapshot preserved | ✅ Pass | docs/architecture/opencode-runtime-snapshot.md |
 | 12 | Workstation playbook exists | ✅ Pass | docs/architecture/workstation-playbook.md |
-| 13 | Git remote and branch documented | ✅ Pass | origin: simonplmak-cloud/workbench, main |
+| 13 | Git remote and branch documented | ✅ Pass | origin: simonplmak-cloud/opencode-workbench, main |
 | 14 | Security scan clean (no secrets in repo) | ✅ Pass | Working tree clean; 1 stale rotated key in history |
 | 15 | .gitignore covers sensitive paths | ✅ Pass | .saga/, .playwright-mcp/, node_modules/, .env* |
 | 16 | PostgreSQL data is ephemeral | ⚠️ Accept | Docker volume lost on rebuild — intentional for dev |
@@ -45,7 +45,7 @@
 
 ## Recovery Process (Step by Step)
 
-1. Create new SWAS from `simonplmak-cloud/workbench` (main branch)
+1. Create new build box from `simonplmak-cloud/opencode-workbench` (main branch)
 2. Wait for `postCreateCommand` (setup.sh) — ~3-5 minutes
 3. Verify Docker: `docker ps` (pg-memory + browserless)
 4. Verify MCP packages: `npm list -g --depth=0`
