@@ -13,7 +13,7 @@ result — locally or over SSH.
 
 ## Distribution
 
-- Public repo: `https://github.com/simonplmak-cloud/opencode-workbench`
+- Public repo: `https://github.com/simonmak-ascent/opencode-workbench`
 - Entry point: `node mcp-server/dist/index.js` (bin: `opencode-workbench`)
 - Run without installing: `npx -y @simonmak-ascent/opencode-workbench`
 - Hosted (Streamable HTTP): `https://opencode-workbench.simonmak.com/mcp`

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/simonplmak-cloud/opencode-workbench/main/connector.schema.json",
+  "$id": "https://raw.githubusercontent.com/simonmak-ascent/opencode-workbench/main/connector.schema.json",
   "title": "OpenCode Workbench connector manifest",
   "type": "object",
   "required": ["name", "title", "description", "version", "transport"],

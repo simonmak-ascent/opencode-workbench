@@ -31,10 +31,10 @@
 
 ```bash
 # 1. Clone repo
-git clone https://github.com/simonplmak-cloud/opencode-workbench
+git clone https://github.com/simonmak-ascent/opencode-workbench
 
 # 2. Create the build box with secrets configured
-gh SWAS create --repo simonplmak-cloud/opencode-workbench --machine basicLinux32gb
+gh SWAS create --repo simonmak-ascent/opencode-workbench --machine basicLinux32gb
 
 # 3. Wait for postCreate (3-5 min)
 #    - setup.sh runs automatically

@@ -103,5 +103,5 @@
 
 | Directory | Repository | Purpose |
 |-----------|-----------|---------|
-| ~/esg-hub/ | github.com/simonplmak-cloud/esg-hub | MCP server (Next.js) |
+| ~/esg-hub/ | github.com/simonmak-ascent/esg-hub | MCP server (Next.js) |
 | ~/project_human/ | github.com/humanity4ai/project_human | Humanity4AI project |

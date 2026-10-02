@@ -4,9 +4,9 @@
 
 ## Connect
 
-- Local stdio server (no API key): `npx -y github:simonplmak-cloud/opencode-workbench`
-- Glama listing: https://glama.ai/mcp/servers/simonplmak-cloud/opencode-workbench
-- Context7 library ID: `/simonplmak-cloud/opencode-workbench`
+- Local stdio server (no API key): `npx -y github:simonmak-ascent/opencode-workbench`
+- Glama listing: https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench
+- Context7 library ID: `/simonmak-ascent/opencode-workbench`
 
 ## MCP tools (6)
 
@@ -27,6 +27,6 @@ Every tool takes a `target`:
 
 ## Docs
 
-- [README and quick start](https://github.com/simonplmak-cloud/opencode-workbench#readme)
-- [MCP server README](https://github.com/simonplmak-cloud/opencode-workbench/tree/main/mcp-server)
-- [Clone architecture](https://github.com/simonplmak-cloud/opencode-workbench/blob/main/docs/architecture/clone-mcp.md)
+- [README and quick start](https://github.com/simonmak-ascent/opencode-workbench#readme)
+- [MCP server README](https://github.com/simonmak-ascent/opencode-workbench/tree/main/mcp-server)
+- [Clone architecture](https://github.com/simonmak-ascent/opencode-workbench/blob/main/docs/architecture/clone-mcp.md)
