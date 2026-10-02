@@ -3,6 +3,25 @@
 > All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-10-03] — VDD-ready, key-resilient profile
+
+### Added
+- **Key-resilient clone**: render-time model selection (DeepSeek → OpenCode Zen free floor → `degraded`); MCP servers missing required credentials are disabled and reported instead of failing at runtime. `apply_clone`/`verify_clone` return `model`, `providerMode` and `degraded`.
+- **Consent gate**: `apply_clone` / `install_component` require `confirm:true`; without it they return a plan with privileged-command previews.
+- **Credential acquisition** (value-blind): `list_required_credentials` + `run_auth_flow`, the `credential-acquisition` skill and `docs/prompts/ACQUIRE-KEYS.md`.
+- **Self-test harness**: `scripts/selftest/` + `pnpm selftest` + `docs/prompts/SELFTEST.md`.
+- **Research layer**: `arxiv`, `paper-search`, `firecrawl`, `exa`, `cloudflare` MCPs; `docs/research/pipeline.md`; ported research/VDD/domain skills (45 total).
+- **Domains**: `scientific` (numpy/scipy/pandas/matplotlib/sympy; optional R/Julia/Jupyter) and `db-clients` components; `data-analysis`, `data-modeling`, `scientific-computing` skills; `docs/architecture/capability-matrix.md`.
+- **`primary-sources-mcp`**: published as `@simonmak-ascent/primary-sources-mcp` and wired into the profile; `research-mcps` core component.
+
+### Changed
+- `vdd` MCP → remote `https://vdd.simonmak.com/api/mcp`; `sentry` → remote; `vdd` removed from optional add-ons.
+- Repo/org references updated `simonplmak-cloud` → `simonmak-ascent`; install snippet scoped to `@simonmak-ascent/opencode-workbench`.
+- `inventory-mcp.sh` is now config-driven; `sync-runtime-config.sh` is path-agnostic.
+- `clone.ts` delivers `AGENTS.md` (+ `docs/research/pipeline.md`) to the config dir so `instructions: ["AGENTS.md"]` resolves.
+
+---
+
 ## [2026-07-27] — Master Backup
 
 ### Changed

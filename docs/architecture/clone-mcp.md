@@ -33,6 +33,19 @@ mcp-server/src/
   target.ts      local + SSH transports over the system ssh binary
 ```
 
+### Tools
+
+| Tool | Purpose |
+|------|---------|
+| `workbench_info` | Repo, components by tier, optional MCP add-ons. |
+| `inspect_target` | OS/arch/pkg-manager/Node/Docker/OpenCode and the *names* of credentials present. |
+| `plan_clone` | Diff the target against the profile → steps (with privileged-command previews). |
+| `apply_clone` | Consent-gated: without `confirm:true` returns the plan; with it, clones + installs. |
+| `install_component` | Install one component by id (also `confirm`-gated). |
+| `verify_clone` | Re-check config, env template, and every component. |
+| `list_required_credentials` | Value-blind: which keys are missing and how to acquire each. |
+| `run_auth_flow` | Emit-and-verify acquisition guidance for one credential. |
+
 ### Connector model
 
 | Mode | How it reaches the target |
