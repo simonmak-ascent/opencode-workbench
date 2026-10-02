@@ -5,7 +5,13 @@
  * (`/home/node/...`, `/workspaces/workbench/...`). A clone must rewrite those to
  * the target's `$HOME`, workspace directory and npm-global module directory, and
  * may drop MCP servers that are opt-in add-ons.
+ *
+ * It also degrades gracefully when the target has no credentials: the model is
+ * selected at render time (DeepSeek → OpenCode Zen → degraded), and MCP servers
+ * whose credentials are absent are disabled and reported instead of failing at
+ * runtime. opencode has no cross-provider fallback, so this must happen here.
  */
+import { assessMcp } from "./mcp-auth.js";
 
 export interface RenderContext {
   /** Target user's home directory, e.g. `/home/ubuntu`. */
@@ -21,11 +27,15 @@ export interface RenderContext {
    * Defaults to the portable core set.
    */
   enabledMcp?: string[] | "all";
+  /**
+   * Environment variable names present on the target. Values are never seen.
+   * When supplied, servers missing required credentials are disabled.
+   */
+  presentEnv?: ReadonlySet<string>;
 }
 
 /** MCP servers treated as opt-in add-ons for a portable clone. */
 export const OPTIONAL_MCP_IDS = [
-  "vdd",
   "esg-hub",
   "humanity4ai",
   "saga",
@@ -39,12 +49,49 @@ export const OPTIONAL_MCP_IDS = [
   "difflens",
 ] as const;
 
+export type ProviderMode = "deepseek" | "zen" | "degraded";
+
+export interface ModelSelection {
+  model: string;
+  smallModel: string;
+  providerMode: ProviderMode;
+}
+
+/**
+ * Choose the default and small model for a target. The floor is OpenCode Zen,
+ * which requires only `OPENCODE_API_KEY`; DeepSeek is preferred when available.
+ */
+export function selectModel(base: Record<string, unknown>, presentEnv: ReadonlySet<string>): ModelSelection {
+  if (presentEnv.has("DEEPSEEK_API_KEY")) {
+    return { model: "deepseek/deepseek-v4-pro", smallModel: "deepseek/deepseek-v4-flash", providerMode: "deepseek" };
+  }
+  if (presentEnv.has("OPENCODE_API_KEY")) {
+    return { model: "zen/zen-medium", smallModel: "zen/zen-medium", providerMode: "zen" };
+  }
+  // No usable model key: keep the Zen floor so opencode still boots and the
+  // operator gets a clear, actionable failure rather than a config error.
+  return { model: "zen/zen-medium", smallModel: "zen/zen-medium", providerMode: "degraded" };
+}
+
+export interface DegradedCapability {
+  id: string;
+  reason: string;
+}
+
 export interface RenderResult {
   config: Record<string, unknown>;
   /** Raw path replacements applied, for reporting. */
   substitutions: string[];
   /** MCP ids removed from the rendered config. */
   removedMcp: string[];
+  /** Model chosen for the target. */
+  model: string;
+  /** Small model chosen for the target. */
+  smallModel: string;
+  /** Which provider the model resolves to. */
+  providerMode: ProviderMode;
+  /** Capabilities disabled because credentials are absent. */
+  degraded: DegradedCapability[];
 }
 
 function substituteString(value: string, ctx: RenderContext): { value: string; applied: boolean } {
@@ -94,8 +141,14 @@ export function renderOpencodeConfig(base: Record<string, unknown>, ctx: RenderC
   const cloned = JSON.parse(JSON.stringify(base)) as Record<string, unknown>;
   cloned.$schema ??= "https://opencode.ai/config.json";
 
+  const presentEnv = ctx.presentEnv ?? new Set<string>();
+  const selection = selectModel(cloned, presentEnv);
+  cloned.model = selection.model;
+  cloned.small_model = selection.smallModel;
+
   const mcp = cloned.mcp;
   const removedMcp: string[] = [];
+  const degraded: DegradedCapability[] = [];
   if (mcp && typeof mcp === "object") {
     const table = mcp as Record<string, unknown>;
     if (ctx.enabledMcp !== "all") {
@@ -107,8 +160,28 @@ export function renderOpencodeConfig(base: Record<string, unknown>, ctx: RenderC
         }
       }
     }
+    if (ctx.presentEnv) {
+      for (const [id, entry] of Object.entries(table)) {
+        if (!entry || typeof entry !== "object") continue;
+        const health = assessMcp(id, entry as Record<string, unknown>, presentEnv);
+        if (health.degraded) {
+          const obj = entry as Record<string, unknown>;
+          obj.enabled = false;
+          obj._disabled_reason = `missing ${health.missingEnv.join(", ")}`;
+          degraded.push({ id, reason: `missing ${health.missingEnv.join(", ")} (${health.auth})` });
+        }
+      }
+    }
   }
 
   const config = deepSubstitute(cloned, ctx, substitutions) as Record<string, unknown>;
-  return { config, substitutions: [...substitutions], removedMcp };
+  return {
+    config,
+    substitutions: [...substitutions],
+    removedMcp,
+    model: selection.model,
+    smallModel: selection.smallModel,
+    providerMode: selection.providerMode,
+    degraded,
+  };
 }

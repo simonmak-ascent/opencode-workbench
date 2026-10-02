@@ -385,13 +385,51 @@
       "timeout": 60000
     },
     "vdd": {
+      "type": "remote",
+      "url": "https://vdd.simonmak.com/api/mcp",
+      "enabled": true,
+      "oauth": false,
+      "timeout": 120000
+    },
+    "arxiv": {
       "type": "local",
-      "command": [
-        "node",
-        "/workspaces/vision_driven_design/packages/vdd-mcp/dist/stdio.js"
-      ],
+      "command": ["uvx", "arxiv-mcp-server"],
+      "enabled": true,
+      "timeout": 180000
+    },
+    "paper-search": {
+      "type": "local",
+      "command": ["uvx", "--with", "mcp==1.9.4", "paper-search-mcp"],
+      "enabled": true,
+      "timeout": 180000
+    },
+    "firecrawl": {
+      "type": "local",
+      "command": ["npx", "-y", "firecrawl-mcp@3.25.5"],
+      "environment": {
+        "FIRECRAWL_API_KEY": "{env:FIRECRAWL_API_KEY}"
+      },
       "enabled": true,
       "timeout": 120000
+    },
+    "exa": {
+      "type": "remote",
+      "oauth": false,
+      "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,web_search_advanced_exa",
+      "enabled": true,
+      "headers": {
+        "x-api-key": "{env:EXA_API_KEY}"
+      },
+      "timeout": 60000
+    },
+    "cloudflare": {
+      "type": "remote",
+      "url": "https://mcp.cloudflare.com/mcp",
+      "enabled": true,
+      "timeout": 60000,
+      "headers": {
+        "Authorization": "Bearer {env:CLOUDFLARE_API_TOKEN}"
+      }
     },
     "clerk": {
       "type": "remote",
@@ -610,16 +648,14 @@
       "timeout": 120000
     },
     "sentry": {
-      "type": "local",
-      "command": [
-        "node",
-        "/home/node/.npm-global/lib/node_modules/@sentry/mcp-server/dist/index.js"
-      ],
-      "environment": {
-        "SENTRY_ACCESS_TOKEN": "{env:SENTRY_AUTH_TOKEN}"
-      },
+      "type": "remote",
+      "url": "https://mcp.sentry.dev/mcp",
       "enabled": true,
-      "timeout": 30000
+      "oauth": false,
+      "headers": {
+        "Authorization": "Sentry-Bearer {env:SENTRY_AUTH_TOKEN}"
+      },
+      "timeout": 60000
     },
     "google-search": {
       "type": "local",

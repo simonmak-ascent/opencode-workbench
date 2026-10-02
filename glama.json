@@ -7,8 +7,8 @@
   "license": "MIT",
   "runtime": "node",
   "installInstructions": {
-    "npm": "npx -y github:simonplmak-cloud/opencode-workbench",
-    "remote": "https://opencode-workbench.simonmak.com/api/mcp"
+    "npm": "npx -y @simonmak-ascent/opencode-workbench",
+    "remote": "https://opencode-workbench.simonmak.com/mcp"
   },
   "categories": ["developer-tools", "education-and-learning-tools", "research-and-data"],
   "keywords": [

@@ -15,7 +15,8 @@ result — locally or over SSH.
 
 - Public repo: `https://github.com/simonplmak-cloud/opencode-workbench`
 - Entry point: `node mcp-server/dist/index.js` (bin: `opencode-workbench`)
-- Run without installing: `npx -y github:simonplmak-cloud/opencode-workbench`
+- Run without installing: `npx -y @simonmak-ascent/opencode-workbench`
+- Hosted (Streamable HTTP): `https://opencode-workbench.simonmak.com/mcp`
 - Registration snippet and connector manifest: [`connector.json`](../../connector.json)
 
 ## Architecture

@@ -44,6 +44,25 @@ if command -v docker >/dev/null 2>&1; then
   docker info >/dev/null 2>&1 && DOCKER_OK="true" || DOCKER_OK="false"
 fi
 
+# Names of credentials present on the target (never values). Source the env
+# template if it exists so freshly-filled keys are detected.
+ENVFILE="$HOME_DIR/.env.workbench"
+if [ -f "$ENVFILE" ]; then
+  set -a
+  . "$ENVFILE" >/dev/null 2>&1 || true
+  set +a
+fi
+ENV_PRESENT=""
+for v in DEEPSEEK_API_KEY OPENCODE_API_KEY OPENROUTER_API_KEY MOONSHOT_API_KEY \
+         PERPLEXITY_API_KEY BRAVE_API_KEY SENTRY_AUTH_TOKEN FIRECRAWL_API_KEY \
+         EXA_API_KEY CLOUDFLARE_API_TOKEN STRIPE_SECRET_KEY GITHUB_PERSONAL_ACCESS_TOKEN \
+         SIMONPLMAK_CLOUD_PAT DATABASE_URL DATABASE_URI SURREAL_ENDPOINT AZURE_CLIENT_ID \
+         GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET ALIBABA_CLOUD_ACCESS_KEY_ID \
+         ALIBABA_CLOUD_ACCESS_KEY_SECRET FRED_API_KEY COMPANIES_HOUSE_API_KEY \
+         RESEARCH_CONTACT VERCEL_ACCESS_TOKEN; do
+  if printenv "$v" >/dev/null 2>&1; then ENV_PRESENT="$ENV_PRESENT $v"; fi
+done
+
 cat <<EOF
 {
   "user": "$(val "$USER_NAME")",
@@ -60,6 +79,7 @@ cat <<EOF
   "npmModules": "$(val "$NPM_MODULES")",
   "opencodeBin": "$(val "$OPENCODE_BIN")",
   "dockerRunning": $DOCKER_OK,
+  "envPresent": "$ENV_PRESENT",
   "has": {
     "git": $(have git),
     "curl": $(have curl),

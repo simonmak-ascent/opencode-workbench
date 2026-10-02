@@ -2,7 +2,8 @@
 # sync-runtime-config.sh — Sync repo opencode.json to runtime location
 # Ensures the runtime config matches the repository source of truth.
 
-REPO_CONFIG="/workspaces/workbench/opencode.json"
+REPO_ROOT="${WB_REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+REPO_CONFIG="$REPO_ROOT/opencode.json"
 RUNTIME_CONFIG="$HOME/.config/opencode/opencode.json"
 
 echo "=== Config Sync ==="

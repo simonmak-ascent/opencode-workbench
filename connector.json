@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/simonplmak-cloud/opencode-workbench/main/connector.schema.json",
+  "$schema": "./connector.schema.json",
   "name": "opencode-workbench",
   "title": "OpenCode Workbench",
   "description": "Clones the OpenCode workbench installation onto Linux machines, locally or over SSH.",
@@ -7,12 +7,22 @@
   "transport": {
     "type": "stdio",
     "command": "npx",
-    "args": ["-y", "github:simonplmak-cloud/opencode-workbench"],
+    "args": ["-y", "@simonmak-ascent/opencode-workbench"],
     "env": []
+  },
+  "transports": {
+    "stdio": {
+      "type": "stdio",
+      "command": ["npx", "-y", "@simonmak-ascent/opencode-workbench"]
+    },
+    "remote": {
+      "type": "remote",
+      "url": "https://opencode-workbench.simonmak.com/mcp"
+    }
   },
   "mcp": {
     "type": "local",
-    "command": ["npx", "-y", "github:simonplmak-cloud/opencode-workbench"],
+    "command": ["npx", "-y", "@simonmak-ascent/opencode-workbench"],
     "enabled": true,
     "timeout": 600000
   },
@@ -23,11 +33,11 @@
   "secrets": {
     "written": [],
     "template": "~/.env.workbench",
-    "note": "The connector never reads or transmits secret values; it writes an empty template with the variable names the profile references."
+    "note": "The connector never reads or transmits secret values; it writes an empty template with the variable names the profile references. It can, with consent, help you acquire keys (list_required_credentials) without ever observing their values."
   },
   "components": {
     "required": ["git", "curl", "node", "opencode"],
     "core": ["pnpm", "uv", "gh", "npm-mcps", "vendored-mcps", "skills", "plugins", "playwright-browsers"],
-    "optional": ["github-mcp", "docker", "docker-containers", "data-tools"]
+    "optional": ["github-mcp", "docker", "docker-containers", "data-tools", "research-mcps"]
   }
 }
