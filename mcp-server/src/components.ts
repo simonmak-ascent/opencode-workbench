@@ -20,6 +20,8 @@ export interface Component {
   detect: string;
   /** Idempotent install script. */
   install: string;
+  /** Human-readable preview of the privileged action, shown before consent. */
+  preview?: string;
   /** True when a step cannot be fully automated (OAuth, reboot, ...). */
   manual?: boolean;
 }
@@ -94,6 +96,7 @@ export const COMPONENTS: Component[] = [
     title: "Node.js >= 20",
     tier: "required",
     description: "Runtime for OpenCode and all npm-based MCP servers.",
+    preview: "curl NodeSource setup_22.x | sudo bash; apt/dnf/yum install nodejs (or nvm install 22)",
     detect: `command -v node >/dev/null 2>&1 && node -e 'process.exit(process.versions.node.split(".")[0] >= 20 ? 0 : 1)'`,
     install: `
 if command -v apt-get >/dev/null 2>&1; then
@@ -122,6 +125,7 @@ fi
     title: "OpenCode CLI",
     tier: "required",
     description: "The agent CLI this workbench is built around.",
+    preview: "curl -fsSL https://opencode.ai/install | bash",
     detect: `command -v opencode >/dev/null 2>&1 || [ -x "$WB_HOME/.opencode/bin/opencode" ]`,
     install: `curl -fsSL https://opencode.ai/install | bash`,
   },
@@ -261,6 +265,7 @@ fi
     title: "Docker",
     tier: "optional",
     description: "Required only for the pg-memory and browserless containers.",
+    preview: "curl -fsSL https://get.docker.com | sudo sh",
     detect: "command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1",
     install: `command -v docker >/dev/null 2>&1 || curl -fsSL https://get.docker.com | $SUDO sh`,
   },
