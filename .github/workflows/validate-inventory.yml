@@ -66,6 +66,20 @@ jobs:
           print(f'Docs match config: {total} configured, {enabled} enabled')
           PYEOF
 
+      - name: Assert server.json matches package.json
+        run: |
+          python3 << 'PYEOF'
+          import json, sys
+          pkg = json.load(open('package.json'))
+          srv = json.load(open('server.json'))
+          vp, vs = pkg.get('version'), srv.get('version')
+          ident = (srv.get('packages') or [{}])[0].get('identifier')
+          print(f"package.json: {pkg.get('name')}@{vp}; server.json: {ident}@{vs}")
+          if vs != vp or ident != pkg.get('name'):
+              print('DRIFT: server.json must match package.json name/version')
+              sys.exit(1)
+          PYEOF
+
       - name: Check skills count
         run: |
           count=$(find .opencode/skills -name "SKILL.md" 2>/dev/null | wc -l)

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "name": "io.github.simonmak-ascent/opencode-workbench",
+  "description": "Provision and clone an OpenCode workbench onto a Linux machine (local or over SSH): kernel-up platform scan, latest-stable OpenCode, the MCP stack, agent skills and the VDD profile — with a one-call bootstrap_host and a value-blind, consent-gated clone.",
+  "version": "1.1.0",
+  "repository": {
+    "url": "https://github.com/simonmak-ascent/opencode-workbench",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@simonmak-ascent/opencode-workbench",
+      "version": "1.1.0",
+      "transport": { "type": "stdio" }
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://opencode-workbench.simonmak.com/mcp"
+    }
+  ]
+}

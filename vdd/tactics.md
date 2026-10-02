@@ -68,6 +68,20 @@ Derived from: `vdd/strategy.md`. Scope: Infrastructure only.
 | A-006 | CI assertion: docs counts match `opencode.json` | SHOULD | Governance | S | None |
 | A-007 | Tests: platform parsing/plan, help, idempotency | MUST | P1, P2 | M | A-001, A-002 |
 
+### [AMEND 2026-10-03] Quality + registry distribution (V-001 → I-006/I-007)
+
+| ID | Action Item | Priority | Pillar | Size | Deps |
+|----|------------|----------|--------|------|------|
+| A-008 | Resolve TDQS lint warnings (shadow-candidates) and keep lint at 0 errors | MUST | P1 | S | A-002 |
+| A-009 | Add `server.json` manifest for the Official MCP Registry | MUST | Distribution | S | None |
+| A-010 | Registry-listing runbook + claim/verify each of the 5 registries; automate what the API allows | MUST | Distribution | M | A-009 |
+| A-011 | Capture a full `mcp-tdqs score` (tier A floor) and wire a CI gate when a scorer key is available | SHOULD | P1 | M | A-008 |
+
+**AMEND dependency map:** `A-002 → A-008 → A-011`; `A-009 → A-010`.
+**AMEND blocker:** A-011 (full score) and Smithery/PulseMCP listing require credentials the
+agent does not hold (TDQS hosted API key, Smithery API key, PulseMCP submission); Glama is
+already live/claimable and the Official Registry supports GitHub OIDC.
+
 ## Dependency Map
 
 ```
