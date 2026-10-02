@@ -33,8 +33,7 @@ describe("workbench-mcp server", () => {
   it("answers workbench_info with components and optional MCPs", async () => {
     const client = await connect();
     const res = await client.callTool({ name: "workbench_info", arguments: {} });
-    const text = (res.content as Array<{ type: string; text: string }>)[0]!.text;
-    const info = JSON.parse(text) as {
+    const info = res.structuredContent as {
       components: Array<{ id: string; tier: string }>;
       optionalMcp: string[];
     };
@@ -50,8 +49,7 @@ describe("workbench-mcp server", () => {
       arguments: { target: { mode: "local" } },
     });
     expect(res.isError).toBeFalsy();
-    const text = (res.content as Array<{ type: string; text: string }>)[0]!.text;
-    const info = JSON.parse(text) as { home: string; has: Record<string, boolean> };
+    const info = res.structuredContent as { home: string; has: Record<string, boolean> };
     expect(typeof info.home).toBe("string");
     expect(info.home.length).toBeGreaterThan(0);
     expect(typeof info.has).toBe("object");
@@ -65,8 +63,7 @@ describe("workbench-mcp server", () => {
       arguments: { target: { mode: "local" } },
     });
     expect(res.isError).toBeFalsy();
-    const text = (res.content as Array<{ type: string; text: string }>)[0]!.text;
-    const plan = JSON.parse(text) as {
+    const plan = res.structuredContent as {
       steps: Array<{ id: string; action: string }>;
       toInstall: string[];
     };
