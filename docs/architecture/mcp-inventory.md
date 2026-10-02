@@ -1,49 +1,44 @@
-# MCP Inventory
+# MCP Server Inventory
 
-> Generated: 2026-07-26
-> Purpose: Complete inventory of all MCP servers with versions, dependencies, and setup
+> Generated: 2026-10-02T16:59:03Z
+> Source: `opencode.json` (single source of truth)
 
-## Remote MCP Servers
+| Server | Type | Enabled | Auth env | Entry |
+|--------|------|---------|----------|-------|
+| alibaba-cloud-ops | local | yes | ALIBABA_CLOUD_ACCESS_KEY_ID, ALIBABA_CLOUD_ACCESS_KEY_SECRET | `uvx alibaba-cloud-ops-mcp-server@latest` |
+| arxiv | local | yes | — | `uvx arxiv-mcp-server` |
+| brave-search | local | yes | BRAVE_API_KEY | `node /home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-brave-search/dist/index.js` |
+| browser-mcp | local | yes | — | `node /home/node/.local/bin/browser-mcp/browser-mcp-server-v2.js` |
+| browserless | local | yes | BROWSERLESS_TOKEN | `node /home/node/.local/bin/browserless-mcp/dist/index.js` |
+| clerk | remote | yes | — | `https://mcp.clerk.com/mcp` |
+| cloudflare | remote | yes | CLOUDFLARE_API_TOKEN | `https://mcp.cloudflare.com/mcp` |
+| context7 | remote | yes | — | `https://mcp.context7.com/mcp` |
+| design-system | local | yes | — | `node /home/node/.npm-global/lib/node_modules/mcp-design-system-extractor/dist/index.js` |
+| designlang | local | yes | — | `npx -y designlang mcp --output-dir /home/node/design-extract-output` |
+| difflens | local | yes | — | `npx -y difflens-cli` |
+| echarts | local | yes | — | `node /home/node/.npm-global/lib/node_modules/mcp-echarts/build/index.js` |
+| esg-hub | local | yes | — | `node /workspaces/esg-hub/mcp-server/dist/index.js` |
+| exa | remote | yes | EXA_API_KEY | `https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,web_search_advanced_exa` |
+| firecrawl | local | yes | FIRECRAWL_API_KEY | `npx -y firecrawl-mcp@3.25.5` |
+| gh_grep | remote | yes | — | `https://mcp.grep.app` |
+| github | local | yes | SIMONPLMAK_CLOUD_PAT | `/home/node/.local/bin/github-mcp-server stdio` |
+| google-search | local | no | GOOGLE_API_KEY, GOOGLE_CSE_ID | `node /home/node/.npm-global/lib/node_modules/@adenot/mcp-google-search/build/index.js` |
+| google-workspace | local | no | GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET | `docker run -i --rm -v /home/node/.mcp/google-workspace-mcp:/app/config -e GOOGLE_CLIENT_ID={env:GOOGLE_CLIENT_ID} -e GOOGLE_CLIENT_SECRET={env:GOOGLE_CLIENT_SECRET} -e LOG_MODE=strict ghcr.io/aaronsb/google-workspace-mcp:latest` |
+| humanity4ai | local | yes | — | `node /workspaces/project_human/mcp-servers/dist/mcp-server.js` |
+| mermaid | local | yes | — | `node /home/node/.npm-global/lib/node_modules/mcp-mermaid/build/index.js` |
+| ms-365 | local | yes | AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID | `npx @softeria/ms-365-mcp-server` |
+| paper-search | local | yes | — | `uvx --with mcp==1.9.4 paper-search-mcp` |
+| perplexity | local | yes | PERPLEXITY_API_KEY | `node /home/node/.local/bin/perplexity-agent-mcp/index.js` |
+| playwright | local | yes | — | `node /home/node/.npm-global/lib/node_modules/@playwright/mcp/cli.js` |
+| postgres | local | yes | DATABASE_URL | `node /home/node/.local/bin/postgres-mcp-shim.mjs` |
+| primary-sources | local | yes | COMPANIES_HOUSE_API_KEY, FRED_API_KEY, RESEARCH_CONTACT | `npx -y @simonmak-ascent/primary-sources-mcp@1.0.0` |
+| saga | local | yes | — | `node /home/node/.npm-global/lib/node_modules/saga-mcp/dist/index.js` |
+| sentry | remote | yes | SENTRY_AUTH_TOKEN | `https://mcp.sentry.dev/mcp` |
+| shadcn | local | yes | SIMONPLMAK_CLOUD_PAT | `node /home/node/.npm-global/lib/node_modules/@jpisnice/shadcn-ui-mcp-server/build/index.js` |
+| stripe | remote | yes | STRIPE_SECRET_KEY | `https://mcp.stripe.com` |
+| surrealdb | local | yes | SURREAL_DATABASE, SURREAL_NAMESPACE, SURREAL_PASSWORD, SURREAL_TOKEN, SURREAL_URL, SURREAL_USERNAME | `node /home/node/.local/bin/surreal-mcp-shim.mjs` |
+| swagger-testcase | local | yes | — | `node /home/node/.npm-global/lib/node_modules/swagger-testcase-mcp/dist/index.js` |
+| vdd | remote | yes | — | `https://vdd.simonmak.com/api/mcp` |
+| vercel | remote | yes | VERCEL_ACCESS_TOKEN | `https://mcp.vercel.com` |
 
-| # | Name | URL | Auth | Version |
-|---|------|-----|------|---------|
-| 1 | context7 | `https://mcp.context7.com/mcp` | None | N/A (remote) |
-| 2 | gh_grep | `https://mcp.grep.app` | None | N/A (remote) |
-| 4 | clerk | `https://mcp.clerk.com/mcp` | None | N/A (remote) |
-| 5 | vercel | `https://mcp.vercel.com` | OAuth | N/A (remote) |
-
-## Local MCP Servers
-
-| # | Name | Package | Version | Entry Point | Dependencies | Setup |
-|---|------|---------|---------|-------------|--------------|-------|
-| 6 | github | `github-mcp-server` | N/A (binary) | `/home/node/.local/bin/github-mcp-server` | Go binary | Downloaded by setup.sh |
-| 7 | perplexity | `perplexity-agent-mcp` | 1.0.0 | `vendor/perplexity-agent-mcp/index.js` | `@modelcontextprotocol/sdk` | Vendored, `npm install` by setup.sh |
-| 8 | brave-search | `@modelcontextprotocol/server-brave-search` | 0.6.2 | `.npm-global/lib/.../dist/index.js` | Node.js | `npm install -g` |
-| 9 | postgres | `@modelcontextprotocol/server-postgres` | 0.6.2 | `.npm-global/lib/.../dist/index.js` | Node.js, Postgres 16 | `npm install -g`, Docker |
-| 10 | browserless | `browserless-mcp` (vendored) | N/A | `vendor/browserless-mcp/dist/index.js` | Node.js, Browserless Docker | Vendored, built by setup.sh |
-| 11 | playwright | `@playwright/mcp` | 0.0.78 | `.npm-global/lib/.../cli.js` | Node.js, Chromium | `npm install -g`, `npx playwright install chrome` |
-| 12 | figma | `figma-developer-mcp` | 0.13.2 | `.npm-global/lib/.../dist/index.js` | Node.js, `@figma/rest-api-spec` | `npm install -g` |
-| 13 | mermaid | `mcp-mermaid` | 0.4.1 | `.npm-global/lib/.../build/index.js` | Node.js | `npm install -g` |
-| 14 | saga | `saga-mcp` | 1.6.0 | `.npm-global/lib/.../dist/index.js` | Node.js, SQLite | `npm install -g` |
-| 15 | echarts | `mcp-echarts` | 0.7.1 | `.npm-global/lib/.../build/index.js` | Node.js | `npm install -g` |
-| 16 | shadcn | `@jpisnice/shadcn-ui-mcp-server` | 2.0.0 | `.npm-global/lib/.../build/index.js` | Node.js, GitHub PAT | `npm install -g` |
-| 17 | swagger-testcase | `swagger-testcase-mcp` | 1.0.0 | `.npm-global/lib/.../dist/index.js` | Node.js | `npm install -g` |
-| 18 | design-system | `mcp-design-system-extractor` | 1.1.1 | `.npm-global/lib/.../dist/index.js` | Node.js | `npm install -g` |
-| 19 | sentry | `@sentry/mcp-server` | 0.37.0 | `.npm-global/lib/.../dist/index.js` | Node.js | `npm install -g` |
-
-## Infrastructure Dependencies
-
-| Infrastructure | Type | Port | Setup |
-|---------------|------|------|-------|
-| PostgreSQL 16 | Docker (`pg-memory`) | 5432 | `docker run` via setup.sh |
-| Browserless | Docker (`browserless`) | 3000 | `docker run` via setup.sh |
-
-## Setup Automation
-
-All MCP servers installed by `.devcontainer/setup.sh`:
-
-1. npm-global packages installed via `npm install -g` (line ~45-55)
-2. Vendored MCPs copied to `~/.local/bin/` (line ~59-62)
-3. Docker containers started (line ~25-35)
-4. `opencode.json` copied to `~/.config/opencode/` (line ~15)
-5. External repos cloned to `~/` (line ~65-70)
+Total: 35 · enabled: 33
