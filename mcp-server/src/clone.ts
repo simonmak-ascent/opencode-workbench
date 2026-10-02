@@ -57,6 +57,8 @@ export interface PlanStep {
   tier: Component["tier"];
   action: "install" | "present" | "manual";
   description: string;
+  /** Preview of the privileged action, for consent. */
+  command?: string;
 }
 
 export interface PlanResult {
@@ -151,7 +153,7 @@ export async function plan(target: Target, options: CloneOptions = {}): Promise<
     const c = componentById(id)!;
     const present = known[id] === true;
     const action: PlanStep["action"] = present ? "present" : c.manual ? "manual" : "install";
-    return { id, title: c.title, tier: c.tier, action, description: c.description };
+    return { id, title: c.title, tier: c.tier, action, description: c.description, command: c.preview };
   });
   return {
     target: target.label,

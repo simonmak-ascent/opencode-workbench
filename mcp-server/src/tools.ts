@@ -12,6 +12,7 @@ import type { TargetSpec } from "./target.js";
 import { COMPONENTS, componentById, defaultComponentIds } from "./components.js";
 import { OPTIONAL_MCP_IDS } from "./render.js";
 import { REPO_URL, REPO_WEB, packageRoot } from "./profile.js";
+import { REQUIRED_CREDENTIALS, credentialByVar, credentialStatus } from "./credential-catalog.js";
 import { bootstrap } from "./bootstrap.js";
 
 const targetShape = z
@@ -79,6 +80,7 @@ const planStepOutput = z.object({
   tier: z.enum(["required", "core", "optional"]).describe("Component tier."),
   action: z.enum(["install", "present", "manual"]).describe("Planned action: install, already present, or manual step."),
   description: z.string().describe("What the component provides."),
+  command: z.string().optional().describe("Preview of the privileged command that would run, for consent."),
 });
 
 const planOutput = z.object({
@@ -106,6 +108,14 @@ const applyOutput = z.object({
   model: z.string().describe("Default model selected for the target (DeepSeek when its key is present, else the OpenCode Zen free floor)."),
   providerMode: z.enum(["deepseek", "zen", "degraded"]).describe("Which provider the model resolves to."),
   degraded: z.array(z.object({ id: z.string(), reason: z.string() })).describe("Capabilities disabled because required credentials are absent; fill the named env vars to enable them."),
+  requiresConfirmation: z.boolean().optional().describe("True when the call returned a plan without applying; re-call with confirm:true to install."),
+  plan: z
+    .object({
+      toInstall: z.array(z.string()).describe("Component ids that would be installed."),
+      commands: z.array(z.object({ id: z.string(), command: z.string().optional() })).describe("Privileged command preview per component."),
+    })
+    .optional()
+    .describe("Presented when confirmation is required."),
 });
 
 const verifyOutput = z.object({
@@ -119,6 +129,36 @@ const verifyOutput = z.object({
     }),
   ).describe("Per-component presence detection."),
   missing: z.array(z.string()).describe("Component ids detected as missing."),
+});
+
+const credentialStatusOutput = z.object({
+  var: z.string().describe("Environment variable name."),
+  label: z.string().describe("Human-readable name."),
+  purpose: z.string().describe("What uses it."),
+  url: z.string().optional().describe("Where to create/obtain the key."),
+  method: z.enum(["paste", "oauth", "cli", "instruction"]).describe("Recommended acquisition method."),
+  command: z.string().optional().describe("Exact non-interactive command, when one exists."),
+  optional: z.boolean().optional().describe("True when only a subset of tools degrades without it."),
+  present: z.boolean().describe("Whether the target already provides it (value never read)."),
+});
+
+const credentialsOutput = z.object({
+  target: z.string().describe("Label of the inspected target."),
+  present: z.array(z.string()).describe("Credential names already present on the target."),
+  missing: z.array(z.string()).describe("Credential names not present."),
+  template: z.string().describe("Path of the env file to fill in."),
+  credentials: z.array(credentialStatusOutput).describe("Every credential the profile references with its acquisition guidance."),
+});
+
+const authFlowOutput = z.object({
+  target: z.string().describe("Label of the target."),
+  var: z.string().describe("Credential being acquired."),
+  method: z.enum(["paste", "oauth", "cli", "instruction"]).describe("Acquisition method."),
+  url: z.string().optional().describe("Provider URL to open."),
+  command: z.string().optional().describe("Command for the agent/user to run."),
+  present: z.boolean().describe("Whether the credential is present now."),
+  verified: z.boolean().describe("True when the credential is present and ready."),
+  next: z.string().describe("What to do next."),
 });
 
 function toSpec(target: TargetArg): TargetSpec {
@@ -228,14 +268,31 @@ export function registerTools(server: McpServer): void {
     {
       title: "Apply a Workbench clone",
       description:
-        "Clone the Workbench profile onto a target and install missing components: repo, OpenCode CLI, Node/pnpm, npm MCPs, vendored MCPs, skills, plugins, and optionally Docker. Idempotent — already-present components are skipped. Requires SSH access and write permission on the target; installs can take several minutes. Writes a rendered opencode.json and an empty ~/.env.workbench template (mode 600), never secret values. Restrict with `components`, preview with `dryRun:true`, then confirm with verify_clone.",
-      inputSchema: { target: targetShape, ...optionsShape },
+        "Clone the Workbench profile onto a target and install missing components: repo, OpenCode CLI, Node/pnpm, npm MCPs, vendored MCPs, research MCPs, skills, plugins, and optionally Docker. Idempotent — already-present components are skipped. Requires SSH access and write permission on the target; installs can take several minutes. Consent-gated: without `confirm:true` it returns a plan (components + privileged-command preview) and changes nothing. Writes a rendered opencode.json and an empty ~/.env.workbench template (mode 600), never secret values. Restrict with `components`, preview with `dryRun:true`, then confirm with verify_clone.",
+      inputSchema: {
+        target: targetShape,
+        confirm: z.boolean().optional().describe("Set true to actually install. When absent, the call returns a plan and makes no changes."),
+        ...optionsShape,
+      },
       outputSchema: applyOutput,
       annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: true },
     },
-    async ({ target, ...opts }: { target: TargetArg } & Partial<CloneOptions>) => {
+    async ({ target, confirm, ...opts }: { target: TargetArg; confirm?: boolean } & Partial<CloneOptions>) => {
       try {
-        return structured(await apply(targetFromSpec(toSpec(target)), toOptions(opts)));
+        const spec = targetFromSpec(toSpec(target));
+        if (confirm !== true) {
+          const p = await plan(spec, toOptions(opts));
+          const dry = await apply(spec, { ...toOptions(opts), dryRun: true });
+          return structured({
+            ...dry,
+            requiresConfirmation: true,
+            plan: {
+              toInstall: p.toInstall,
+              commands: p.steps.filter((s) => s.action === "install").map((s) => ({ id: s.id, command: s.command })),
+            },
+          });
+        }
+        return structured(await apply(spec, toOptions(opts)));
       } catch (e) {
         return fail("apply_clone failed", e);
       }
@@ -271,17 +328,100 @@ export function registerTools(server: McpServer): void {
         target: targetShape,
         component: z.string().describe("Component id from workbench_info."),
         workspace: z.string().optional().describe("Target directory for the profile repo."),
+        confirm: z.boolean().optional().describe("Set true to actually install. When absent, the call returns a plan and makes no changes."),
       },
       outputSchema: applyOutput,
       annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: true },
     },
-    async ({ target, component, workspace }: { target: TargetArg; component: string; workspace?: string }) => {
+    async ({ target, component, workspace, confirm }: { target: TargetArg; component: string; workspace?: string; confirm?: boolean }) => {
       try {
         const c = componentById(component);
         if (!c) throw new Error(`unknown component '${component}'`);
-        return structured(await apply(targetFromSpec(toSpec(target)), { components: [component], workspace }));
+        const spec = targetFromSpec(toSpec(target));
+        if (confirm !== true) {
+          const dry = await apply(spec, { components: [component], workspace, dryRun: true });
+          return structured({
+            ...dry,
+            requiresConfirmation: true,
+            plan: { toInstall: [component], commands: [{ id: component, command: c.preview }] },
+          });
+        }
+        return structured(await apply(spec, { components: [component], workspace }));
       } catch (e) {
         return fail("install_component failed", e);
+      }
+    },
+  );
+
+  server.registerTool(
+    "list_required_credentials",
+    {
+      title: "List required credentials",
+      description:
+        "Report which credentials the profile references, which the target already provides, and how to acquire each missing one (label, purpose, provider URL, method and exact command). Value-blind: it checks whether env vars are set but never reads or returns their values. Use it after plan_clone to see what a clone would leave degraded, and before run_auth_flow.",
+      inputSchema: { target: targetShape },
+      outputSchema: credentialsOutput,
+      annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
+    },
+    async ({ target }: { target: TargetArg }) => {
+      try {
+        const t = targetFromSpec(toSpec(target));
+        const info = await inspect(t);
+        const presentEnv = new Set((info.envPresent ?? "").split(/\s+/).filter(Boolean));
+        const credentials = REQUIRED_CREDENTIALS.map((c) => credentialStatus(c, presentEnv));
+        return structured({
+          target: t.label,
+          present: credentials.filter((c) => c.present).map((c) => c.var),
+          missing: credentials.filter((c) => !c.present).map((c) => c.var),
+          template: `${info.home}/.env.workbench`,
+          credentials,
+        });
+      } catch (e) {
+        return fail("list_required_credentials failed", e);
+      }
+    },
+  );
+
+  server.registerTool(
+    "run_auth_flow",
+    {
+      title: "Acquire one credential (best-effort)",
+      description:
+        "Return the acquisition plan for one credential on a target: the provider URL, the exact non-interactive command when one exists (e.g. `opencode auth login`, `opencode mcp auth vercel`, `gh auth login`), and whether the credential is already present. Emit-and-verify: it does not run interactive flows or handle secret values itself. Use list_required_credentials first to find the variable name.",
+      inputSchema: {
+        target: targetShape,
+        var: z.string().describe("Credential env var name from list_required_credentials (e.g. OPENCODE_API_KEY)."),
+      },
+      outputSchema: authFlowOutput,
+      annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
+    },
+    async ({ target, var: name }: { target: TargetArg; var: string }) => {
+      try {
+        const spec = credentialByVar(name);
+        if (!spec) throw new Error(`unknown credential '${name}'`);
+        const t = targetFromSpec(toSpec(target));
+        const info = await inspect(t);
+        const presentEnv = new Set((info.envPresent ?? "").split(/\s+/).filter(Boolean));
+        const present = presentEnv.has(name);
+        const next = present
+          ? "Already present; nothing to do."
+          : spec.command
+            ? `Run: ${spec.command}`
+            : spec.url
+              ? `Open ${spec.url} and paste the value into ${info.home}/.env.workbench`
+              : `Set ${name}= in ${info.home}/.env.workbench`;
+        return structured({
+          target: t.label,
+          var: name,
+          method: spec.method,
+          url: spec.url,
+          command: spec.command,
+          present,
+          verified: present,
+          next,
+        });
+      } catch (e) {
+        return fail("run_auth_flow failed", e);
       }
     },
   );
@@ -293,6 +433,7 @@ export function registerTools(server: McpServer): void {
     parameters: [
       { name: "target", type: "object", required: false, description: "Machine to provision; required unless help=true. { mode: local|ssh, host?, user?, port?, identityFile?, cwd? }." },
       { name: "help", type: "boolean", required: false, description: "Return this parameter reference and contact no target." },
+      { name: "confirm", type: "boolean", required: false, description: "Set true to actually provision. When absent, a plan (platform + upgrade + components) is returned and nothing changes." },
       { name: "workspace", type: "string", required: false, description: "Target directory for the profile repo." },
       { name: "components", type: "string[]", required: false, description: "Component ids to include; defaults to required+core." },
       { name: "upgrade", type: "boolean", required: false, description: "Execute the platform upgrade (default false = plan only)." },
@@ -315,27 +456,31 @@ export function registerTools(server: McpServer): void {
     ),
   });
 
+  const bootstrapPlatformOutput = z.object({
+    osId: z.string().nullable(),
+    osIdLike: z.array(z.string()),
+    osName: z.string().nullable(),
+    osVersion: z.string().nullable(),
+    kernel: z.string().nullable(),
+    arch: z.string().nullable(),
+    packageManager: z.string().nullable(),
+    family: z.string(),
+  });
+
+  const bootstrapUpgradeOutput = z.object({
+    packageManager: z.string().nullable(),
+    family: z.string(),
+    commands: z.array(z.string()),
+    upgradable: z.number().nullable(),
+    executed: z.boolean(),
+    output: z.array(z.string()),
+    rebootAdvisory: z.boolean(),
+  });
+
   const bootstrapResultOutput = z.object({
-    target: z.string().describe("Label of the target."),
-    platform: z.object({
-      osId: z.string().nullable(),
-      osIdLike: z.array(z.string()),
-      osName: z.string().nullable(),
-      osVersion: z.string().nullable(),
-      kernel: z.string().nullable(),
-      arch: z.string().nullable(),
-      packageManager: z.string().nullable(),
-      family: z.string(),
-    }).describe("Platform report from the kernel up."),
-    upgrade: z.object({
-      packageManager: z.string().nullable(),
-      family: z.string(),
-      commands: z.array(z.string()),
-      upgradable: z.number().nullable(),
-      executed: z.boolean().describe("True only when upgrade:true ran the commands."),
-      output: z.array(z.string()),
-      rebootAdvisory: z.boolean(),
-    }).describe("Dry-run platform upgrade plan."),
+    target: z.string(),
+    platform: bootstrapPlatformOutput.describe("Platform report from the kernel up."),
+    upgrade: bootstrapUpgradeOutput.describe("Dry-run platform upgrade plan."),
     opencode: z.object({
       installed: z.boolean(),
       version: z.string().nullable().describe("Resolved OpenCode build — the version pin."),
@@ -347,8 +492,17 @@ export function registerTools(server: McpServer): void {
   });
 
   const bootstrapOutput = z.object({
-    mode: z.enum(["help", "result"]),
+    mode: z.enum(["help", "confirm", "result"]),
     help: bootstrapHelpOutput.optional(),
+    confirm: z
+      .object({
+        target: z.string(),
+        platform: bootstrapPlatformOutput,
+        upgrade: bootstrapUpgradeOutput,
+        toInstall: z.array(z.string()),
+        commands: z.array(z.object({ id: z.string(), command: z.string().optional() })),
+      })
+      .optional(),
     result: bootstrapResultOutput.optional(),
   });
 
@@ -357,10 +511,11 @@ export function registerTools(server: McpServer): void {
     {
       title: "Bootstrap a bare Linux host",
       description:
-        "Provision a bare Linux target into a VDD-configured OpenCode workstation in one call: scan the platform from the kernel up, return a dry-run upgrade plan, install the latest stable OpenCode and record its version, apply the VDD profile config, and verify parity. Pass help:true for full parameter documentation without contacting the target. Set upgrade:true (requires root/sudo) to execute the platform upgrade; default is plan-only. Never reads or transmits secret values.",
+        "Provision a bare Linux target into a VDD-configured OpenCode workstation in one call: scan the platform from the kernel up, return a dry-run upgrade plan, install the latest stable OpenCode and record its version, apply the VDD profile config, and verify parity. Pass help:true for full parameter documentation without contacting the target. Consent-gated: without confirm:true it returns a plan (platform + upgrade commands + components) and changes nothing. Set upgrade:true (requires root/sudo) to execute the platform upgrade; default is plan-only. Never reads or transmits secret values.",
       inputSchema: {
         target: targetShape.optional(),
         help: z.boolean().optional().describe("Return parameter documentation and skip all target access."),
+        confirm: z.boolean().optional().describe("Set true to actually provision. When absent, the call returns a plan and makes no changes."),
         ...optionsShape,
         upgrade: z.boolean().optional().describe("Execute the platform upgrade (default false: plan only)."),
         assumeYes: z.boolean().optional().describe("Use non-interactive upgrade flags (default true)."),
@@ -372,13 +527,15 @@ export function registerTools(server: McpServer): void {
     async (args: {
       target?: TargetArg;
       help?: boolean;
+      confirm?: boolean;
     } & Partial<CloneOptions> & { upgrade?: boolean; assumeYes?: boolean; opencodeVersion?: string }) => {
       try {
         if (args.help) {
           return structured({ mode: "help" as const, help: bootstrapHelp });
         }
         if (!args.target) throw new Error("target is required unless help=true");
-        const result = await bootstrap(targetFromSpec(toSpec(args.target)), {
+        const spec = targetFromSpec(toSpec(args.target));
+        const base = {
           components: args.components,
           workspace: args.workspace,
           profileUrl: args.profileUrl,
@@ -387,7 +544,24 @@ export function registerTools(server: McpServer): void {
           upgrade: args.upgrade,
           assumeYes: args.assumeYes,
           opencodeVersion: args.opencodeVersion,
-        });
+        };
+        if (args.confirm !== true && args.dryRun !== true) {
+          const p = await plan(spec, toOptions(args));
+          const preview = await bootstrap(spec, { ...base, upgrade: false, dryRun: true });
+          return structured({
+            mode: "confirm" as const,
+            confirm: {
+              target: preview.target,
+              platform: preview.platform,
+              upgrade: preview.upgrade,
+              toInstall: p.toInstall,
+              commands: p.steps
+                .filter((s) => s.action === "install")
+                .map((s) => ({ id: s.id, command: s.command })),
+            },
+          });
+        }
+        const result = await bootstrap(spec, base);
         return structured({ mode: "result" as const, result });
       } catch (e) {
         return fail("bootstrap_host failed", e);

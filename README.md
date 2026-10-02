@@ -14,7 +14,7 @@ This repository is the **single source of truth** for a complete cloud developme
 
 - Workstation configuration and automation
 - OpenCode configuration (model, providers, MCP servers)
-- Agent skills (28 reusable AI instructions)
+- Agent skills (45 reusable AI instructions across research, dev, data, science and ops)
 - Operational prompts (disaster recovery, backup, security)
 - Recovery procedures (playbook, checklist, gap analysis)
 - Security governance (secret management, threat model)
@@ -39,7 +39,9 @@ Register the MCP server with OpenCode:
 }
 ```
 
-Then ask the agent to `inspect_target` → `plan_clone` → `apply_clone` → `verify_clone`, for `{ "mode": "local" }` or `{ "mode": "ssh", "host": "<your-box>", "user": "<your-user>" }`. See [`mcp-server/README.md`](mcp-server/README.md) and [`docs/architecture/clone-mcp.md`](docs/architecture/clone-mcp.md).
+Then ask the agent to run `inspect_target` → `plan_clone` → `apply_clone { confirm: true }` → `verify_clone`, for `{ "mode": "local" }` or `{ "mode": "ssh", "host": "<your-box>", "user": "<your-user>" }`. `apply_clone` is consent-gated: without `confirm:true` it returns a plan (components + privileged-command preview) and changes nothing. Run `list_required_credentials` to see which keys the box still needs and how to acquire them, and `bash scripts/selftest/run-selftest.sh` to verify it works. See [`mcp-server/README.md`](mcp-server/README.md) and [`docs/architecture/clone-mcp.md`](docs/architecture/clone-mcp.md).
+
+The clone is **key-resilient**: with no model key it still boots on the OpenCode Zen free floor, and MCP servers whose credentials are absent are disabled and reported (not left to fail at runtime).
 
 The connector never reads or transmits secret values; it writes an empty `~/.env.workbench` template for you to fill in.
 
@@ -107,7 +109,7 @@ opencode-workbench/
 |----------|---------|
 | **OpenCode** | CLI v1.18.5, DeepSeek V4 Pro model, LSP enabled |
 | **MCP Servers** | 35 configured (33 enabled, 2 disabled), 9 remote + 26 local |
-| **Agent Skills** | 28 reusable skills in `.opencode/skills/` |
+| **Agent Skills** | 45 reusable skills in `.opencode/skills/` |
 | **Infrastructure** | PostgreSQL 16 (Docker), Browserless Chromium (Docker) |
 | **Tools** | pandoc, jq, miller, sqlite3, GitHub CLI, Playwright Chromium |
 | **Prompts** | 9 operational prompts in `docs/prompts/` |

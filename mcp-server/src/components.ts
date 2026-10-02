@@ -20,6 +20,8 @@ export interface Component {
   detect: string;
   /** Idempotent install script. */
   install: string;
+  /** Human-readable preview of the privileged action, shown before consent. */
+  preview?: string;
   /** True when a step cannot be fully automated (OAuth, reboot, ...). */
   manual?: boolean;
 }
@@ -94,6 +96,7 @@ export const COMPONENTS: Component[] = [
     title: "Node.js >= 20",
     tier: "required",
     description: "Runtime for OpenCode and all npm-based MCP servers.",
+    preview: "curl NodeSource setup_22.x | sudo bash; apt/dnf/yum install nodejs (or nvm install 22)",
     detect: `command -v node >/dev/null 2>&1 && node -e 'process.exit(process.versions.node.split(".")[0] >= 20 ? 0 : 1)'`,
     install: `
 if command -v apt-get >/dev/null 2>&1; then
@@ -122,6 +125,7 @@ fi
     title: "OpenCode CLI",
     tier: "required",
     description: "The agent CLI this workbench is built around.",
+    preview: "curl -fsSL https://opencode.ai/install | bash",
     detect: `command -v opencode >/dev/null 2>&1 || [ -x "$WB_HOME/.opencode/bin/opencode" ]`,
     install: `curl -fsSL https://opencode.ai/install | bash`,
   },
@@ -261,6 +265,7 @@ fi
     title: "Docker",
     tier: "optional",
     description: "Required only for the pg-memory and browserless containers.",
+    preview: "curl -fsSL https://get.docker.com | sudo sh",
     detect: "command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1",
     install: `command -v docker >/dev/null 2>&1 || curl -fsSL https://get.docker.com | $SUDO sh`,
   },
@@ -305,6 +310,25 @@ pkg_install jq pandoc sqlite3 xmlstarlet || true
 pipx install csvkit 2>/dev/null || true
 pip3 install --break-system-packages -q duckdb polars datasette pyarrow openpyxl xlrd xlsxwriter lxml sqlalchemy tabulate 2>/dev/null || true
 `,
+  },
+  {
+    id: "scientific",
+    title: "Scientific Python stack",
+    tier: "optional",
+    description: "numpy, scipy, pandas, matplotlib, sympy (plus optional Jupyter, R, Julia).",
+    preview: "pip3 install --break-system-packages numpy scipy pandas matplotlib sympy",
+    detect: `python3 -c 'import numpy, scipy, pandas, matplotlib, sympy' >/dev/null 2>&1`,
+    install: `command -v python3 >/dev/null 2>&1 || pkg_install python3 python3-pip
+pip3 install --break-system-packages -q numpy scipy pandas matplotlib sympy || warn "scientific install failed"`,
+  },
+  {
+    id: "db-clients",
+    title: "Database clients",
+    tier: "optional",
+    description: "psql and pgcli for PostgreSQL work.",
+    detect: "command -v psql >/dev/null 2>&1 || command -v pgcli >/dev/null 2>&1",
+    install: `pkg_install postgresql-client || true
+pipx install pgcli 2>/dev/null || true`,
   },
 ];
 

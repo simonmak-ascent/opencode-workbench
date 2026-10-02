@@ -24,7 +24,9 @@ describe("opencode-workbench server", () => {
       "bootstrap_host",
       "inspect_target",
       "install_component",
+      "list_required_credentials",
       "plan_clone",
+      "run_auth_flow",
       "verify_clone",
       "workbench_info",
     ]);

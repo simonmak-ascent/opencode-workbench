@@ -41,6 +41,8 @@ From a checkout, use the local build instead:
 | `install_component` | Install a single component by id. |
 | `verify_clone` | Re-check config, env template, and every component. |
 | `bootstrap_host` | One-call provisioning: kernel-up platform scan + dry-run upgrade plan, latest-stable OpenCode + version pin, apply, verify; `help:true` documents parameters without touching the target. |
+| `list_required_credentials` | Value-blind: which credentials are missing and how to acquire each. |
+| `run_auth_flow` | Emit-and-verify acquisition guidance for one credential. |
 
 Every tool takes a `target`:
 
@@ -53,8 +55,8 @@ Every tool takes a `target`:
 ## Components
 
 - **required** — `git`, `curl`, `node` (>=20), `opencode`
-- **core** — `pnpm`, `uv`, `gh`, `npm-mcps`, `vendored-mcps`, `skills`, `plugins`, `playwright-browsers`
-- **optional** — `github-mcp`, `docker`, `docker-containers`, `data-tools`
+- **core** — `pnpm`, `uv`, `gh`, `npm-mcps`, `vendored-mcps`, `research-mcps`, `skills`, `plugins`, `playwright-browsers`
+- **optional** — `github-mcp`, `docker`, `docker-containers`, `data-tools`, `scientific`, `db-clients`
 
 Add-ons (esg-hub, humanity4ai, vdd, saga, stripe, alibaba, ms-365, google-workspace,
 surrealdb, designlang, difflens) are omitted from the rendered config unless you pass
