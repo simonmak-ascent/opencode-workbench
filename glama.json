@@ -1,0 +1,22 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": ["simonplmak-cloud"],
+  "name": "workbench",
+  "description": "Clones the OpenCode workbench installation onto Linux machines — locally or over SSH — reproducing the same OpenCode config, MCP servers, agent skills, plugins, and Docker tooling. Exposes 6 tools over stdio.",
+  "repository": "https://github.com/simonplmak-cloud/workbench",
+  "license": "MIT",
+  "runtime": "node",
+  "installInstructions": {
+    "npm": "npx -y github:simonplmak-cloud/workbench"
+  },
+  "categories": ["developer-tools", "education-and-learning-tools", "research-and-data"],
+  "keywords": [
+    "workbench",
+    "opencode",
+    "mcp",
+    "clone",
+    "dev-environment",
+    "provisioning",
+    "model-context-protocol"
+  ]
+}

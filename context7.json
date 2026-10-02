@@ -1,0 +1,45 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "OpenCode Workbench (workbench-mcp)",
+  "description": "MCP server and connector that clones the OpenCode workbench installation onto Linux machines — locally or over SSH — reproducing the OpenCode config, MCP servers, agent skills, plugins and Docker tooling. Exposes 6 tools over stdio.",
+  "folders": [
+    "mcp-server",
+    "docs",
+    "configs"
+  ],
+  "rules": [
+    "Run locally with `npx -y github:simonplmak-cloud/workbench` (Node stdio MCP server; no API key).",
+    "Drive a clone with the tool order `workbench_info` → `inspect_target` → `plan_clone` → `apply_clone` → `verify_clone`; use `install_component` to install a single component by id.",
+    "Every tool takes a `target` of `{mode: \"local\"}` or `{mode: \"ssh\", host, user, port?, identityFile?}`.",
+    "The connector never reads, transmits or writes secret values; `apply_clone` writes an empty `~/.env.workbench` template (mode 600) listing the `{env:VAR}` names to fill in.",
+    "`apply_clone` is idempotent; pass `dryRun: true` to preview the plan without making changes."
+  ],
+  "excludeFolders": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    ".cache",
+    "tests",
+    "tests-webapp",
+    "e2e",
+    "test-results",
+    "**/__pycache__",
+    ".github",
+    ".opencode",
+    ".devcontainer",
+    "specs",
+    "marketing",
+    "overrides"
+  ],
+  "excludeFiles": [
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "LICENSE",
+    "LICENSE.md",
+    "LICENSE-CONTENT.md",
+    "SECURITY.md",
+    "GITHUB_SETUP.md",
+    "VERCEL_PROTECTION_FIX.md"
+  ]
+}
