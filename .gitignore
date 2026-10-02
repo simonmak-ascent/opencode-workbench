@@ -45,3 +45,6 @@ build/
 
 # Cache directories
 .cache/
+
+# Self-test report (runtime artifact)
+selftest-report.json
