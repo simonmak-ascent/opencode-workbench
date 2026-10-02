@@ -68,6 +68,7 @@ const inspectOutput = z.object({
   npmModules: z.string().optional().describe("npm global modules directory."),
   opencodeBin: z.string().optional().describe("Path to the opencode binary, if installed."),
   dockerRunning: z.boolean().optional().describe("Whether the Docker daemon is reachable."),
+  envPresent: z.string().optional().describe("Space-separated names of credentials present on the target (values are never read)."),
   has: z.record(z.string(), z.boolean()).describe("Detection flags for git, curl, node, npm, corepack, pnpm, docker, uv, gh, opencode, sudo."),
 });
 
@@ -101,6 +102,9 @@ const applyOutput = z.object({
   skipped: z.array(z.string()).describe("Component ids skipped (already present or manual)."),
   envVars: z.array(z.string()).describe("Environment variable names listed in the env template."),
   dryRun: z.boolean().describe("True when the run made no changes."),
+  model: z.string().describe("Default model selected for the target (DeepSeek when its key is present, else the OpenCode Zen free floor)."),
+  providerMode: z.enum(["deepseek", "zen", "degraded"]).describe("Which provider the model resolves to."),
+  degraded: z.array(z.object({ id: z.string(), reason: z.string() })).describe("Capabilities disabled because required credentials are absent; fill the named env vars to enable them."),
 });
 
 const verifyOutput = z.object({

@@ -31,6 +31,8 @@ export interface InspectResult {
   npmModules?: string;
   opencodeBin?: string;
   dockerRunning?: boolean;
+  /** Space-separated names of credentials present on the target (never values). */
+  envPresent?: string;
   has: Record<string, boolean>;
 }
 
@@ -71,6 +73,12 @@ export interface ApplyResult {
   skipped: string[];
   envVars: string[];
   dryRun: boolean;
+  /** Model selected for the target (DeepSeek → Zen → degraded). */
+  model: string;
+  /** Which provider the model resolves to. */
+  providerMode: string;
+  /** Capabilities disabled because required credentials are absent. */
+  degraded: Array<{ id: string; reason: string }>;
 }
 
 export function targetFromSpec(spec: TargetSpec): Target {
@@ -188,11 +196,13 @@ export async function apply(target: Target, options: CloneOptions = {}): Promise
 
   // Render and write opencode.json (local, always safe to write; skipped on dry run).
   const base = await loadBaseConfig();
+  const presentEnv = new Set((info.envPresent ?? "").split(/\s+/).filter(Boolean));
   const ctx: RenderContext = {
     home,
     workspace,
     npmModules: info.npmModules || `${home}/.npm-global/lib/node_modules`,
     configDir,
+    presentEnv,
   };
   const rendered = renderOpencodeConfig(base, ctx);
   const envVars = extractEnvVars(rendered.config);
@@ -210,6 +220,9 @@ mkdir -p ${shellQuote(configDir)}
 cat > ${shellQuote(configPath)} <<'WB_OPENCODE_EOF'
 ${JSON.stringify(rendered.config, null, 2)}
 WB_OPENCODE_EOF
+if [ -f "$WB_REPO/AGENTS.md" ]; then cp "$WB_REPO/AGENTS.md" ${shellQuote(configDir)}/AGENTS.md && echo "wrote AGENTS.md"; fi
+mkdir -p ${shellQuote(configDir)}/docs/research
+if [ -f "$WB_REPO/docs/research/pipeline.md" ]; then cp "$WB_REPO/docs/research/pipeline.md" ${shellQuote(configDir)}/docs/research/pipeline.md && echo "wrote research pipeline"; fi
 if [ ! -f ${shellQuote(envPath)} ]; then
   cat > ${shellQuote(envPath)} <<'WB_ENV_EOF'
 ${renderEnvTemplate(envVars)}WB_ENV_EOF
@@ -220,7 +233,7 @@ else
 fi
 echo "wrote config: ${configPath}"
 `;
-    await target.run(writeScript, { timeoutMs: 30_000 });
+    await target.run(withEnv(writeScript, workspace), { timeoutMs: 30_000 });
   }
 
   if (!dryRun) {
@@ -253,6 +266,9 @@ echo "wrote config: ${configPath}"
     skipped,
     envVars,
     dryRun,
+    model: rendered.model,
+    providerMode: rendered.providerMode,
+    degraded: rendered.degraded,
   };
 }
 

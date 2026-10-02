@@ -15,7 +15,7 @@ Register it with OpenCode (or any MCP client):
   "mcp": {
     "workbench": {
       "type": "local",
-      "command": ["npx", "-y", "github:simonplmak-cloud/opencode-workbench"],
+      "command": ["npx", "-y", "@simonmak-ascent/opencode-workbench"],
       "enabled": true,
       "timeout": 600000
     }
@@ -23,6 +23,7 @@ Register it with OpenCode (or any MCP client):
 }
 ```
 
+Or point at the hosted server: `https://opencode-workbench.simonmak.com/mcp` (Streamable HTTP).
 From a checkout, use the local build instead:
 
 ```json
