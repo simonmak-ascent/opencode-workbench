@@ -57,4 +57,22 @@ describe("workbench-mcp server", () => {
     expect(typeof info.has).toBe("object");
     await client.close();
   });
+
+  it("plans a local clone without side effects", async () => {
+    const client = await connect();
+    const res = await client.callTool({
+      name: "plan_clone",
+      arguments: { target: { mode: "local" } },
+    });
+    expect(res.isError).toBeFalsy();
+    const text = (res.content as Array<{ type: string; text: string }>)[0]!.text;
+    const plan = JSON.parse(text) as {
+      steps: Array<{ id: string; action: string }>;
+      toInstall: string[];
+    };
+    expect(plan.steps.some((s) => s.id === "git")).toBe(true);
+    expect(plan.steps.some((s) => s.id === "opencode")).toBe(true);
+    expect(Array.isArray(plan.toInstall)).toBe(true);
+    await client.close();
+  });
 });
