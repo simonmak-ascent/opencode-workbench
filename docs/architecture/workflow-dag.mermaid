@@ -41,7 +41,7 @@ graph TD
     subgraph "MCP Server / Agent Skills"
         SA["SkillAuthorAgent<br/>context7 + github"]
         SV["SkillValidatorAgent<br/>playwright + sentry"]
-        SP["SkillPublisherAgent<br/>github + n8n"]
+        SP["SkillPublisherAgent<br/>github"]
 
         SUP --> SA
         SA --> SV
@@ -52,8 +52,8 @@ graph TD
     subgraph "Web Scraper"
         SC["ScrapeConfigAgent<br/>perplexity + brave"]
         SE["ScrapeExecutorAgent<br/>playwright + browserless"]
-        SS["ScrapeStorageAgent<br/>surrealdb + n8n"]
-        SAL["ScrapeAlertAgent<br/>n8n + sentry"]
+        SS["ScrapeStorageAgent<br/>surrealdb"]
+        SAL["ScrapeAlertAgent<br/>sentry"]
 
         SUP --> SC
         SC --> SE
@@ -65,7 +65,6 @@ graph TD
     subgraph "Shared Infrastructure"
         DB[("SurrealDB<br/>Shared State")]
         EVENTS[("Event Bus")]
-        N8N["n8n<br/>Orchestration"]
         SENTRY["Sentry<br/>Observability"]
     end
 
@@ -80,8 +79,6 @@ graph TD
     SAL --- DB
 
     SUP --- EVENTS
-    SAL --- N8N
-    SP --- N8N
 
     R --- SENTRY
     B --- SENTRY

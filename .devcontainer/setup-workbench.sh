@@ -44,7 +44,7 @@ fi
 
 echo ""
 echo "=== Configuring shell aliases ==="
-ALIASES_LINE='source /workspaces/codespace-workbench/.devcontainer/aliases.sh'
+ALIASES_LINE='source /workspaces/workbench/.devcontainer/aliases.sh'
 
 if [ -f ~/.bashrc ] && grep -qF "$ALIASES_LINE" ~/.bashrc; then
   echo "[SKIP] Aliases already sourced in ~/.bashrc"

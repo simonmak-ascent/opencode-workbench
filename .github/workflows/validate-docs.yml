@@ -35,7 +35,7 @@ jobs:
             "docs/architecture/ai-provider-inventory.md"
             "docs/architecture/opencode-runtime-config.md"
             "docs/architecture/opencode-runtime-snapshot.md"
-            "docs/architecture/codespaces-secrets.md"
+            "docs/architecture/SWAS-secrets.md"
             "docs/recovery/RECOVERY_PLAYBOOK.md"
             "docs/recovery/DISASTER_RECOVERY.md"
             "docs/recovery/RECOVERY_CHECKLIST.md"

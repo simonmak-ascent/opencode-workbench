@@ -120,7 +120,7 @@ This is consistent across all runs. The hang scenario described by the user woul
 
 ### Skills (30)
 
-All skills present and accounted for in `/workspaces/codespace-workbench/.opencode/skills/`.
+All skills present and accounted for in `/workspaces/workbench/.opencode/skills/`.
 
 ---
 

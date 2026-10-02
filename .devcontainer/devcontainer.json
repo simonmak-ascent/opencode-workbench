@@ -29,7 +29,6 @@
     "BROWSERLESS_PORT": "3000",
     "BROWSERLESS_PROTOCOL": "http",
     "BROWSERLESS_TOKEN": "${localEnv:BROWSERLESS_TOKEN}",
-    "N8N_MCP_ACCESS_TOKEN": "${localEnv:N8N_MCP_ACCESS_TOKEN}",
     "PERPLEXITY_API_KEY": "${localEnv:PERPLEXITY_API_KEY}",
     "BRAVE_API_KEY": "${localEnv:BRAVE_API_KEY}",
     "FIGMA_TOKEN": "${localEnv:FIGMA_TOKEN}",
@@ -38,7 +37,7 @@
     "DEEPSEEK_API_KEY": "${localEnv:DEEPSEEK_API_KEY}",
     "MOONSHOT_API_KEY": "${localEnv:MOONSHOT_API_KEY}",
     "OPENCODE_API_KEY": "${localEnv:OPENCODE_API_KEY}",
-    "DB_PATH": "/workspaces/codespace-workbench/.saga/.tracker.db",
+    "DB_PATH": "/workspaces/workbench/.saga/.tracker.db",
     "VERCEL_ACCESS_TOKEN": "${localEnv:VERCEL_ACCESS_TOKEN}",
     "OPENROUTER_API_KEY": "${localEnv:OPENROUTER_API_KEY}"
   },

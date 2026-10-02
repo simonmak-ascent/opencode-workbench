@@ -11,13 +11,13 @@ From log analysis, OpenCode loads configs in this order:
 1. `/home/node/.config/opencode/config.json` — not found (logged but doesn't exist)
 2. `/home/node/.config/opencode/opencode.json` — **global config (primary)**
 3. `/home/node/.config/opencode/opencode.jsonc` — not found
-4. `/workspaces/codespace-workbench/opencode.json` — **project config (identical to global)**
-5. `/workspaces/codespace-workbench/.opencode/opencode.json` — not found
-6. `/workspaces/codespace-workbench/.opencode/opencode.jsonc` — not found
+4. `/workspaces/workbench/opencode.json` — **project config (identical to global)**
+5. `/workspaces/workbench/.opencode/opencode.json` — not found
+6. `/workspaces/workbench/.opencode/opencode.jsonc` — not found
 7. `/home/node/.opencode/opencode.json` — not found
 8. `/home/node/.opencode/opencode.jsonc` — not found
 
-**Note:** The project config and global config are byte-identical. The project config at `/workspaces/codespace-workbench/opencode.json` is the effective config. The global config at `~/.config/opencode/opencode.json` is a copy.
+**Note:** The project config and global config are byte-identical. The project config at `/workspaces/workbench/opencode.json` is the effective config. The global config at `~/.config/opencode/opencode.json` is a copy.
 
 ---
 
@@ -71,7 +71,7 @@ Log evidence of usage: `Error from provider (Console Go): Upstream request faile
 
 **Only installed package:** `@opencode-ai/plugin@1.18.5`
 **Plugin directory:** `~/.config/opencode/node_modules/`
-**Skills directory:** `/workspaces/codespace-workbench/.opencode/skills/` (28 skills)
+**Skills directory:** `/workspaces/workbench/.opencode/skills/` (28 skills)
 
 ---
 
@@ -101,7 +101,6 @@ zls, yaml-ls, vue, typescript, tinymist, texlab, terraform, svelte, sourcekit-ls
 | Variable | Set? | Used By |
 |---|---|---|
 | `DEEPSEEK_API_KEY` | Yes | DeepSeek provider |
-| `N8N_MCP_ACCESS_TOKEN` | Yes | n8n MCP |
 | `SIMONPLMAK_CLOUD_PAT` | Yes | GitHub MCP, shadcn MCP |
 | `PERPLEXITY_API_KEY` | Yes | Perplexity MCP |
 | `BRAVE_API_KEY` | Yes | Brave Search MCP |

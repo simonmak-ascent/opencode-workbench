@@ -93,5 +93,14 @@
 - **Install individual lodash functions only if specifically needed**
 
 ### Express / Fastify
-- **Rejected because**: Next.js Route Handlers and n8n webhooks cover API needs
+- **Rejected because**: Next.js Route Handlers cover API needs
 - **No standalone API server needed in current architecture**
+
+## Retired Tooling
+
+### n8n (workflow automation + MCP)
+- **Retired 2026-09-21**: Workflow automation formerly on n8n is consolidated on
+  Python + systemd timers on SWAS. The n8n container and its data volume were removed
+  (the instance held no workflows, executions, or credentials), the n8n MCP entry was
+  removed from `opencode.json`, and n8n references were removed from the fleet's
+  inventories, configs, and repos. The n8n Cloud account itself remains but is unused.

@@ -6,7 +6,7 @@
 
 ```
 ┌──────────────────────────────────────────────┐
-│          GitHub Codespaces Secrets            │
+│          the SWAS box Secrets            │
 │  (encrypted at rest, injected at runtime)     │
 └──────────────────┬───────────────────────────┘
                    │
@@ -40,9 +40,9 @@
 | Tier | Description | Examples | Storage |
 |------|-------------|----------|---------|
 | **Tier 0 — Platform** | GitHub-injected tokens | `GITHUB_TOKEN`, `GH_TOKEN` | Automatic |
-| **Tier 1 — Critical** | Required for core function | `DEEPSEEK_API_KEY`, `SIMONPLMAK_CLOUD_PAT` | Codespaces Secrets |
-| **Tier 2 — Operational** | Required for MCP servers | `BRAVE_API_KEY`, `SENTRY_AUTH_TOKEN`, `FIGMA_TOKEN`, `N8N_MCP_ACCESS_TOKEN`, `PERPLEXITY_API_KEY`, `BROWSERLESS_TOKEN` | Codespaces Secrets |
-| **Tier 3 — Optional** | Nice to have, not critical | `OPENROUTER_API_KEY`, `GOOGLE_API_KEY`, `KIMI_API_KEY` | Codespaces Secrets |
+| **Tier 1 — Critical** | Required for core function | `DEEPSEEK_API_KEY`, `SIMONPLMAK_CLOUD_PAT` | SWAS Secrets |
+| **Tier 2 — Operational** | Required for MCP servers | `BRAVE_API_KEY`, `SENTRY_AUTH_TOKEN`, `FIGMA_TOKEN`, `PERPLEXITY_API_KEY`, `BROWSERLESS_TOKEN` | SWAS Secrets |
+| **Tier 3 — Optional** | Nice to have, not critical | `OPENROUTER_API_KEY`, `GOOGLE_API_KEY`, `KIMI_API_KEY` | SWAS Secrets |
 | **Tier 4 — Non-Secret** | Configuration only | `DATABASE_URL`, `DB_PATH`, `BROWSERLESS_HOST` | `devcontainer.json` |
 
 ## Defense in Depth
@@ -63,7 +63,7 @@
 - Recovery methods documented without exposing tokens
 
 ### Layer 4: Recovery Preparedness
-- All required secrets inventoried in `docs/architecture/codespaces-secrets.md`
+- All required secrets inventoried in `docs/architecture/SWAS-secrets.md`
 - Recovery playbook includes secret validation step
 - Missing secrets detectable via environment validation script
 
@@ -74,7 +74,7 @@
 | Accidental secret commit | `.gitignore` + pre-commit scan |
 | Secret leak via logs | MCP servers receive narrow env, not full environment |
 | Lost secrets | Full inventory with recovery methods in docs |
-| Unauthorized access | GitHub Codespaces Secrets are encrypted, scoped to repository |
+| Unauthorized access | the SWAS box Secrets are encrypted, scoped to repository |
 | Configuration drift | Runtime sync scripts, inventory comparison |
 
 ## Security Scan

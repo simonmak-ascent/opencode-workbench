@@ -17,7 +17,7 @@
 ### DeepSeek
 - **API**: `https://api.deepseek.com/v1`
 - **Key env**: `DEEPSEEK_API_KEY`
-- **Source**: Codespaces Secret
+- **Source**: SWAS Secret
 
 ## MCP Server Assignments (19 configured, 18 enabled, 1 disabled)
 
@@ -26,7 +26,6 @@
 |--------|-----|-------------|
 | context7 | `https://mcp.context7.com/mcp` | None |
 | gh_grep | `https://mcp.grep.app` | None |
-| n8n | `https://simonmak.app.n8n.cloud/mcp-server/http` | Bearer token (`N8N_MCP_ACCESS_TOKEN`) |
 | clerk | `https://mcp.clerk.com/mcp` | None |
 | vercel | `https://mcp.vercel.com` | OAuth |
 
@@ -51,7 +50,7 @@
 ## Recovery Method
 
 1. Clone this repository
-2. Codespaces secrets auto-propagate via `devcontainer.json` `remoteEnv`
+2. SWAS secrets auto-propagate via `devcontainer.json` `remoteEnv`
 3. `.devcontainer/setup.sh` installs MCP servers and copies config
 4. `opencode.json` is the single source of truth for MCP configuration
 5. Runtime copy at `~/.config/opencode/opencode.json` is synced from repo

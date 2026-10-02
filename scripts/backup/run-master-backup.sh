@@ -4,7 +4,7 @@
 # Usage: bash scripts/backup/run-master-backup.sh
 
 set -euo pipefail
-WORKSPACE="/workspaces/codespace-workbench"
+WORKSPACE="/workspaces/workbench"
 REPORT_DATE=$(date +%Y-%m-%d)
 BACKUP_REPORT="$WORKSPACE/docs/backup-reports/$REPORT_DATE.md"
 SECRETS_SCAN="$WORKSPACE/scripts/security/scan-secrets.sh"
@@ -62,7 +62,7 @@ echo "Checking required environment variables..."
 REQUIRED_VARS=(
     DEEPSEEK_API_KEY SIMONPLMAK_CLOUD_PAT PERPLEXITY_API_KEY
     BRAVE_API_KEY BROWSERLESS_TOKEN FIGMA_TOKEN
-    SENTRY_AUTH_TOKEN N8N_MCP_ACCESS_TOKEN
+    SENTRY_AUTH_TOKEN
     DATABASE_URL DB_PATH BROWSERLESS_HOST BROWSERLESS_PORT BROWSERLESS_PROTOCOL
 )
 

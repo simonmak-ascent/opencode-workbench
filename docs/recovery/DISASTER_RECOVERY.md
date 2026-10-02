@@ -1,23 +1,23 @@
 # Disaster Recovery
 
 > Purpose: Complete recovery procedure assuming total loss of the workstation.
-> Scenario: Codespace deleted, VM deleted, all local state lost.
-> Survivors: Git repository, GitHub account, GitHub Codespaces Secrets.
+> Scenario: SWAS deleted, VM deleted, all local state lost.
+> Survivors: Git repository, GitHub account, the SWAS box Secrets.
 
 ## Pre-Flight: Verify Survivors
 
 Before attempting recovery, verify these assets exist:
 
-1. **Repository**: `https://github.com/simonplmak-cloud/codespace-workbench` exists
-2. **Secrets**: At least 10 critical secrets configured at https://github.com/settings/codespaces/secrets
+1. **Repository**: `https://github.com/simonplmak-cloud/workbench` exists
+2. **Secrets**: At least 10 critical secrets configured at https://github.com/settings/SWAS/secrets
 3. **PAT**: `SIMONPLMAK_CLOUD_PAT` is active (check: https://github.com/settings/tokens)
 4. **Machine type**: Recommended `4-core` (`basicLinux32gb`) at minimum
 
 ## Recovery Procedure
 
-### Step 1: Create New Codespace
+### Step 1: Create New SWAS
 ```
-https://github.com/simonplmak-cloud/codespace-workbench → Code → Codespaces → Create
+https://github.com/simonplmak-cloud/workbench → Code → SWAS → Create
 ```
 
 ### Step 2: Wait for Automation
@@ -44,7 +44,7 @@ npm list -g --depth=0
 opencode --version
 
 # 3. Start OpenCode
-cd /workspaces/codespace-workbench
+cd /workspaces/workbench
 opencode
 
 # 4. Bootstrap additional tools (optional)
@@ -79,10 +79,10 @@ Or manually verify:
 | Prompt library | ✅ Full | docs/prompts/ in repo |
 | Shell aliases | ✅ Full | .devcontainer/aliases.sh |
 | npm global packages | ✅ Auto | Installed by setup.sh |
-| API keys | ✅ If secrets exist | Codespaces Secrets |
+| API keys | ✅ If secrets exist | SWAS Secrets |
 | Saga tracker DB | ❌ Lost | Ephemeral — recreated on first use |
 | PostgreSQL data | ❌ Lost | Ephemeral — dev database |
-| Shell history | ❌ Lost | Local to codespace |
+| Shell history | ❌ Lost | Local to SWAS |
 | Playwright chromium | ⚠️ Manual | Must `npx playwright install chrome` (or auto via setup.sh) |
 | Vercel token auth | ✅ Auto | Bearer {env:VERCEL_ACCESS_TOKEN} |
 
@@ -105,5 +105,5 @@ Or manually verify:
 ## Recovery Point Objective (RPO)
 
 - **Configuration**: 0 data loss (fully in Git)
-- **Secrets**: 0 data loss (in Codespaces Secrets)
+- **Secrets**: 0 data loss (in SWAS Secrets)
 - **Application data**: Loss acceptable (dev environment)

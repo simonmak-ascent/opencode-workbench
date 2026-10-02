@@ -2,7 +2,7 @@
 
 > Generated: 2026-07-26
 > Purpose: Complete inventory of every AI/LLM provider used by this workstation
-> Recovery: Each provider requires a codespace secret or env var for API access
+> Recovery: Each provider requires a SWAS secret or env var for API access
 
 ## Active Provider (OpenCode Runtime)
 
@@ -21,7 +21,7 @@
 
 | Provider | MCP Server | Secret Required | Status | Notes |
 |----------|-----------|----------------|--------|-------|
-| **Perplexity** | `perplexity-agent-mcp` (local) | `PERPLEXITY_API_KEY` | ✅ Key regenerated (pending rebuild) | Regenerated 2026-07-26 with `pplx-` prefix. Requires codespace rebuild to take effect |
+| **Perplexity** | `perplexity-agent-mcp` (local) | `PERPLEXITY_API_KEY` | ✅ Key regenerated (pending rebuild) | Regenerated 2026-07-26 with `pplx-` prefix. Requires SWAS rebuild to take effect |
 | **Brave Search** | `server-brave-search` (local) | `BRAVE_API_KEY` | ✅ Working | Search API, key format `BSA...` |
 | **Sentry** | `@sentry/mcp-server` (local) | `SENTRY_AUTH_TOKEN` | ✅ Working | Key format `sntryu_...` |
 
@@ -36,10 +36,10 @@
 
 ## Recovery Process
 
-1. All provider API keys must exist as **GitHub Codespaces Secrets**
+1. All provider API keys must exist as **the SWAS box Secrets**
 2. They propagate via `devcontainer.json` → `remoteEnv`
 3. OpenCode picks them up via `{env:SECRET_NAME}` in `opencode.json`
-4. Full secret inventory: see `docs/codespaces-secrets.md`
+4. Full secret inventory: see `docs/SWAS-secrets.md`
 
 ## Status
 

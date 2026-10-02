@@ -17,7 +17,7 @@ PATTERNS=(
     'BSA[A-Za-z0-9]{20,}'
 )
 
-cd /workspaces/codespace-workbench
+cd /workspaces/workbench
 
 for pattern in "${PATTERNS[@]}"; do
     # Scan working tree (not HEAD) — this is a pre-commit/pre-push scan

@@ -9,7 +9,6 @@
 |---|------|-----|------|---------|
 | 1 | context7 | `https://mcp.context7.com/mcp` | None | N/A (remote) |
 | 2 | gh_grep | `https://mcp.grep.app` | None | N/A (remote) |
-| 3 | n8n | `https://simonmak.app.n8n.cloud/mcp-server/http` | Bearer (`N8N_MCP_ACCESS_TOKEN`) | N/A (remote) |
 | 4 | clerk | `https://mcp.clerk.com/mcp` | None | N/A (remote) |
 | 5 | vercel | `https://mcp.vercel.com` | OAuth | N/A (remote) |
 

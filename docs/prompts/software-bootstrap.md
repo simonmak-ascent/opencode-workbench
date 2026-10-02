@@ -2,7 +2,7 @@
 
 **Purpose:** Install file format conversion, ETL, and data management tools.
 
-**When To Use:** When setting up a fresh Codespace or adding data processing capabilities.
+**When To Use:** When setting up a fresh SWAS or adding data processing capabilities.
 
 **Author:** DevOps  
 **Date Modified:** 2026-07-25

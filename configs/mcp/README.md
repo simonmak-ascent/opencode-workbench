@@ -14,7 +14,6 @@
 |--------|------|------|--------|
 | context7 | remote | none | active |
 | gh_grep | remote | none | active |
-| n8n | remote | OAuth | active |
 | clerk | remote | none | active |
 | vercel | remote | OAuth | active |
 | github | local binary | PAT | active |
@@ -40,7 +39,6 @@
 ### Remote (no local install needed)
 - `context7` — documentation search via Context7
 - `gh_grep` — GitHub code search via grep.app
-- `n8n` — workflow automation (OAuth to simonmak.app.n8n.cloud)
 - `clerk` — authentication snippets via Clerk
 - `vercel` — deployment management (OAuth to Vercel)
 
@@ -91,14 +89,14 @@
 ┌─────────────────────────────────────────────┐
 │            OpenCode Client                   │
 ├─────────────────────────────────────────────┤
-│  opencode.json (22 MCP server definitions)   │
+│  opencode.json (21 MCP server definitions)   │
 ├──────────┬──────────┬──────────┬────────────┤
 │ Remote   │ Local    │ Vendored │ Disabled   │
-│ (5)      │ npm (11) │ (2)      │ (4)        │
+│ (4)      │ npm (11) │ (2)      │ (4)        │
 ├──────────┼──────────┼──────────┼────────────┤
 │ context7 │ brave    │ perplexity│ surrealdb  │
 │ gh_grep  │ postgres │ browserless│ storybook │
-│ n8n*     │ playwright│          │ wcagc      │
+│          │ playwright│          │ wcagc      │
 │ clerk    │ shadcn   │          │ convertica │
 │ vercel*  │ echarts  │          │            │
 │          │ mermaid  │          │            │
@@ -118,7 +116,7 @@
 3. If local npm: add `npm install -g <package>` to `.devcontainer/setup.sh`
 4. If vendored: add source to `vendor/` and copy to `~/.local/bin/` in setup.sh
 5. If binary: add download step to `.devcontainer/setup.sh`
-6. If auth required: add secret to `docs/codespaces-secrets.md`
+6. If auth required: add secret to `docs/SWAS-secrets.md`
 7. Update `configs/mcp/mcp-inventory.json`
 8. Update `docs/software-inventory.md`
 
@@ -126,12 +124,12 @@
 
 All MCP server configurations are in `opencode.json`.
 All are reinstalled by `.devcontainer/setup.sh` during postCreate.
-Secrets must be configured via GitHub Codespaces Secrets.
+Secrets must be configured via the SWAS box Secrets.
 
 ## Related Documentation
 
 - `docs/software-inventory.md` — Full inventory with versions
 - `docs/environment-inventory.md` — Environment variable map
-- `docs/codespaces-secrets.md` — Secrets management
+- `docs/SWAS-secrets.md` — Secrets management
 - `docs/recovery-gap-analysis.md` — Disaster recovery gaps
 - `configs/mcp/mcp-inventory.json` — Machine-readable inventory

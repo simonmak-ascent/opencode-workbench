@@ -1,7 +1,7 @@
 # Recovery Checklist
 
 > Purpose: Verifiable checklist for workstation recovery validation.
-> Use after codespace rebuild or disaster recovery.
+> Use after SWAS rebuild or disaster recovery.
 
 ## Infrastructure
 
@@ -44,7 +44,6 @@
 - [ ] `BROWSERLESS_TOKEN` present
 - [ ] `FIGMA_TOKEN` present
 - [ ] `SENTRY_AUTH_TOKEN` present
-- [ ] `N8N_MCP_ACCESS_TOKEN` present
 - [ ] `DATABASE_URL` present
 - [ ] `DB_PATH` present
 - [ ] `BROWSERLESS_HOST` present
@@ -69,7 +68,6 @@
 
 - [ ] context7 (remote) responds
 - [ ] gh_grep (remote) responds
-- [ ] n8n (remote) responds
 - [ ] clerk (remote) responds
 - [ ] github (local) responds
 - [ ] brave-search (local) responds

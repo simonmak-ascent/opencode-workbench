@@ -5,15 +5,15 @@
 
 ## Prerequisites
 
-1. Access to `https://github.com/simonplmak-cloud/codespace-workbench`
-2. All required GitHub Codespaces Secrets configured (see `docs/architecture/codespaces-secrets.md`)
-3. GitHub account with Codespaces access
+1. Access to `https://github.com/simonplmak-cloud/workbench`
+2. All required the SWAS box Secrets configured (see `docs/architecture/SWAS-secrets.md`)
+3. GitHub account with SWAS access
 
-## Phase 1: Create New Codespace
+## Phase 1: Create New SWAS
 
-1. Navigate to `https://github.com/simonplmak-cloud/codespace-workbench`
-2. Click **Code** → **Codespaces** → **Create codespace on main**
-3. Wait for the codespace to initialize (~3-5 minutes)
+1. Navigate to `https://github.com/simonplmak-cloud/workbench`
+2. Click **Code** → **SWAS** → **Create SWAS on main**
+3. Wait for the SWAS to initialize (~3-5 minutes)
 4. The `postCreateCommand` will run `bash .devcontainer/setup.sh` automatically
 
 ## Phase 2: Verify Infrastructure
@@ -38,7 +38,7 @@ opencode --version
 
 ```bash
 # Check critical secrets are present
-env | grep -E '^(DEEPSEEK_|SIMONPLMAK_|PERPLEXITY_|BRAVE_|BROWSERLESS_|FIGMA_|SENTRY_|N8N_)'
+env | grep -E '^(DEEPSEEK_|SIMONPLMAK_|PERPLEXITY_|BRAVE_|BROWSERLESS_|FIGMA_|SENTRY_)'
 
 # Check non-secret config vars
 env | grep -E '^(DATABASE_URL|DB_PATH|BROWSERLESS_HOST|BROWSERLESS_PORT|BROWSERLESS_PROTOCOL)'
@@ -53,7 +53,7 @@ npx playwright install chrome
 ## Phase 5: Start OpenCode
 
 ```bash
-cd /workspaces/codespace-workbench
+cd /workspaces/workbench
 opencode
 ```
 
@@ -61,7 +61,6 @@ opencode
 
 ```bash
 # Vercel uses Bearer token auth (VERCEL_ACCESS_TOKEN) — no manual step needed
-# n8n uses access token (N8N_MCP_ACCESS_TOKEN) — no manual step needed
 # All other remote MCPs (context7, gh_grep, clerk) use no auth
 ```
 
@@ -70,7 +69,6 @@ opencode
 In OpenCode, check that all expected MCP tools are available:
 - context7 (remote)
 - gh_grep (remote)
-- n8n (remote)
 - clerk (remote)
 - github (local)
 - brave-search (local)

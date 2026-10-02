@@ -11,6 +11,6 @@ Research deliverables:
 Key findings ready for architecture phase:
 1. Server-first Next.js 14+ with RSC, Vercel AI SDK streaming, Clerk org RBAC
 2. MCP protocol 2025-11-25, Streamable HTTP, typed supervisor-worker orchestration
-3. Immutable snapshot → deterministic parser → SurrealDB → n8n change detection pipeline
+3. Immutable snapshot → deterministic parser → SurrealDB → change detection pipeline
 
 Ready to proceed to Phase #2: Architect multi-agent workflow.

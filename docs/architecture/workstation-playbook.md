@@ -7,7 +7,7 @@
 
 ### Starting OpenCode
 ```bash
-cd /workspaces/codespace-workbench
+cd /workspaces/workbench
 opencode
 ```
 
@@ -21,7 +21,6 @@ opencode serve --port 4096 --hostname 0.0.0.0
 # Vercel (requires browser OAuth)
 opencode mcp auth vercel
 
-# n8n (configured via Bearer token — no OAuth needed)
 ```
 
 ### Checking MCP Status
@@ -42,7 +41,7 @@ opencode mcp auth vercel
 2. Add to `opencode.json` under `mcp` with proper config
 3. If it needs secrets, add env var to `devcontainer.json` `remoteEnv`
 4. Update `docs/mcp-inventory.md` and `docs/software-inventory.md`
-5. Update `docs/codespaces-secrets.md` if new secret needed
+5. Update `docs/SWAS-secrets.md` if new secret needed
 6. Commit all changes
 
 ### Adding a New Skill
@@ -64,14 +63,14 @@ opencode mcp auth vercel
 | Design-system CORS | Needs `STORYBOOK_URL` env pointing to a live Storybook instance |
 | Postgres connection | Verify Docker container: `docker ps \| grep pg-memory` |
 
-### Before Codespace Rebuild
+### Before SWAS Rebuild
 
 1. Commit and push all changes
 2. Verify `devcontainer.json` has all needed `remoteEnv` entries
-3. Verify all codespace secrets exist in GitHub
+3. Verify all SWAS secrets exist in GitHub
 4. Run through the recovery checklist in `docs/recovery-gap-analysis.md`
 
-### After Codespace Rebuild
+### After SWAS Rebuild
 
 1. Wait for `postCreateCommand` (setup.sh) to complete
 2. Verify Docker containers: `docker ps`

@@ -18,7 +18,7 @@ pass()  { echo -e "  ${GREEN}PASS${NC}  $1"; PASSES=$((PASSES + 1)); }
 warn()  { echo -e "  ${YELLOW}WARN${NC}  $1"; WARNS=$((WARNS + 1)); }
 fail()  { echo -e "  ${RED}FAIL${NC}  $1"; FAILS=$((FAILS + 1)); }
 
-CONFIG_PROJECT="${CONFIG_PROJECT:-/workspaces/codespace-workbench/opencode.json}"
+CONFIG_PROJECT="${CONFIG_PROJECT:-/workspaces/workbench/opencode.json}"
 CONFIG_GLOBAL="${CONFIG_GLOBAL:-$HOME/.config/opencode/opencode.json}"
 AUTH_FILE="$HOME/.local/share/opencode/auth.json"
 MCP_AUTH_FILE="$HOME/.local/share/opencode/mcp-auth.json"
@@ -150,7 +150,6 @@ echo "── Secret Dependencies ──"
 SECRET_CHECKS=(
   "DEEPSEEK_API_KEY:deepseek provider"
   "OPENCODE_API_KEY:opencode-go provider"
-  "N8N_MCP_ACCESS_TOKEN:n8n MCP"
   "SIMONPLMAK_CLOUD_PAT:github + shadcn MCP"
   "PERPLEXITY_API_KEY:perplexity MCP"
   "BRAVE_API_KEY:brave-search MCP"

@@ -70,13 +70,13 @@ opencode  # loads SYSTEM_PROMPT.md, reads WORKFLOW_STATE.md, resumes
 | SurrealDB unavailable | Wait for Docker container restart; retry with backoff |
 | Missing env var | Fail immediately with descriptive error; do not retry |
 | Corrupted artifact | Re-execute the agent that produced it (idempotent by input hash) |
-| Codespace deleted | Full rebuild from repo + secrets → setup.sh → resume from WORKFLOW_STATE.md |
+| SWAS deleted | Full rebuild from repo + secrets → setup.sh → resume from WORKFLOW_STATE.md |
 
 ## Restoration from Scratch
 
-If SurrealDB state is lost along with the codespace:
+If SurrealDB state is lost along with the SWAS:
 
-1. Recreate codespace: `gh codespace create --repo ... --machine basicLinux32gb`
+1. Recreate SWAS: `gh SWAS create --repo ... --machine basicLinux32gb`
 2. Setup runs automatically (3-5 min)
 3. Manual steps: `npx playwright install chrome`, `opencode mcp auth vercel`
 4. Read WORKFLOW_STATE.md to determine last phase
@@ -85,7 +85,7 @@ If SurrealDB state is lost along with the codespace:
 
 ## Data Durability
 
-| Data | Storage | Survives Codespace Delete? |
+| Data | Storage | Survives SWAS Delete? |
 |------|---------|---------------------------|
 | Code | GitHub repo | YES |
 | WORKFLOW_STATE.md | GitHub repo | YES |

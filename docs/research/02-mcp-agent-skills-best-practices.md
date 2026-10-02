@@ -174,13 +174,13 @@ type AgentHandoff = {
 
 ---
 
-## 6. Tool Chaining: Brave → Perplexity → SurrealDB → n8n
+## 6. Tool Chaining: Brave → Perplexity → SurrealDB
 
 **Pipeline**:
 ```
 Brave Search → normalize/deduplicate sources → Perplexity deep research
 → validate report schema → SurrealDB upsert → outbox event
-→ n8n webhook consume → notify → record delivery
+→ webhook consume → notify → record delivery
 ```
 
 **Orchestrator pattern**:
@@ -191,7 +191,7 @@ Brave Search → normalize/deduplicate sources → Perplexity deep research
 5. Poll with deadline
 6. Validate output against schema
 7. Transactional SurrealDB upsert + outbox write
-8. Outbox dispatcher → n8n webhook
+8. Outbox dispatcher → webhook
 9. Persistence BEFORE notification
 10. Deterministic record IDs for idempotent retries
 
@@ -241,7 +241,7 @@ Brave Search → normalize/deduplicate sources → Perplexity deep research
 | In-memory protocol | Initialize, discover, call via linked client/server transports |
 | stdio integration | Child process startup, framing, stdout cleanliness, shutdown |
 | HTTP integration | POST/GET/SSE, session IDs, version headers, origin checks, resumption |
-| E2E | Host/agent → MCP → provider → persistence → n8n |
+| E2E | Host/agent → MCP → provider → persistence |
 | Skill evaluation | Activation precision/recall, workflow adherence, output quality |
 
 **In-memory transport** (TypeScript SDK):
@@ -253,7 +253,7 @@ const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
 
 ---
 
-## 10. n8n Handoffs
+## 10. Webhook Handoffs
 
 **Webhook envelope**:
 ```json
@@ -290,5 +290,5 @@ flowchart LR
     MCP --> B[Brave Search]
     MCP --> P[Perplexity]
     MCP --> DB[(SurrealDB)]
-    MCP --> N[n8n Webhook]
+    MCP --> N[Webhook]
 ```

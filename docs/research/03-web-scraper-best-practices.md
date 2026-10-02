@@ -4,7 +4,7 @@
 
 ## Executive Summary
 
-Durable, replayable scraping pipeline: queue → HTTP/browser worker → immutable snapshot → deterministic parser → validation → diff engine → SurrealDB storage → n8n alerts. Prefer HTTP over browsers. Separate acquisition from extraction. Version every parser and schema.
+Durable, replayable scraping pipeline: queue → HTTP/browser worker → immutable snapshot → deterministic parser → validation → diff engine → SurrealDB storage → alerts. Prefer HTTP over browsers. Separate acquisition from extraction. Version every parser and schema.
 
 ---
 
@@ -34,7 +34,7 @@ Schedule/API → Scheduler → Durable job queue → Per-origin admission contro
                                                │
                                   Diff/change-detection engine
                                                │
-                         SurrealDB ─→ n8n alerts ─→ downstream consumers
+                         SurrealDB ─→ alerts ─→ downstream consumers
                                                │
                             Sentry + metrics + logs + dead-letter queue
 ```
@@ -174,7 +174,7 @@ const RETRYABLE = new Set([408, 425, 429, 500, 502, 503, 504]);
 
 **Level 3 — Semantic diff**: Compare normalized structured records field-by-field. JSON Patch for objects, line/word diff for prose.
 
-**n8n pipeline**:
+**Alert pipeline**:
 ```
 Schedule → SurrealDB fetch targets → Split batch → Scraper webhook →
 IF success → normalize + hash → fetch previous snapshot → IF hash differs →
@@ -271,6 +271,6 @@ Sentry.withMonitor("catalog-scrape", async () => { ... }, {
 - [ ] Diff structured records, not raw HTML
 - [ ] Baseline updated only after successful validation + commit
 - [ ] SCHEMAFULL SurrealDB with deterministic upserts
-- [ ] Severity-ranked n8n alerts
+- [ ] Severity-ranked alerts
 - [ ] Sentry monitors for schedules, queue age, block rates, extraction yield, silent failures
 - [ ] CAPTCHA = stop + review, not evasion escalation

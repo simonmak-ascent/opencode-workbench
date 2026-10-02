@@ -23,7 +23,6 @@
 | `surreal` | CLI | SurrealDB client |
 | `playwright` | Testing | E2E browser automation |
 | `sentry` | Observability | Error monitoring |
-| `n8n` | Automation | Workflow orchestration |
 | `browserless` | Browser | Headless browser service |
 | `figma` | Design | Design token access |
 

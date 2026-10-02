@@ -7,7 +7,7 @@
 
 | File | Role | Sync |
 |------|------|------|
-| `/workspaces/codespace-workbench/opencode.json` | **Source of truth** — committed to repo | Edit this one |
+| `/workspaces/workbench/opencode.json` | **Source of truth** — committed to repo | Edit this one |
 | `~/.config/opencode/opencode.json` | **Runtime copy** — used by opencode CLI | Copied from repo on `postCreateCommand` |
 
 **Rule**: Edit the repo copy, then manually sync: `cp opencode.json ~/.config/opencode/opencode.json`
@@ -37,7 +37,7 @@
 ## MCP Servers (19 total, 18 enabled)
 
 ### Remote (5)
-- context7, gh_grep, n8n (Bearer token), clerk, vercel (token auth)
+- context7, gh_grep, clerk, vercel (token auth)
 
 ### Local — npm global (11)
 - brave-search, postgres, playwright, shadcn, echarts, mermaid, saga (disabled), swagger-testcase, design-system, figma, sentry
@@ -61,9 +61,9 @@
 
 All secrets use `{env:VAR}` syntax. Example:
 ```json
-{ "Authorization": "Bearer {env:N8N_MCP_ACCESS_TOKEN}" }
+{ "Authorization": "Bearer {env:YOUR_TOKEN}" }
 ```
 
 Secrets originate from:
-1. GitHub Codespaces Secrets → `devcontainer.json` `remoteEnv`
+1. the SWAS box Secrets → `devcontainer.json` `remoteEnv`
 2. Legacy fallback: `~/.env.workbench` (sourced by `~/.bashrc`)

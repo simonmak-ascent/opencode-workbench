@@ -80,7 +80,7 @@ type AgentHandoff = {
 
 ```
 Brave Search → source deduplication → Perplexity deep research →
-  schema validation → SurrealDB upsert → outbox event → n8n webhook notify
+  schema validation → SurrealDB upsert → outbox event → webhook notify
 ```
 
 Rules:

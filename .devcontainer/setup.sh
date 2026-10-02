@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Workbench setup: installs opencode + MCP stack inside the Codespace.
+# Workbench setup: installs opencode + MCP stack inside the SWAS.
 # Runs as postCreateCommand (user: node, home: /home/node).
 set -uo pipefail
 
-WORKSPACE="${WORKSPACE:-/workspaces/codespace-workbench}"
+WORKSPACE="${WORKSPACE:-/workspaces/workbench}"
 
 # --- Ensure .env.workbench is sourced on login ---
 if [ ! -f "$HOME/.env.workbench" ]; then

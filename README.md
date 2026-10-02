@@ -1,6 +1,6 @@
-# Codespace Workbench
+# SWAS Workbench
 
-A fully reproducible, self-documenting, and recoverable development workstation operating system for GitHub Codespaces and OpenCode.
+A fully reproducible, self-documenting, and recoverable development workstation operating system for the SWAS box and OpenCode.
 
 ## Purpose
 
@@ -18,8 +18,8 @@ This repository is the **single source of truth** for a complete cloud developme
 ## Quick Start
 
 ```bash
-# Create a new codespace
-gh codespace create --repo simonplmak-cloud/codespace-workbench --machine basicLinux32gb
+# Create a new SWAS
+gh SWAS create --repo simonplmak-cloud/workbench --machine basicLinux32gb
 
 # Wait for postCreate (3-5 min) — installs everything automatically
 # Then start coding:
@@ -29,8 +29,8 @@ opencode
 ## Architecture
 
 ```
-codespace-workbench/
-├── .devcontainer/                  # Codespace definition & bootstrap
+workbench/
+├── .devcontainer/                  # SWAS definition & bootstrap
 │   ├── devcontainer.json           # Container image, features, ports, remoteEnv
 │   ├── setup.sh                    # Post-create: installs opencode, MCPs, Docker infra
 │   └── aliases.sh                  # Shell aliases sourced at runtime
@@ -82,7 +82,7 @@ codespace-workbench/
 This workstation operates under a formal charter. Key principles:
 
 - **Single Source of Truth**: Runtime must match repository. Drift is a bug.
-- **Secrets Never Touch Disk**: All secrets flow through GitHub Codespaces Secrets.
+- **Secrets Never Touch Disk**: All secrets flow through the SWAS box Secrets.
 - **Immutable History**: Changelog is append-only. Every change is traceable.
 - **Documentation Lives With Code**: Docs describe the system as it is, not as imagined.
 
@@ -105,11 +105,11 @@ Or use OpenCode prompts:
 
 ## Recovery Workflow
 
-Assume the Codespace is deleted. Only Git repo + Codespaces Secrets survive.
+Assume the SWAS is deleted. Only Git repo + SWAS Secrets survive.
 
 ```bash
-# 1. Create new codespace
-gh codespace create --repo simonplmak-cloud/codespace-workbench --machine basicLinux32gb
+# 1. Create new SWAS
+gh SWAS create --repo simonplmak-cloud/workbench --machine basicLinux32gb
 
 # 2. Wait for automation (3-5 min)
 
@@ -127,7 +127,7 @@ Full details: [`docs/recovery/RECOVERY_PLAYBOOK.md`](docs/recovery/RECOVERY_PLAY
 
 | Type | Count | Servers |
 |------|-------|---------|
-| Remote | 5 | context7, gh_grep, n8n (Bearer auth), clerk, vercel (OAuth) |
+| Remote | 4 | context7, gh_grep, clerk, vercel (OAuth) |
 | Local (npm) | 11 | brave-search, postgres, playwright, shadcn, echarts, mermaid, saga, swagger-testcase, design-system, figma, sentry |
 | Local (vendored) | 2 | perplexity-agent-mcp, browserless-mcp |
 | Local (binary) | 1 | github-mcp-server |
@@ -136,7 +136,7 @@ See: [`docs/architecture/mcp-inventory.md`](docs/architecture/mcp-inventory.md)
 
 ## Secrets Management
 
-All secrets stored in GitHub Codespaces Secrets. Never in repository files.
+All secrets stored in the SWAS box Secrets. Never in repository files.
 
 | # | Secret | Used By |
 |---|--------|---------|
@@ -147,10 +147,9 @@ All secrets stored in GitHub Codespaces Secrets. Never in repository files.
 | 5 | `BROWSERLESS_TOKEN` | Browserless MCP + container |
 | 6 | `FIGMA_TOKEN` | Figma MCP |
 | 7 | `SENTRY_AUTH_TOKEN` | Sentry MCP |
-| 8 | `N8N_MCP_ACCESS_TOKEN` | n8n MCP |
 | 9 | `KIMI_API_KEY` | Alternate provider (legacy) |
 
-See: [`docs/architecture/codespaces-secrets.md`](docs/architecture/codespaces-secrets.md)
+See: [`docs/architecture/SWAS-secrets.md`](docs/architecture/SWAS-secrets.md)
 
 ## Documentation Index
 
@@ -175,4 +174,4 @@ See: [`docs/architecture/codespaces-secrets.md`](docs/architecture/codespaces-se
 
 ## Recovery Score: 92/100
 
-Validated disaster recovery within < 10 minutes using repository + Codespaces Secrets alone.
+Validated disaster recovery within < 10 minutes using repository + SWAS Secrets alone.

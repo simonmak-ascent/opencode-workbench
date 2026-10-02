@@ -1,7 +1,7 @@
 # Security Audit Report
 
 **Date:** 2026-07-27 (Round 2)
-**Scope:** Repository `/workspaces/codespace-workbench`, git history, live config, runtime cache
+**Scope:** Repository `/workspaces/workbench`, git history, live config, runtime cache
 **Previous audit:** 2026-07-27 (Round 1) — all findings reassessed
 
 ---
@@ -92,7 +92,6 @@ All sensitive patterns blocked:
 
 | Finding | Location | Severity |
 |---|---|---|
-| `simonmak.app.n8n.cloud` | opencode.json + 7 docs | **LOW** — public n8n cloud subdomain |
 | `/home/node/` paths (13x) | opencode.json | **LOW** — codespace-standard paths |
 
 No new URLs, IPs, or internal identifiers discovered since last audit.
@@ -116,7 +115,7 @@ No new URLs, IPs, or internal identifiers discovered since last audit.
 ### 4.1 Repository Visibility
 **Result: PASS**
 
-- Repository: `simonplmak-cloud/codespace-workbench`
+- Repository: `simonplmak-cloud/workbench`
 - Visibility: **PRIVATE** (confirmed via `gh api`)
 - No public exposure of any repo contents
 
@@ -136,7 +135,7 @@ No new URLs, IPs, or internal identifiers discovered since last audit.
 **Result: LOW** — codespace-standard paths only
 
 - `/home/node/` — default codespace user directory
-- `/workspaces/codespace-workbench/` — workspace mount point
+- `/workspaces/workbench/` — workspace mount point
 - `node` — default codespace username
 - No internal server names, private hostnames, or non-public URLs discovered
 
@@ -161,7 +160,6 @@ None.
 | ID | Finding | Status | Remediation |
 |---|---|---|---|
 | CFG-01 | Hardcoded `opencode:opencode` in `DATABASE_URL` | Same | Acceptable for local dev |
-| EXP-01 | `simonmak.app.n8n.cloud` visible in opencode.json | Same | Public endpoint — acceptable |
 | HIST-01 | Stale rotated `sk-J27...` key in git history | **NEW** | Key rotated, private repo — LOW severity |
 | ~~CACHE-01~~ | ~~Stale opencode-conductor cache~~ | **FIXED** | Cache cleaned |
 

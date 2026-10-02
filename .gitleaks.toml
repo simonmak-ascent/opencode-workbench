@@ -1,0 +1,13 @@
+# Extends the default gitleaks ruleset. The allowlist only silences the
+# repository's own secret-prefix scanner, whose source necessarily contains
+# literal prefix regexes (e.g. "ghp_[a-zA-Z0-9]{36}") that are not secrets.
+title = "workbench gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "The secret scanner itself references prefixes without values"
+paths = [
+  '''scripts/security/scan-secrets.sh''',
+]

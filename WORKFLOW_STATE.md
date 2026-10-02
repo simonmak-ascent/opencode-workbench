@@ -60,7 +60,6 @@ Correlation ID: workflow-init-2026-07-27
 | SurrealDB | Not yet provisioned | — |
 | Vercel project | Not yet created | — |
 | Sentry project | Not yet created | — |
-| n8n workflows | Not yet created | — |
 
 ## Instructions
 

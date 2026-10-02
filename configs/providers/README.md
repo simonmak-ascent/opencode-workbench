@@ -22,8 +22,8 @@ The following API keys are available in the environment but not configured as Op
 ## Adding a New Provider
 
 1. Add the provider configuration to `opencode.json` under `provider`
-2. Ensure the API key exists as a Codespaces Secret
+2. Ensure the API key exists as a SWAS Secret
 3. Add the env var to `devcontainer.json` `remoteEnv`
 4. Update `docs/architecture/ai-provider-inventory.md`
-5. Update `docs/architecture/codespaces-secrets.md`
+5. Update `docs/architecture/SWAS-secrets.md`
 6. Commit and push

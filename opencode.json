@@ -1,10 +1,84 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "model": "deepseek/deepseek-v4-pro",
-  "small_model": "deepseek/deepseek-v4-pro",
-  "lsp": true,
+  "instructions": [
+    "AGENTS.md"
+  ],
+  "autoupdate": true,
+  "small_model": "deepseek/deepseek-v4-flash",
+  "subagent_depth": 2,
+  "permission": {
+    "read": {
+      "*": "allow",
+      ".env": "deny",
+      ".env.*": "deny",
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "**/*.pem": "deny",
+      "**/*.key": "deny",
+      "**/credentials.*": "deny",
+      "**/secrets.*": "deny"
+    },
+    "bash": {
+      "*": "allow",
+      "pnpm check*": "allow",
+      "pnpm test*": "allow",
+      "pnpm build*": "allow",
+      "pnpm evals*": "allow",
+      "pnpm install*": "allow",
+      "pnpm add*": "allow",
+      "pnpm update*": "allow",
+      "tsc*": "allow",
+      "vitest*": "allow",
+      "eslint*": "allow",
+      "prettier*": "allow",
+      "docker build*": "allow",
+      "docker compose*": "allow",
+      "npm install*": "allow",
+      "npm test*": "allow",
+      "npm run build*": "allow",
+      "npm run lint*": "allow",
+      "npm run check*": "allow",
+      "yarn*": "allow",
+      "make*": "allow",
+      "cmake*": "allow",
+      "cargo build*": "allow",
+      "cargo test*": "allow",
+      "node --test*": "allow",
+      "npx tsc*": "allow",
+      "npx vitest*": "allow",
+      "npx eslint*": "allow",
+      "npx jest*": "allow",
+      "git push*": "ask",
+      "git commit*": "ask",
+      "rm -rf *": "ask",
+      "sudo *": "deny"
+    },
+    "edit": "allow",
+    "external_directory": "ask",
+    "task": {
+      "code-reviewer": "allow",
+      "test-writer": "allow",
+      "security-reviewer": "ask",
+      "explorer": "allow",
+      "explore": "allow",
+      "general": "allow",
+      "*": "deny"
+    }
+  },
   "formatter": true,
-  "plugin": [],
+  "lsp": true,
+  "compaction": {
+    "auto": true,
+    "prune": false,
+    "reserved": 10000
+  },
+  "plugin": [
+    "opencode-env-protect",
+    "opencode-sentry-monitor",
+    "./plugins/memory.ts",
+    "./plugins/doc-tools.ts"
+  ],
   "provider": {
     "deepseek": {
       "name": "DeepSeek",
@@ -57,40 +131,9 @@
         }
       },
       "options": {
-        "apiKey": "{env:DEEPSEEK_API_KEY}"
-      }
-    },
-    "opencode-go": {
-      "name": "OpenCode Console Go",
-      "api": "https://api.opencode.ai/v1",
-      "env": [
-        "OPENCODE_API_KEY"
-      ],
-      "models": {
-        "kimi-k3": {
-          "id": "kimi-k3",
-          "name": "Kimi K3 (via OpenCode)",
-          "reasoning": true,
-          "cost": {
-            "input": 0.00087,
-            "output": 0.00348
-          },
-          "limit": {
-            "context": 262144,
-            "output": 262144
-          },
-          "modalities": {
-            "input": [
-              "text"
-            ],
-            "output": [
-              "text"
-            ]
-          }
-        }
-      },
-      "options": {
-        "apiKey": "{env:OPENCODE_API_KEY}"
+        "apiKey": "{env:DEEPSEEK_API_KEY}",
+        "timeout": 600000,
+        "chunkTimeout": 45000
       }
     },
     "perplexity": {
@@ -243,7 +286,9 @@
         }
       },
       "options": {
-        "apiKey": "{env:OPENROUTER_API_KEY}"
+        "apiKey": "{env:OPENROUTER_API_KEY}",
+        "timeout": 600000,
+        "chunkTimeout": 45000
       }
     },
     "zen": {
@@ -318,34 +363,55 @@
     "context7": {
       "type": "remote",
       "url": "https://mcp.context7.com/mcp",
-      "enabled": true
+      "enabled": true,
+      "timeout": 60000
     },
     "gh_grep": {
       "type": "remote",
       "url": "https://mcp.grep.app",
-      "enabled": true
-    },
-    "n8n": {
-      "type": "remote",
-      "url": "https://simonmak.app.n8n.cloud/mcp-server/http",
       "enabled": true,
-      "oauth": false,
-      "headers": {
-        "Authorization": "Bearer {env:N8N_MCP_ACCESS_TOKEN}"
-      }
+      "timeout": 60000
+    },
+    "vdd": {
+      "type": "local",
+      "command": [
+        "node",
+        "/workspaces/vision_driven_design/packages/vdd-mcp/dist/stdio.js"
+      ],
+      "enabled": true,
+      "timeout": 120000
     },
     "clerk": {
       "type": "remote",
       "url": "https://mcp.clerk.com/mcp",
-      "enabled": true
+      "enabled": true,
+      "timeout": 60000
     },
     "vercel": {
       "type": "remote",
       "url": "https://mcp.vercel.com",
       "enabled": true,
+      "timeout": 60000,
       "headers": {
         "Authorization": "Bearer {env:VERCEL_ACCESS_TOKEN}"
       }
+    },
+    "surrealdb": {
+      "type": "local",
+      "command": [
+        "node",
+        "/home/node/.local/bin/surreal-mcp-shim.mjs"
+      ],
+      "environment": {
+        "SURREALDB_URL": "{env:SURREAL_URL}",
+        "SURREALDB_NS": "{env:SURREAL_NAMESPACE}",
+        "SURREALDB_DB": "{env:SURREAL_DATABASE}",
+        "SURREALDB_USER": "{env:SURREAL_USERNAME}",
+        "SURREALDB_PASS": "{env:SURREAL_PASSWORD}",
+        "SURREALDB_TOKEN": "{env:SURREAL_TOKEN}"
+      },
+      "enabled": true,
+      "timeout": 15000
     },
     "github": {
       "type": "local",
@@ -381,15 +447,17 @@
         "BRAVE_API_KEY": "{env:BRAVE_API_KEY}"
       },
       "enabled": true,
-      "timeout": 120000
+      "timeout": 15000
     },
     "postgres": {
       "type": "local",
       "command": [
         "node",
-        "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-postgres/dist/index.js",
-        "{env:DATABASE_URL}"
+        "/home/node/.local/bin/postgres-mcp-shim.mjs"
       ],
+      "environment": {
+        "DATABASE_URL": "{env:DATABASE_URL}"
+      },
       "enabled": true,
       "timeout": 30000
     },
@@ -400,10 +468,10 @@
         "/home/node/.local/bin/browserless-mcp/dist/index.js"
       ],
       "environment": {
-        "BROWSERLESS_HOST": "{env:BROWSERLESS_HOST}",
-        "BROWSERLESS_PORT": "{env:BROWSERLESS_PORT}",
+        "BROWSERLESS_HOST": "localhost",
+        "BROWSERLESS_PORT": "3000",
         "BROWSERLESS_TOKEN": "{env:BROWSERLESS_TOKEN}",
-        "BROWSERLESS_PROTOCOL": "{env:BROWSERLESS_PROTOCOL}"
+        "BROWSERLESS_PROTOCOL": "http"
       },
       "enabled": true,
       "timeout": 30000
@@ -416,6 +484,24 @@
       ],
       "enabled": true,
       "timeout": 60000
+    },
+    "esg-hub": {
+      "type": "local",
+      "command": [
+        "node",
+        "/workspaces/esg-hub/mcp-server/dist/index.js"
+      ],
+      "enabled": true,
+      "timeout": 120000
+    },
+    "humanity4ai": {
+      "type": "local",
+      "command": [
+        "node",
+        "/workspaces/project_human/mcp-servers/dist/mcp-server.js"
+      ],
+      "enabled": true,
+      "timeout": 30000
     },
     "mermaid": {
       "type": "local",
@@ -433,10 +519,9 @@
         "/home/node/.npm-global/lib/node_modules/saga-mcp/dist/index.js"
       ],
       "environment": {
-        "DB_PATH": "{env:DB_PATH}"
+        "DB_PATH": "/workspaces/workbench/.saga/.tracker.db"
       },
-      "enabled": false,
-      "_disabled_reason": "DB_PATH environment variable is not set"
+      "enabled": true
     },
     "echarts": {
       "type": "local",
@@ -477,6 +562,41 @@
       "enabled": true,
       "timeout": 30000
     },
+    "browser-mcp": {
+      "type": "local",
+      "command": [
+        "node",
+        "/home/node/.local/bin/browser-mcp/browser-mcp-server-v2.js"
+      ],
+      "enabled": true,
+      "timeout": 60000
+    },
+    "designlang": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "designlang",
+        "mcp",
+        "--output-dir",
+        "/home/node/design-extract-output"
+      ],
+      "enabled": true,
+      "timeout": 120000
+    },
+    "difflens": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "difflens-cli"
+      ],
+      "environment": {
+        "npm_config_ignore_scripts": "true"
+      },
+      "enabled": true,
+      "timeout": 120000
+    },
     "sentry": {
       "type": "local",
       "command": [
@@ -484,10 +604,78 @@
         "/home/node/.npm-global/lib/node_modules/@sentry/mcp-server/dist/index.js"
       ],
       "environment": {
-        "SENTRY_AUTH_TOKEN": "{env:SENTRY_AUTH_TOKEN}"
+        "SENTRY_ACCESS_TOKEN": "{env:SENTRY_AUTH_TOKEN}"
       },
       "enabled": true,
       "timeout": 30000
+    },
+    "google-search": {
+      "type": "local",
+      "command": [
+        "node",
+        "/home/node/.npm-global/lib/node_modules/@adenot/mcp-google-search/build/index.js"
+      ],
+      "environment": {
+        "GOOGLE_API_KEY": "{env:GOOGLE_API_KEY}",
+        "GOOGLE_CSE_ID": "{env:GOOGLE_CSE_ID}"
+      },
+      "enabled": false,
+      "_disabled_reason": "Google Custom Search JSON API is EOL (403)"
+    },
+    "google-workspace": {
+      "type": "local",
+      "command": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "-v",
+        "/home/node/.mcp/google-workspace-mcp:/app/config",
+        "-e",
+        "GOOGLE_CLIENT_ID={env:GOOGLE_CLIENT_ID}",
+        "-e",
+        "GOOGLE_CLIENT_SECRET={env:GOOGLE_CLIENT_SECRET}",
+        "-e",
+        "LOG_MODE=strict",
+        "ghcr.io/aaronsb/google-workspace-mcp:latest"
+      ],
+      "enabled": false,
+      "_disabled_reason": "Requires OAuth + GOOGLE_CLIENT_ID/SECRET (not configured)"
+    },
+    "ms-365": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@softeria/ms-365-mcp-server"
+      ],
+      "environment": {
+        "MS_CLIENT_ID": "{env:AZURE_CLIENT_ID}",
+        "MS_CLIENT_SECRET": "{env:AZURE_CLIENT_SECRET}",
+        "MS_TENANT_ID": "{env:AZURE_TENANT_ID}"
+      },
+      "enabled": true
+    },
+    "stripe": {
+      "type": "remote",
+      "url": "https://mcp.stripe.com",
+      "enabled": true,
+      "timeout": 60000,
+      "headers": {
+        "Authorization": "Bearer {env:STRIPE_SECRET_KEY}"
+      }
+    },
+    "alibaba-cloud-ops": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "alibaba-cloud-ops-mcp-server@latest"
+      ],
+      "environment": {
+        "ALIBABA_CLOUD_ACCESS_KEY_ID": "{env:ALIBABA_CLOUD_ACCESS_KEY_ID}",
+        "ALIBABA_CLOUD_ACCESS_KEY_SECRET": "{env:ALIBABA_CLOUD_ACCESS_KEY_SECRET}"
+      },
+      "enabled": true,
+      "timeout": 120000
     }
   }
 }

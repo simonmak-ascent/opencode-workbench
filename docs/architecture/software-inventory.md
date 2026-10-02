@@ -1,13 +1,13 @@
 # Software Inventory
 
-> Generated: 2026-07-26 | Codespace: codespace-workbench
+> Generated: 2026-07-26 | SWAS: workbench
 > Captures exact versions. Update when tools are added, removed, or upgraded.
 
 ## Core Platform
 
 | Tool | Version | Purpose | Install Method |
 |------|---------|---------|---------------|
-| Debian | 13 (trixie) | OS | GitHub Codespaces base |
+| Debian | 13 (trixie) | OS | the SWAS box base |
 | Node.js | 22.23.1 | JS runtime | devcontainer image |
 | npm | 10.9.8 | Package manager | devcontainer image |
 | Python | 3.13.5 | Python runtime | devcontainer image |
@@ -76,7 +76,6 @@
 |--------|-----|------|
 | context7 | https://mcp.context7.com/mcp | None |
 | gh_grep | https://mcp.grep.app | None |
-| n8n | https://simonmak.app.n8n.cloud/mcp-server/http | Token (N8N_MCP_ACCESS_TOKEN) |
 | clerk | https://mcp.clerk.com/mcp | None |
 | vercel | https://mcp.vercel.com | OAuth |
 

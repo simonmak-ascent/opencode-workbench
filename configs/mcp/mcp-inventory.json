@@ -18,12 +18,6 @@
         "auth": "none"
       },
       {
-        "name": "n8n",
-        "url": "https://simonmak.app.n8n.cloud/mcp-server/http",
-        "enabled": true,
-        "auth": "token"
-      },
-      {
         "name": "clerk",
         "url": "https://mcp.clerk.com/mcp",
         "enabled": true,

@@ -7,7 +7,7 @@ echo ""
 echo "> Generated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 echo ""
 
-REPO_CONFIG="/workspaces/codespace-workbench/opencode.json"
+REPO_CONFIG="/workspaces/workbench/opencode.json"
 RUNTIME_CONFIG="$HOME/.config/opencode/opencode.json"
 
 echo "## Configuration Source"
@@ -67,7 +67,7 @@ echo ""
 
 echo "## Skills"
 echo ""
-SKILL_COUNT=$(find /workspaces/codespace-workbench/.opencode/skills -name "SKILL.md" 2>/dev/null | wc -l)
+SKILL_COUNT=$(find /workspaces/workbench/.opencode/skills -name "SKILL.md" 2>/dev/null | wc -l)
 echo "| Category | Count |"
 echo "|----------|-------|"
 echo "| Total skills | $SKILL_COUNT |"

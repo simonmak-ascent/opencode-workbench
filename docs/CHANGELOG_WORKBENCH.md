@@ -1,6 +1,6 @@
 # Changelog — Workbench
 
-> All notable changes to the codespace-workbench configuration.
+> All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [2026-07-27] — Master Backup

@@ -4,14 +4,14 @@
 
 ## Global Git Config
 
-Git configuration is managed via the codespace's default settings. Additional customizations:
+Git configuration is managed via the SWAS's default settings. Additional customizations:
 
-- User identity set via `GIT_COMMITTER_NAME` and `GIT_COMMITTER_EMAIL` (codespace-injected)
-- GitHub CLI (`gh`) authenticated via `GITHUB_TOKEN` (codespace-injected)
+- User identity set via `GIT_COMMITTER_NAME` and `GIT_COMMITTER_EMAIL` (SWAS-injected)
+- GitHub CLI (`gh`) authenticated via `GITHUB_TOKEN` (SWAS-injected)
 
 ## Repository Settings
 
-- Remote: `https://github.com/simonplmak-cloud/codespace-workbench`
+- Remote: `https://github.com/simonplmak-cloud/workbench`
 - Default branch: `main`
 - Push policy: Manual only (no auto-push)
 

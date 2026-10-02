@@ -9,7 +9,6 @@
 |--------|------|-----------|------|-----------|
 | context7 | remote | HTTP | None | resolve-library-id, query-docs |
 | gh_grep | remote | HTTP | None | search GitHub code |
-| n8n | remote | HTTP | Bearer (N8N_MCP_ACCESS_TOKEN) | workflow CRUD, execution, nodes |
 | clerk | remote | HTTP | None | auth snippets, user management |
 | vercel | remote | HTTP | Bearer (VERCEL_ACCESS_TOKEN) | deploy, projects, domains, analytics |
 | github | local (binary) | stdio | PAT (SIMONPLMAK_CLOUD_PAT) | repos, PRs, issues, commits, code search |

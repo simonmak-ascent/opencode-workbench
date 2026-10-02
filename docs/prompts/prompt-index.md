@@ -28,7 +28,7 @@
 
 | Prompt | Purpose | Usage | Dependencies |
 |--------|---------|-------|-------------|
-| [software-bootstrap.md](software-bootstrap.md) | Install data processing tools | Fresh codespace setup | `scripts/bootstrap-tools.sh` |
+| [software-bootstrap.md](software-bootstrap.md) | Install data processing tools | Fresh SWAS setup | `scripts/bootstrap-tools.sh` |
 | [workstation-preservation.md](workstation-preservation.md) | Full preservation as 10 DevOps roles | Comprehensive backup | All inventory scripts |
 
 ## Related Documentation

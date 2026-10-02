@@ -19,7 +19,6 @@
 |--------|--------|-------|
 | context7 | ✅ Active | Remote, docs lookup |
 | gh_grep | ✅ Active | Remote, GitHub code search |
-| n8n | ✅ Active | Remote, Bearer auth |
 | clerk | ✅ Active | Remote, SDK snippets |
 | vercel | ⚠️ Active but unauth | OAuth not completed |
 | github | ✅ Active | Local, PAT auth |
@@ -46,7 +45,7 @@
 
 ## Shell Environment
 
-- **Shell**: bash (via codespace)
+- **Shell**: bash (via SWAS)
 - **OpenCode binary**: `/home/node/.opencode/bin/opencode`
 - **Node version**: 22 (via devcontainer image)
 - **npm global prefix**: `/home/node/.npm-global`

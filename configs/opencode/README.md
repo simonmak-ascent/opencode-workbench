@@ -26,7 +26,7 @@ During `postCreateCommand`, `.devcontainer/setup.sh` copies it to:
 - **Model:** kimi-for-coding/k3
 - **LSP:** Enabled
 - **MCP active servers:** 19 of 22 (3 disabled)
-- **Remote servers auth:** n8n (OAuth), vercel (OAuth) — completed
+- **Remote servers auth:** vercel (OAuth) — completed
 - **Custom instructions:** None configured
 
 ## Custom Instructions
@@ -59,4 +59,4 @@ Authenticate remote MCP servers:
 opencode mcp auth <server-name>
 ```
 
-Supported: n8n, vercel (OAuth-based remote servers)
+Supported: vercel (OAuth-based remote servers)

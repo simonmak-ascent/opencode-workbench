@@ -80,10 +80,10 @@
 - **Persistence**: SurrealDB table `mcp_validations`
 
 ### SkillPublisherAgent
-- **Responsibility**: Publish validated skills to GitHub releases and register n8n webhooks
-- **Tools**: `github`, `n8n`, `sentry`
+- **Responsibility**: Publish validated skills to GitHub releases
+- **Tools**: `github`, `sentry`
 - **Input**: `{ mcp_skill_json: MCPSkillSpec, valid: boolean }`
-- **Output**: `{ github_release: string, n8n_webhook_registered: boolean }`
+- **Output**: `{ github_release: string }`
 - **Persistence**: SurrealDB table `mcp_releases`
 
 ---
@@ -106,14 +106,14 @@
 
 ### ScrapeStorageAgent
 - **Responsibility**: Persist extracted data to SurrealDB and detect changes
-- **Tools**: `surrealdb`, `n8n`
+- **Tools**: `surrealdb`
 - **Input**: `{ extracted_data: JSON, schema: JSONSchema }`
 - **Output**: `{ record_ids: string[], change_detected: boolean }`
 - **Persistence**: SurrealDB table `scraped_records`
 
 ### ScrapeAlertAgent
-- **Responsibility**: Send alerts via n8n when changes are detected
-- **Tools**: `n8n`, `sentry`
+- **Responsibility**: Send alerts when changes are detected
+- **Tools**: `sentry`
 - **Input**: `{ change_detected: boolean, diff: string }`
 - **Output**: `{ alert_sent: boolean, webhook_response: JSON }`
 - **Persistence**: SurrealDB table `scrape_alerts`

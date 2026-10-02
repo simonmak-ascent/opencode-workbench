@@ -1,7 +1,7 @@
-# Codespaces Secrets Inventory
+# SWAS Secrets Inventory
 
 > Generated: 2026-07-26 | Updated: 2026-07-26 (post-audit)
-> Purpose: Track all GitHub Codespaces Secrets required for workstation operation.
+> Purpose: Track all the SWAS box Secrets required for workstation operation.
 > CRITICAL: This file documents secret NAMES and USAGE only. Never record values.
 
 ## Required Secrets (Active)
@@ -15,7 +15,6 @@
 | `BROWSERLESS_TOKEN` | Browserless auth token | browserless MCP + Docker container | https://browserless.io/account |
 | `FIGMA_TOKEN` | Figma Developer API | figma-developer-mcp | https://www.figma.com/settings (Personal Access Tokens) |
 | `SENTRY_AUTH_TOKEN` | Sentry API auth token | @sentry/mcp-server | https://sentry.io/settings/account/api/auth-tokens/ |
-| `N8N_MCP_ACCESS_TOKEN` | n8n MCP server auth | n8n MCP (Bearer header) | n8n → Settings → API |
 
 (*) Perplexity key must start with `pplx-` prefix. Current key has wrong format — regenerate.
 
@@ -41,7 +40,7 @@
 | `GOOGLE_API_KEY` | Google AI API | Not configured | Available in env |
 | `VERCEL_ACCESS_TOKEN` | Vercel API token | Not configured (Vercel MCP uses OAuth) | Available in env |
 
-## Non-Secret Env Vars (set in devcontainer.json)
+## Non-Secret Env Vars (set in `~/.env.workbench` on SWAS)
 
 | Variable | Value | Purpose |
 |----------|-------|---------|
@@ -49,22 +48,25 @@
 | `BROWSERLESS_HOST` | `localhost` | Browserless host |
 | `BROWSERLESS_PORT` | `3000` | Browserless port |
 | `BROWSERLESS_PROTOCOL` | `http` | Browserless protocol |
-| `DB_PATH` | `/workspaces/codespace-workbench/.saga/.tracker.db` | Saga tracker database |
+| `DB_PATH` | `/workspaces/workbench/.saga/.tracker.db` | Saga tracker database |
 
 ## Setup Instructions
 
-Configure at: https://github.com/settings/codespaces/secrets
+Secrets live in `~/.env.workbench` on the SWAS box (sourced by `.bashrc`), never
+in the repository:
 
-1. Navigate to Settings → Codespaces → Secrets
-2. Add each "Required" secret from the table above
-3. Scope to `simonplmak-cloud/codespace-workbench` repository
-4. Secrets injected as environment variables on codespace start
+1. SSH to the SWAS box (`cs ssh` / `ssh workbench`)
+2. Populate `~/.env.workbench` with each "Required" secret from the table above
+   (`VAR="value"` lines, `chmod 600`)
+3. The local `~/.env.opencode` is the source for values — transfer with
+   `cs cp <file> remote:/root/.env.workbench` (never commit them)
+4. opencode.json references secrets via `{env:VAR}` syntax
 
 ## Recovery Verification
 
 ```bash
-# After codespace rebuild, verify secrets are present:
-env | grep -E '^(DEEPSEEK_|SIMONPLMAK_|PERPLEXITY_|BRAVE_|BROWSERLESS_|FIGMA_|SENTRY_|N8N_)'
+# After SWAS rebuild, verify secrets are present:
+env | grep -E '^(DEEPSEEK_|SIMONPLMAK_|PERPLEXITY_|BRAVE_|BROWSERLESS_|SENTRY_|SURREAL_|NPM_)'
 ```
 
 ## Security
