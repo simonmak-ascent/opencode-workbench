@@ -27,8 +27,8 @@ npx mcp-tdqs lint --command 'node mcp-server/dist/index.js' --server-name openco
 curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" \
   | tar xz mcp-publisher && sudo mv mcp-publisher /usr/local/bin/
 
-mcp-publisher login github     # GitHub OIDC/device flow
-mcp-publisher publish          # reads ./server.json
+mcp-publisher login github-oidc   # GitHub OIDC (non-interactive; required in CI)
+mcp-publisher publish             # reads ./server.json
 ```
 
 Verify: `curl -s "https://registry.modelcontextprotocol.io/v0/servers?search=opencode-workbench"`.

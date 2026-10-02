@@ -203,7 +203,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Workbench server info",
       description:
-        "Describe this MCP server: repository URL, components grouped by tier (required/core/optional), and optional MCP add-ons. Reads only the bundled profile — no target or network access, results are static. Use it to look up a component id before calling install_component; for a machine's actual state use inspect_target.",
+        "Describe this MCP server and its capabilities without contacting any target: repository URL, the default component set, components grouped by tier (required/core/optional), and optional MCP add-ons. Read-only and static — it reads only the bundled profile. Use it first to look up a component id for install_component or to see available add-ons; use inspect_target for a machine's live state.",
       inputSchema: {},
       outputSchema: infoOutput,
       annotations: { readOnlyHint: true, idempotentHint: true },
@@ -230,7 +230,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Inspect a Linux target",
       description:
-        "Probe a target machine — this host or a remote one over SSH — and report its OS, architecture, package manager, Node/npm, OpenCode, Docker and per-tool detection flags. Read-only: runs a single shell probe and changes nothing. Requires SSH access for `mode: ssh`. Use it before plan_clone to understand what a clone would touch. Report-only: it does not provision — for a one-call provision use bootstrap_host.",
+        "Probe one Linux machine — this host (`local`) or a remote host over SSH (`ssh`) — and report its OS, kernel, architecture, package manager, Node/npm, OpenCode, Docker, and per-tool detection flags, plus the names (never values) of credentials present. Read-only: one shell probe, changes nothing. Use it to see what a clone would touch, then plan_clone to turn that into an ordered plan; for a first-time end-to-end provision use bootstrap_host. It installs nothing.",
       inputSchema: { target: targetShape },
       outputSchema: inspectOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -249,7 +249,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Plan a Workbench clone",
       description:
-        "Compare a target against the portable Workbench profile and return each component as 'install', 'present', or 'manual', plus the list to install. Read-only: it installs nothing; requires SSH access for `mode: ssh`. Restrict the plan with `components`. Use this before apply_clone; use verify_clone after to confirm the result. For granular control of an existing profile use this; for a first-time end-to-end provision use bootstrap_host instead.",
+        "Compare a target against the portable Workbench profile and return each component as `install`, `present`, or `manual`, with privileged-command previews and the list to install. Read-only; installs nothing and needs SSH for `mode: ssh`. Use it before apply_clone for granular control of an existing profile; for a first-time end-to-end provision use bootstrap_host instead, which composes inspect + plan + apply + verify.",
       inputSchema: { target: targetShape, ...optionsShape },
       outputSchema: planOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -268,7 +268,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Apply a Workbench clone",
       description:
-        "Clone the Workbench profile onto a target and install missing components: repo, OpenCode CLI, Node/pnpm, npm MCPs, vendored MCPs, research MCPs, skills, plugins, and optionally Docker. Idempotent — already-present components are skipped. Requires SSH access and write permission on the target; installs can take several minutes. Consent-gated: without `confirm:true` it returns a plan (components + privileged-command preview) and changes nothing. Writes a rendered opencode.json and an empty ~/.env.workbench template (mode 600), never secret values. Restrict with `components`, preview with `dryRun:true`, then confirm with verify_clone. Prefer bootstrap_host for a first-time provision; use apply_clone for a specific component subset or per-component control.",
+        "Install the Workbench profile on a target: clone the profile repo and install missing components (repo, OpenCode CLI, Node/pnpm, npm/vendored/research MCPs, skills, plugins, optional Docker), writing a rendered `opencode.json` and an empty, names-only `~/.env.workbench` (mode 600). Idempotent — present components are skipped. Consent-gated: without `confirm:true` it returns the plan and changes nothing. Use it for a component subset or per-component control on an already-provisioned host; for a first-time provision use bootstrap_host, and do not call both for the same host and change.",
       inputSchema: {
         target: targetShape,
         confirm: z.boolean().optional().describe("Set true to actually install. When absent, the call returns a plan and makes no changes."),
@@ -304,7 +304,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Verify a Workbench clone",
       description:
-        "Re-check a target after cloning: presence of opencode.json and ~/.env.workbench plus per-component detection, returning a missing list. Read-only; requires SSH access for `mode: ssh`. Restrict the check with `components`. Use this after apply_clone; for a pre-clone preview use plan_clone. bootstrap_host runs this automatically, so call verify_clone directly only for a targeted re-check.",
+        "Re-check a target after a clone: confirm `opencode.json` and `~/.env.workbench` exist and re-detect every component, returning the missing list. Read-only; needs SSH for `mode: ssh`. Use it after apply_clone; bootstrap_host runs it automatically, so call verify_clone directly only for a targeted re-check. For a pre-clone preview use plan_clone.",
       inputSchema: { target: targetShape, ...optionsShape },
       outputSchema: verifyOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -323,7 +323,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Install one Workbench component",
       description:
-        "Install one component by id (e.g. 'node', 'opencode', 'npm-mcps', 'skills') on a target. `component` must be an id returned by workbench_info. Idempotent — installs only that component and skips it if already present. Requires SSH access and write permission on the target; can take several minutes. Use apply_clone for the full default set.",
+        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from workbench_info. Idempotent and consent-gated: without `confirm:true` it returns the plan. Use it for one targeted component; use apply_clone for a component subset, or bootstrap_host for a first-time end-to-end provision — do not combine them for the same host and change.",
       inputSchema: {
         target: targetShape,
         component: z.string().describe("Component id from workbench_info."),
@@ -358,7 +358,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "List required credentials",
       description:
-        "Report which credentials the profile references, which the target already provides, and how to acquire each missing one (label, purpose, provider URL, method and exact command). Value-blind: it checks whether env vars are set but never reads or returns their values. Use it after plan_clone to see what a clone would leave degraded, and before run_auth_flow.",
+        "List the credentials the profile references, which the target already provides, and how to acquire each missing one (label, purpose, provider URL, method, exact command). Value-blind: checks only whether env vars are set and never reads or returns values. Use it after plan_clone to see what a clone would leave degraded; pair it with run_auth_flow to act on one credential.",
       inputSchema: { target: targetShape },
       outputSchema: credentialsOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -387,7 +387,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Acquire one credential (best-effort)",
       description:
-        "Return the acquisition plan for one credential on a target: the provider URL, the exact non-interactive command when one exists (e.g. `opencode auth login`, `opencode mcp auth vercel`, `gh auth login`), and whether the credential is already present. Emit-and-verify: it does not run interactive flows or handle secret values itself. Use list_required_credentials first to find the variable name.",
+        "Return the acquisition plan for one credential on a target: the provider URL, the exact non-interactive command when one exists (e.g. `opencode auth login`, `opencode mcp auth vercel`, `gh auth login`), and whether it is already present. Emit-and-verify: it does not run interactive flows or handle secret values. Use it for a single credential surfaced by list_required_credentials; it does not replace that listing.",
       inputSchema: {
         target: targetShape,
         var: z.string().describe("Credential env var name from list_required_credentials (e.g. OPENCODE_API_KEY)."),
@@ -511,7 +511,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Bootstrap a bare Linux host",
       description:
-        "Provision a bare Linux target into a VDD-configured OpenCode workstation in one call: scan the platform from the kernel up, return a dry-run upgrade plan, install the latest stable OpenCode and record its version, apply the VDD profile config, and verify parity. Pass help:true for full parameter documentation without contacting the target. Consent-gated: without confirm:true it returns a plan (platform + upgrade commands + components) and changes nothing. Set upgrade:true (requires root/sudo) to execute the platform upgrade; default is plan-only. Never reads or transmits secret values. Use bootstrap_host for a first-time, end-to-end provision of a bare host; for granular control of an already-provisioned profile call inspect_target, plan_clone, apply_clone or verify_clone individually instead — bootstrap_host composes them, so do not call both for the same change.",
+        "Provision a bare Linux target end-to-end in one call: scan the platform from the kernel up and return a dry-run upgrade plan, install the latest stable OpenCode and record the resolved version, apply the VDD profile config, and verify parity. Pass `help:true` for full parameter documentation without contacting the target. Consent-gated: without `confirm:true` it returns a plan and changes nothing. Set `upgrade:true` (root/sudo) to run the platform upgrade; default is plan-only. Never reads or transmits secret values. Use it for a first-time provision of a bare host — do NOT also call inspect_target, plan_clone, apply_clone, or install_component for the same host and change; use those granular tools instead when you need step-by-step control of an existing profile.",
       inputSchema: {
         target: targetShape.optional(),
         help: z.boolean().optional().describe("Return parameter documentation and skip all target access."),
