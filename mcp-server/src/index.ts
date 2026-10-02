@@ -6,8 +6,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerTools } from "./tools.js";
-
-const VERSION = "1.0.0";
+import { VERSION } from "./version.js";
 
 async function main(): Promise<void> {
   const server = new McpServer({ name: "opencode-workbench", version: VERSION });

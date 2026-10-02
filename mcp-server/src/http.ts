@@ -14,8 +14,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { registerTools } from "./tools.js";
+import { VERSION } from "./version.js";
 
-const VERSION = "1.0.0";
 const NAME = "opencode-workbench";
 
 const server = new McpServer({ name: NAME, version: VERSION });
