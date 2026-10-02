@@ -14,7 +14,7 @@ offloaded to a compute box (`cs run "pnpm test"`) or CI — do not run them loca
 
 - `mcp-server/` — the `opencode-workbench` MCP server + connector (TypeScript).
   Tools: `inspect_target`, `plan_clone`, `apply_clone`, `verify_clone`,
-  `install_component`, `workbench_info`. Local + SSH transports.
+  `install_component`, `bootstrap_host`, `workbench_info`. Local + SSH transports.
   See `mcp-server/README.md` and `docs/architecture/clone-mcp.md`.
 - `connector.json` — connector manifest / registration snippet.
 - `plugins/` — the `memory.ts` + `doc-tools.ts` OpenCode plugins (portable,
@@ -23,7 +23,8 @@ offloaded to a compute box (`cs run "pnpm test"`) or CI — do not run them loca
   The build box is provisioned by the equivalent manual steps documented here
   (opencode CLI, npm-global MCP servers, vendored MCPs, Docker containers,
   toolchain) — see `docs/architecture/workstation-playbook.md`.
-- `opencode.json` — the canonical workbench config: 29 MCP servers, all secrets
+- `opencode.json` — the canonical workbench config: 35 MCP servers (33 enabled,
+  2 disabled: `google-search`, `google-workspace`), all secrets
   use `{env:VAR}` syntax. Copied to both `/workspaces/workbench/`
   (project config) and `~/.config/opencode/opencode.json` (global) on the build box.
   If you edit the repo copy, re-sync both.

@@ -40,6 +40,7 @@ From a checkout, use the local build instead:
 | `apply_clone` | Clone the profile + install missing components + write rendered config. Idempotent. |
 | `install_component` | Install a single component by id. |
 | `verify_clone` | Re-check config, env template, and every component. |
+| `bootstrap_host` | One-call provisioning: kernel-up platform scan + dry-run upgrade plan, latest-stable OpenCode + version pin, apply, verify; `help:true` documents parameters without touching the target. |
 
 Every tool takes a `target`:
 

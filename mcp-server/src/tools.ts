@@ -12,6 +12,7 @@ import type { TargetSpec } from "./target.js";
 import { COMPONENTS, componentById, defaultComponentIds } from "./components.js";
 import { OPTIONAL_MCP_IDS } from "./render.js";
 import { REPO_URL, REPO_WEB, packageRoot } from "./profile.js";
+import { bootstrap } from "./bootstrap.js";
 
 const targetShape = z
   .object({
@@ -281,6 +282,115 @@ export function registerTools(server: McpServer): void {
         return structured(await apply(targetFromSpec(toSpec(target)), { components: [component], workspace }));
       } catch (e) {
         return fail("install_component failed", e);
+      }
+    },
+  );
+
+  const bootstrapHelp = {
+    name: "bootstrap_host",
+    description:
+      "Provision a bare Linux target (local or SSH) into a VDD-configured OpenCode workstation in one call: scan the platform from the kernel up, return a dry-run upgrade plan, install the latest stable OpenCode and record its version, apply the VDD profile, and verify.",
+    parameters: [
+      { name: "target", type: "object", required: false, description: "Machine to provision; required unless help=true. { mode: local|ssh, host?, user?, port?, identityFile?, cwd? }." },
+      { name: "help", type: "boolean", required: false, description: "Return this parameter reference and contact no target." },
+      { name: "workspace", type: "string", required: false, description: "Target directory for the profile repo." },
+      { name: "components", type: "string[]", required: false, description: "Component ids to include; defaults to required+core." },
+      { name: "upgrade", type: "boolean", required: false, description: "Execute the platform upgrade (default false = plan only)." },
+      { name: "assumeYes", type: "boolean", required: false, description: "Use non-interactive upgrade flags (default true)." },
+      { name: "opencodeVersion", type: "string", required: false, description: "Pin a specific OpenCode version (default: latest stable)." },
+      { name: "dryRun", type: "boolean", required: false, description: "Report only; make no changes." },
+    ],
+  };
+
+  const bootstrapHelpOutput = z.object({
+    name: z.string(),
+    description: z.string(),
+    parameters: z.array(
+      z.object({
+        name: z.string(),
+        type: z.string(),
+        required: z.boolean(),
+        description: z.string(),
+      }),
+    ),
+  });
+
+  const bootstrapResultOutput = z.object({
+    target: z.string().describe("Label of the target."),
+    platform: z.object({
+      osId: z.string().nullable(),
+      osIdLike: z.array(z.string()),
+      osName: z.string().nullable(),
+      osVersion: z.string().nullable(),
+      kernel: z.string().nullable(),
+      arch: z.string().nullable(),
+      packageManager: z.string().nullable(),
+      family: z.string(),
+    }).describe("Platform report from the kernel up."),
+    upgrade: z.object({
+      packageManager: z.string().nullable(),
+      family: z.string(),
+      commands: z.array(z.string()),
+      upgradable: z.number().nullable(),
+      executed: z.boolean().describe("True only when upgrade:true ran the commands."),
+      output: z.array(z.string()),
+      rebootAdvisory: z.boolean(),
+    }).describe("Dry-run platform upgrade plan."),
+    opencode: z.object({
+      installed: z.boolean(),
+      version: z.string().nullable().describe("Resolved OpenCode build — the version pin."),
+      requested: z.string().nullable(),
+    }),
+    apply: applyOutput,
+    verify: verifyOutput,
+    warnings: z.array(z.string()),
+  });
+
+  const bootstrapOutput = z.object({
+    mode: z.enum(["help", "result"]),
+    help: bootstrapHelpOutput.optional(),
+    result: bootstrapResultOutput.optional(),
+  });
+
+  server.registerTool(
+    "bootstrap_host",
+    {
+      title: "Bootstrap a bare Linux host",
+      description:
+        "Provision a bare Linux target into a VDD-configured OpenCode workstation in one call: scan the platform from the kernel up, return a dry-run upgrade plan, install the latest stable OpenCode and record its version, apply the VDD profile config, and verify parity. Pass help:true for full parameter documentation without contacting the target. Set upgrade:true (requires root/sudo) to execute the platform upgrade; default is plan-only. Never reads or transmits secret values.",
+      inputSchema: {
+        target: targetShape.optional(),
+        help: z.boolean().optional().describe("Return parameter documentation and skip all target access."),
+        ...optionsShape,
+        upgrade: z.boolean().optional().describe("Execute the platform upgrade (default false: plan only)."),
+        assumeYes: z.boolean().optional().describe("Use non-interactive upgrade flags (default true)."),
+        opencodeVersion: z.string().optional().describe("Pin a specific OpenCode version (default: latest stable)."),
+      },
+      outputSchema: bootstrapOutput,
+      annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: true },
+    },
+    async (args: {
+      target?: TargetArg;
+      help?: boolean;
+    } & Partial<CloneOptions> & { upgrade?: boolean; assumeYes?: boolean; opencodeVersion?: string }) => {
+      try {
+        if (args.help) {
+          return structured({ mode: "help" as const, help: bootstrapHelp });
+        }
+        if (!args.target) throw new Error("target is required unless help=true");
+        const result = await bootstrap(targetFromSpec(toSpec(args.target)), {
+          components: args.components,
+          workspace: args.workspace,
+          profileUrl: args.profileUrl,
+          skipRepo: args.skipRepo,
+          dryRun: args.dryRun,
+          upgrade: args.upgrade,
+          assumeYes: args.assumeYes,
+          opencodeVersion: args.opencodeVersion,
+        });
+        return structured({ mode: "result" as const, result });
+      } catch (e) {
+        return fail("bootstrap_host failed", e);
       }
     },
   );

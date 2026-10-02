@@ -3,6 +3,37 @@
 > All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-10-03] — VDD adoption + `bootstrap_host`
+
+### Added
+- **VDD chain** (Phase 0–8): `constitution.md`, `vdd/vision.md`, `vdd/strategy.md`,
+  `vdd/tactics.md`, `vdd/specs/bootstrap-bare-host/{spec,plan,data-model,tasks}.md`
+  + `contracts/bootstrap_host.md`, `vdd/gates/G1–G7.md`,
+  `vdd/impact-report.generated.md`.
+- **`bootstrap_host` MCP tool** — one-call provisioning of a bare Linux target
+  (local or SSH): kernel-up platform scan + dry-run upgrade plan, latest-stable
+  OpenCode install with recorded version pin, VDD profile apply, verify, and a
+  target-free `help` parameter. (`mcp-server/src/bootstrap.ts`, `platform.ts`)
+- New unit tests `mcp-server/test/platform.test.ts` (20) and a `help` test.
+
+### Changed
+- `mcp-server/src/probe.ts` + `clone.ts`: emit `osIdLike` (`ID_LIKE`) for exact
+  distro-family detection.
+- Reconciled MCP counts: `README.md` (19→35) and `AGENTS.md` (29→35 configured,
+  33 enabled, 2 disabled).
+- CI `validate-inventory.yml`: assert documented MCP counts match `opencode.json`.
+
+### Fixed
+- Canonical non-interactive upgrade flag placement (`apt-get -y dist-upgrade`).
+- `AGENTS.md` tool list now includes `bootstrap_host`.
+
+### Known Issues
+- A-005/A-006 partially traced; README free-text counts now asserted by CI.
+- Constitution `[PENDING]` decisions: VDD adoption scope, `DB_PATH` drift,
+  `WORKFLOW_STATE.md` staleness.
+
+---
+
 ## [2026-07-27] — Master Backup
 
 ### Changed

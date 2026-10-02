@@ -22,6 +22,8 @@ export interface InspectResult {
   workspaceDefault: string;
   configDir: string;
   osId?: string;
+  /** Value of `ID_LIKE` from /etc/os-release (space-separated family hints). */
+  osIdLike?: string;
   osName?: string;
   osVersion?: string;
   kernel?: string;

@@ -106,7 +106,7 @@ opencode-workbench/
 | Category | Details |
 |----------|---------|
 | **OpenCode** | CLI v1.18.5, DeepSeek V4 Pro model, LSP enabled |
-| **MCP Servers** | 19 configured (5 remote, 14 local), all enabled |
+| **MCP Servers** | 35 configured (33 enabled, 2 disabled), 9 remote + 26 local |
 | **Agent Skills** | 28 reusable skills in `.opencode/skills/` |
 | **Infrastructure** | PostgreSQL 16 (Docker), Browserless Chromium (Docker) |
 | **Tools** | pandoc, jq, miller, sqlite3, GitHub CLI, Playwright Chromium |
@@ -160,12 +160,12 @@ Full details: [`docs/recovery/RECOVERY_PLAYBOOK.md`](docs/recovery/RECOVERY_PLAY
 
 ## MCP Architecture
 
-| Type | Count | Servers |
-|------|-------|---------|
-| Remote | 4 | context7, gh_grep, clerk, vercel (OAuth) |
-| Local (npm) | 11 | brave-search, postgres, playwright, shadcn, echarts, mermaid, saga, swagger-testcase, design-system, figma, sentry |
-| Local (vendored) | 2 | perplexity-agent-mcp, browserless-mcp |
-| Local (binary) | 1 | github-mcp-server |
+| Type | Count | Notes |
+|------|-------|-------|
+| Remote | 9 | context7, gh_grep, vdd, exa, cloudflare, clerk, vercel (token auth), sentry, stripe |
+| Local | 26 | npm / vendored / binary stdio servers |
+
+Totals: **35 configured** (33 enabled, 2 disabled: `google-search`, `google-workspace`).
 
 See: [`docs/architecture/mcp-inventory.md`](docs/architecture/mcp-inventory.md)
 
