@@ -31,7 +31,7 @@ Register the MCP server with OpenCode:
   "mcp": {
     "opencode-workbench": {
       "type": "local",
-      "command": ["npx", "-y", "github:simonplmak-cloud/opencode-workbench"],
+      "command": ["npx", "-y", "@simonmak-ascent/opencode-workbench"],
       "enabled": true,
       "timeout": 600000
     }
