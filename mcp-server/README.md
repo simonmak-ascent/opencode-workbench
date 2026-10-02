@@ -58,9 +58,9 @@ Every tool takes a `target`:
 - **core** — `pnpm`, `uv`, `gh`, `npm-mcps`, `vendored-mcps`, `research-mcps`, `skills`, `plugins`, `playwright-browsers`
 - **optional** — `github-mcp`, `docker`, `docker-containers`, `data-tools`, `scientific`, `db-clients`
 
-Add-ons (esg-hub, humanity4ai, vdd, saga, stripe, alibaba, ms-365, google-workspace,
-surrealdb, designlang, difflens) are omitted from the rendered config unless you pass
-`enabledMcp`/run with the full profile.
+Add-ons (esg-hub, humanity4ai, saga, surrealdb, google-workspace, google-search,
+ms-365, stripe, alibaba-cloud-ops, designlang, difflens) are omitted from the rendered
+config unless you pass `enabledMcp`/run with the full profile.
 
 ## Security
 

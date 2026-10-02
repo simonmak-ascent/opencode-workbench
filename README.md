@@ -107,7 +107,7 @@ opencode-workbench/
 
 | Category | Details |
 |----------|---------|
-| **OpenCode** | CLI v1.18.5, DeepSeek V4 Pro model, LSP enabled |
+| **OpenCode** | Latest stable CLI, DeepSeek V4 Pro model, LSP enabled |
 | **MCP Servers** | 35 configured (33 enabled, 2 disabled), 9 remote + 26 local |
 | **Agent Skills** | 45 reusable skills in `.opencode/skills/` |
 | **Infrastructure** | PostgreSQL 16 (Docker), Browserless Chromium (Docker) |
@@ -150,9 +150,9 @@ gh SWAS create --repo simonmak-ascent/opencode-workbench --machine basicLinux32g
 
 # 2. Wait for automation (3-5 min)
 
-# 3. Two manual steps:
-npx playwright install chrome
-opencode mcp auth vercel     # only if Vercel MCP needed
+# 3. If needed (usually done by setup.sh):
+npx playwright install chromium
+# Vercel MCP uses VERCEL_ACCESS_TOKEN (token auth — no OAuth step)
 
 # 4. Validate recovery
 bash scripts/recovery/validate-recovery.sh
@@ -178,13 +178,18 @@ All secrets stored in the build box Secrets. Never in repository files.
 | # | Secret | Used By |
 |---|--------|---------|
 | 1 | `DEEPSEEK_API_KEY` | OpenCode (primary model) |
-| 2 | `SIMONPLMAK_CLOUD_PAT` | GitHub MCP, shadcn MCP |
-| 3 | `PERPLEXITY_API_KEY` | Perplexity MCP |
-| 4 | `BRAVE_API_KEY` | Brave Search MCP |
-| 5 | `BROWSERLESS_TOKEN` | Browserless MCP + container |
-| 6 | `FIGMA_TOKEN` | Figma MCP |
+| 2 | `OPENCODE_API_KEY` | OpenCode Zen / Console Go providers |
+| 3 | `SIMONPLMAK_CLOUD_PAT` | GitHub MCP, shadcn MCP, `gh` |
+| 4 | `PERPLEXITY_API_KEY` | Perplexity MCP |
+| 5 | `BRAVE_API_KEY` | Brave Search MCP |
+| 6 | `BROWSERLESS_TOKEN` | Browserless MCP + container |
 | 7 | `SENTRY_AUTH_TOKEN` | Sentry MCP |
-| 8 | `KIMI_API_KEY` | Alternate provider (legacy) |
+| 8 | `VERCEL_ACCESS_TOKEN` | Vercel MCP (token auth) |
+
+Additional keys for opt-in servers (`EXA_API_KEY`, `CLOUDFLARE_API_TOKEN`,
+`STRIPE_SECRET_KEY`, `SURREAL_*`, `ALIBABA_CLOUD_*`, `AZURE_*`, `FIRECRAWL_API_KEY`,
+`FRED_API_KEY`, `COMPANIES_HOUSE_API_KEY`) are catalogued in
+[`docs/architecture/secrets.md`](docs/architecture/secrets.md) — never by value.
 
 See: [`docs/architecture/secrets.md`](docs/architecture/secrets.md)
 
@@ -209,7 +214,7 @@ See: [`docs/architecture/secrets.md`](docs/architecture/secrets.md)
 4. **Prompt**: Create in `docs/prompts/`, update `prompt-index.md`
 5. After any change: Update `CHANGELOG_WORKBENCH.md`, run master backup
 
-## Recovery Score: 92/100
+## Recovery Score: 94/100
 
 Validated disaster recovery within < 10 minutes using repository + build box Secrets alone.
 

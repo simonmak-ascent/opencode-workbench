@@ -13,8 +13,9 @@ offloaded to a compute box (`cs run "pnpm test"`) or CI — do not run them loca
 ## Repo structure
 
 - `mcp-server/` — the `opencode-workbench` MCP server + connector (TypeScript).
-  Tools: `inspect_target`, `plan_clone`, `apply_clone`, `verify_clone`,
-  `install_component`, `bootstrap_host`, `workbench_info`. Local + SSH transports.
+  Tools: `workbench_info`, `inspect_target`, `plan_clone`, `apply_clone`,
+  `verify_clone`, `install_component`, `list_required_credentials`,
+  `run_auth_flow`, `bootstrap_host`. Local + SSH transports.
   See `mcp-server/README.md` and `docs/architecture/clone-mcp.md`.
 - `connector.json` — connector manifest / registration snippet.
 - `plugins/` — the `memory.ts` + `doc-tools.ts` OpenCode plugins (portable,
@@ -58,7 +59,7 @@ bash scripts/recovery/validate-recovery.sh        # verify workstation is in goo
 |---|---|
 | `DATABASE_URL` | `postgres://opencode:opencode@localhost:5432/memory` |
 | `BROWSERLESS_HOST/PORT/PROTOCOL` | `localhost:3000/http` |
-| `DB_PATH` | `/workspaces/workbench/.saga/.tracker.db` |
+| `DB_PATH` | `/workspaces/opencode-workbench/.saga/.tracker.db` |
 | `DEEPSEEK_API_KEY` | primary model: `deepseek/deepseek-v4-pro` |
 | `OPENCODE_API_KEY` | OpenCode Zen + Console Go providers |
 | `SIMONPLMAK_CLOUD_PAT` | GitHub MCP (binary) + shadcn MCP + `gh` auth |
@@ -90,7 +91,7 @@ bash .devcontainer/start-browserless.sh
   `~/.local/bin/browserless-mcp/dist/index.js` (on the build box: `/home/node/.local/bin/`).
 - Model `deepseek/deepseek-v4-pro` (small: `deepseek/deepseek-v4-flash`);
   `default_agent` is `vdd` (the only subagent defined in `opencode.json`).
-- 28 repo skills in `.opencode/skills/`; global skills live under
+- 45 repo skills in `.opencode/skills/`; global skills live under
   `~/.config/opencode/skills/` (not this repo).
 - Plugins: `./plugins/memory.ts` + `./plugins/doc-tools.ts` (plus npm
   `opencode-env-protect`, `opencode-sentry-monitor`).

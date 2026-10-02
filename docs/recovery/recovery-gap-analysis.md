@@ -14,7 +14,7 @@
 | 5 | setup.sh copies opencode.json | ✅ Pass | Copies to ~/.config/opencode/ |
 | 6 | setup.sh clones external repos | ✅ Pass | esg-hub, project_human |
 | 7 | All env vars declared in remoteEnv | ✅ Pass | 17 explicit entries (DB_PATH unreliable at runtime — see I13) |
-| 8 | OpenCode skills tracked in repo | ✅ Pass | 28 skills in .opencode/skills/ |
+| 8 | OpenCode skills tracked in repo | ✅ Pass | 45 skills in .opencode/skills/ |
 | 9 | MCP versions documented | ✅ Pass | docs/architecture/mcp-inventory.md |
 | 10 | AI provider configuration documented | ✅ Pass | docs/architecture/ai-provider-inventory.md |
 | 11 | Runtime config snapshot preserved | ✅ Pass | docs/architecture/opencode-runtime-snapshot.md |
@@ -37,7 +37,7 @@
 | Postgres data ephemeral | Low | Acceptable for dev environment |
 | Storybook URL not configured | Low | Design-system MCP needs `STORYBOOK_URL` env var |
 | Machine type not in recovery doc | Low | Now documented: `basicLinux32gb` recommended |
-| Saga MCP disabled intentionally | Low | `enabled: false` in opencode.json; re-enable after DB_PATH verification |
+| Saga MCP enabled | — | `DB_PATH` set; saga-mcp creates the DB on first use |
 | Vercel OAuth still in DISASTER_RECOVERY.md | Low | Actually uses token auth now — doc drift, fix below |
 | Perplexity key prefix mismatch (pplx-) | Medium | Key regenerated in GitHub secrets — rebuild needed to propagate |
 | DB_PATH unreliable at runtime | Medium | Declared in remoteEnv but not always picked up; needs investigation |
@@ -60,3 +60,18 @@
 - **Automation**: 96 — setup.sh covers all entry points; 17/17 remoteEnv vars; no manual formatter/plugin steps
 - **Secret Management**: 93 — All critical secrets declared; 1 stale key in history; Perplexity rotation pending rebuild
 - **Plugin/Fmt Recoverability**: 96 — No plugins to resolve; eslint from devcontainer image; zero manual setup
+
+## 2026-10-03 refresh
+
+- MCP servers: **35 configured / 33 enabled** (2 disabled: `google-search`,
+  `google-workspace`); `figma` removed.
+- Agent skills: **45** (was 28).
+- Clone MCP hardened and extended: consent gate (`confirm:true` on
+  `apply_clone`/`install_component`), value-blind credential tools
+  (`list_required_credentials`, `run_auth_flow`), and `bootstrap_host` (one-call
+  provisioning with a kernel-up scan and a recorded OpenCode version pin).
+- Distribution: npm `@simonmak-ascent/opencode-workbench@1.1.2` published; hosted
+  connector live at `https://opencode-workbench.simonmak.com/mcp`; `server.json`
+  + GitHub-OIDC registry-publish workflow added.
+- Recovery assets re-validated: `setup.sh` + the component model cover the
+  required/core set; score held at **94/100**.
