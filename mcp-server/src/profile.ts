@@ -3,9 +3,9 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
 /** Canonical public repo for the workbench profile. */
-export const REPO_URL = "https://github.com/simonplmak-cloud/opencode-workbench.git";
-export const REPO_WEB = "https://github.com/simonplmak-cloud/opencode-workbench";
-export const RAW_BASE = "https://raw.githubusercontent.com/simonplmak-cloud/opencode-workbench/main";
+export const REPO_URL = "https://github.com/simonmak-ascent/opencode-workbench.git";
+export const REPO_WEB = "https://github.com/simonmak-ascent/opencode-workbench";
+export const RAW_BASE = "https://raw.githubusercontent.com/simonmak-ascent/opencode-workbench/main";
 
 /** Root of the installed package (repo root when run from a checkout). */
 export function packageRoot(): string {

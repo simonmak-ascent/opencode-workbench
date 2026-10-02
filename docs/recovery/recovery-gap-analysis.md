@@ -19,7 +19,7 @@
 | 10 | AI provider configuration documented | ✅ Pass | docs/architecture/ai-provider-inventory.md |
 | 11 | Runtime config snapshot preserved | ✅ Pass | docs/architecture/opencode-runtime-snapshot.md |
 | 12 | Workstation playbook exists | ✅ Pass | docs/architecture/workstation-playbook.md |
-| 13 | Git remote and branch documented | ✅ Pass | origin: simonplmak-cloud/opencode-workbench, main |
+| 13 | Git remote and branch documented | ✅ Pass | origin: simonmak-ascent/opencode-workbench, main |
 | 14 | Security scan clean (no secrets in repo) | ✅ Pass | Working tree clean; 1 stale rotated key in history |
 | 15 | .gitignore covers sensitive paths | ✅ Pass | .saga/, .playwright-mcp/, node_modules/, .env* |
 | 16 | PostgreSQL data is ephemeral | ⚠️ Accept | Docker volume lost on rebuild — intentional for dev |
@@ -45,7 +45,7 @@
 
 ## Recovery Process (Step by Step)
 
-1. Create new build box from `simonplmak-cloud/opencode-workbench` (main branch)
+1. Create new build box from `simonmak-ascent/opencode-workbench` (main branch)
 2. Wait for `postCreateCommand` (setup.sh) — ~3-5 minutes
 3. Verify Docker: `docker ps` (pg-memory + browserless)
 4. Verify MCP packages: `npm list -g --depth=0`

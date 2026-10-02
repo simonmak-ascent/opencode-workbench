@@ -8,7 +8,7 @@
 
 Before attempting recovery, verify these assets exist:
 
-1. **Repository**: `https://github.com/simonplmak-cloud/opencode-workbench` exists
+1. **Repository**: `https://github.com/simonmak-ascent/opencode-workbench` exists
 2. **Secrets**: At least 10 critical secrets configured in the build box Secrets
 3. **PAT**: `SIMONPLMAK_CLOUD_PAT` is active (check: https://github.com/settings/tokens)
 4. **Machine type**: Recommended `4-core` (`basicLinux32gb`) at minimum
@@ -17,7 +17,7 @@ Before attempting recovery, verify these assets exist:
 
 ### Step 1: Create New build box
 ```
-https://github.com/simonplmak-cloud/opencode-workbench → Code → SWAS → Create
+https://github.com/simonmak-ascent/opencode-workbench → Code → SWAS → Create
 ```
 
 ### Step 2: Wait for Automation

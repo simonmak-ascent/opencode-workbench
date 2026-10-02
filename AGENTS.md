@@ -61,7 +61,7 @@ bash scripts/recovery/validate-recovery.sh        # verify workstation is in goo
 | `DEEPSEEK_API_KEY` | primary model: `deepseek/deepseek-v4-pro` |
 | `OPENCODE_API_KEY` | OpenCode Zen + Console Go providers |
 | `SIMONPLMAK_CLOUD_PAT` | GitHub MCP (binary) + shadcn MCP + `gh` auth |
-| `NPM_TOKEN` | GitHub Packages (`@simonplmak-cloud`) — same PAT |
+| `NPM_TOKEN` | GitHub Packages (`@simonmak-ascent`) — same PAT |
 | `VERCEL_ACCESS_TOKEN`, `PERPLEXITY_API_KEY`, `BRAVE_API_KEY`, `SENTRY_AUTH_TOKEN`, `MOONSHOT_API_KEY`, `SURREAL_*`, `ALIBABA_CLOUD_*`, `AZURE_*`, `STRIPE_SECRET_KEY` | respective MCP servers/providers |
 
 ## Docker containers (always running on the build box)

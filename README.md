@@ -1,10 +1,10 @@
 # OpenCode Workbench
 
-[![Secret Scan](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/secret-scan.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/secret-scan.yml)
+[![Secret Scan](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/secret-scan.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/secret-scan.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![MCP Server](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/mcp-server.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/mcp-server.yml)
-[![Validate Documentation](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/validate-docs.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/validate-docs.yml)
-[![MCP Tool Definition Quality](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/tdqs.yml/badge.svg)](https://github.com/simonplmak-cloud/opencode-workbench/actions/workflows/tdqs.yml)
+[![MCP Server](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/mcp-server.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/mcp-server.yml)
+[![Validate Documentation](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/validate-docs.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/validate-docs.yml)
+[![MCP Tool Definition Quality](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/tdqs.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/tdqs.yml)
 
 > **A reproducible, self-documenting, and recoverable OpenCode development workstation** — configuration, agent skills, MCP stack, and an MCP server that clones the entire setup onto any Linux machine (locally or over SSH).
 
@@ -47,7 +47,7 @@ The connector never reads or transmits secret values; it writes an empty `~/.env
 
 ```bash
 # Create a new build box
-gh SWAS create --repo simonplmak-cloud/opencode-workbench --machine basicLinux32gb
+gh SWAS create --repo simonmak-ascent/opencode-workbench --machine basicLinux32gb
 
 # Wait for postCreate (3-5 min) — installs everything automatically
 # Then start coding:
@@ -144,7 +144,7 @@ Assume the build box is deleted. Only Git repo + build box Secrets survive.
 
 ```bash
 # 1. Create new build box
-gh SWAS create --repo simonplmak-cloud/opencode-workbench --machine basicLinux32gb
+gh SWAS create --repo simonmak-ascent/opencode-workbench --machine basicLinux32gb
 
 # 2. Wait for automation (3-5 min)
 
@@ -213,10 +213,10 @@ Validated disaster recovery within < 10 minutes using repository + build box Sec
 
 ## Use with Context7
 
-Up-to-date OpenCode Workbench documentation is indexed on [Context7](https://context7.com/simonplmak-cloud/opencode-workbench), so coding agents can pull it into context on demand. With the Context7 MCP server or `ctx7` CLI installed, name the library in your prompt:
+Up-to-date OpenCode Workbench documentation is indexed on [Context7](https://context7.com/simonmak-ascent/opencode-workbench), so coding agents can pull it into context on demand. With the Context7 MCP server or `ctx7` CLI installed, name the library in your prompt:
 
 ```text
-use library /simonplmak-cloud/opencode-workbench for API and docs
+use library /simonmak-ascent/opencode-workbench for API and docs
 ```
 
 ## License
@@ -225,6 +225,6 @@ MIT — see [LICENSE](LICENSE).
 
 ---
 
-A tool by [Simon Mak](https://github.com/simonplmak-cloud).
+A tool by [Simon Mak](https://github.com/simonmak-ascent).
 
 If this saves you time, a ⭐ on GitHub helps others find it.

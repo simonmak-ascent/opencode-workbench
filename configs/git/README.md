@@ -11,7 +11,7 @@ Git configuration is managed via the build box's default settings. Additional cu
 
 ## Repository Settings
 
-- Remote: `https://github.com/simonplmak-cloud/opencode-workbench`
+- Remote: `https://github.com/simonmak-ascent/opencode-workbench`
 - Default branch: `main`
 - Push policy: Manual only (no auto-push)
 
