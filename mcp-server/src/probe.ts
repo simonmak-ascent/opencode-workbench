@@ -17,10 +17,10 @@ fi
 USER_NAME="$(id -un)"
 SHELL_NAME="$SHELL"
 
-OS_ID=""; OS_NAME=""; OS_VERSION=""
+OS_ID=""; OS_ID_LIKE=""; OS_NAME=""; OS_VERSION=""
 if [ -r /etc/os-release ]; then
   . /etc/os-release 2>/dev/null || true
-  OS_ID="$ID"; OS_NAME="$NAME"; OS_VERSION="$VERSION_ID"
+  OS_ID="$ID"; OS_ID_LIKE="$ID_LIKE"; OS_NAME="$NAME"; OS_VERSION="$VERSION_ID"
 fi
 KERNEL="$(uname -sr 2>/dev/null || echo unknown)"
 ARCH="$(uname -m 2>/dev/null || echo unknown)"
@@ -69,6 +69,7 @@ cat <<EOF
   "home": "$(val "$HOME_DIR")",
   "shell": "$(val "$SHELL_NAME")",
   "osId": "$(val "$OS_ID")",
+  "osIdLike": "$(val "$OS_ID_LIKE")",
   "osName": "$(val "$OS_NAME")",
   "osVersion": "$(val "$OS_VERSION")",
   "kernel": "$(val "$KERNEL")",

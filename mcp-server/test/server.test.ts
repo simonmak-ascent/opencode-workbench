@@ -21,6 +21,7 @@ describe("opencode-workbench server", () => {
     const names = tools.map((t) => t.name).sort();
     expect(names).toEqual([
       "apply_clone",
+      "bootstrap_host",
       "inspect_target",
       "install_component",
       "list_required_credentials",
@@ -29,6 +30,20 @@ describe("opencode-workbench server", () => {
       "verify_clone",
       "workbench_info",
     ]);
+    await client.close();
+  });
+
+  it("documents bootstrap_host without touching a target", async () => {
+    const client = await connect();
+    const res = await client.callTool({ name: "bootstrap_host", arguments: { help: true } });
+    expect(res.isError).toBeFalsy();
+    const out = res.structuredContent as {
+      mode: string;
+      help?: { parameters: Array<{ name: string }> };
+    };
+    expect(out.mode).toBe("help");
+    expect(out.help?.parameters.map((p) => p.name)).toContain("upgrade");
+    expect(out.help?.parameters.map((p) => p.name)).toContain("opencodeVersion");
     await client.close();
   });
 
