@@ -134,6 +134,15 @@ fi
     install: `curl -LsSf https://astral.sh/uv/install.sh | sh`,
   },
   {
+    id: "research-mcps",
+    title: "Research MCP servers",
+    tier: "core",
+    description: "primary-sources (npm) plus arxiv/paper-search/firecrawl (fetched on demand via uvx/npx).",
+    detect: `command -v npx >/dev/null 2>&1 && command -v uvx >/dev/null 2>&1 && npm ls -g --depth=0 @simonmak-ascent/primary-sources-mcp >/dev/null 2>&1`,
+    install: `command -v npx >/dev/null 2>&1 || { warn "npx missing"; exit 1; }
+npm install -g --silent --no-audit --no-fund @simonmak-ascent/primary-sources-mcp@1.0.0 || warn "failed: primary-sources-mcp"`,
+  },
+  {
     id: "gh",
     title: "GitHub CLI",
     tier: "core",
