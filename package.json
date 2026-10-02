@@ -29,7 +29,8 @@
     "prepare": "npm run build",
     "typecheck": "tsc -p mcp-server/tsconfig.json --noEmit",
     "test": "vitest run --root mcp-server",
-    "test:coverage": "vitest run --root mcp-server --coverage"
+    "test:coverage": "vitest run --root mcp-server --coverage",
+    "selftest": "node scripts/selftest/run-selftest.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.31.0",
