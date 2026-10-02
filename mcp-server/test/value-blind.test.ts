@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { REQUIRED_CREDENTIALS, credentialByVar, credentialStatus } from "../src/credentials";
+import { REQUIRED_CREDENTIALS, credentialByVar, credentialStatus } from "../src/credential-catalog";
 import { renderOpencodeConfig, type RenderContext } from "../src/render";
 import { extractEnvVars, renderEnvTemplate } from "../src/profile";
 

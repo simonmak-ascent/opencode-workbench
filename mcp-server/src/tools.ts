@@ -12,7 +12,7 @@ import type { TargetSpec } from "./target.js";
 import { COMPONENTS, componentById, defaultComponentIds } from "./components.js";
 import { OPTIONAL_MCP_IDS } from "./render.js";
 import { REPO_URL, REPO_WEB, packageRoot } from "./profile.js";
-import { REQUIRED_CREDENTIALS, credentialByVar, credentialStatus } from "./credentials.js";
+import { REQUIRED_CREDENTIALS, credentialByVar, credentialStatus } from "./credential-catalog.js";
 
 const targetShape = z
   .object({
