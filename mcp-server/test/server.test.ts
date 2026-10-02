@@ -21,12 +21,12 @@ describe("opencode-workbench server", () => {
     const names = tools.map((t) => t.name).sort();
     expect(names).toEqual([
       "apply_clone",
-      "bootstrap_host",
-      "get_workbench_info",
+      "describe_workbench",
       "inspect_target",
       "install_component",
       "list_required_credentials",
       "plan_clone",
+      "provision_host",
       "remove_component",
       "run_auth_flow",
       "update_component",
@@ -35,9 +35,9 @@ describe("opencode-workbench server", () => {
     await client.close();
   });
 
-  it("documents bootstrap_host without touching a target", async () => {
+  it("documents provision_host without touching a target", async () => {
     const client = await connect();
-    const res = await client.callTool({ name: "bootstrap_host", arguments: { help: true } });
+    const res = await client.callTool({ name: "provision_host", arguments: { help: true } });
     expect(res.isError).toBeFalsy();
     const out = res.structuredContent as {
       mode: string;
@@ -49,9 +49,9 @@ describe("opencode-workbench server", () => {
     await client.close();
   });
 
-  it("answers get_workbench_info with components and optional MCPs", async () => {
+  it("answers describe_workbench with components and optional MCPs", async () => {
     const client = await connect();
-    const res = await client.callTool({ name: "get_workbench_info", arguments: {} });
+    const res = await client.callTool({ name: "describe_workbench", arguments: {} });
     const info = res.structuredContent as {
       components: Array<{ id: string; tier: string }>;
       optionalMcp: string[];

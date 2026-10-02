@@ -1,5 +1,5 @@
 /**
- * `bootstrap_host` orchestration: take a bare Linux target (local or SSH) to a
+ * `provision_host` orchestration: take a bare Linux target (local or SSH) to a
  * VDD-configured OpenCode workstation in one call.
  *
  * Order: inspect → platform plan (dry-run unless `upgrade`) → apply the profile

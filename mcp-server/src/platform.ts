@@ -1,5 +1,5 @@
 /**
- * Pure, side-effect-free platform logic for `bootstrap_host`.
+ * Pure, side-effect-free platform logic for `provision_host`.
  *
  * Nothing here touches the network, the filesystem or a target: every function
  * takes plain input and returns plain output, so the whole cross-distro mapping
