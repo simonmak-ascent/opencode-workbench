@@ -311,6 +311,25 @@ pipx install csvkit 2>/dev/null || true
 pip3 install --break-system-packages -q duckdb polars datasette pyarrow openpyxl xlrd xlsxwriter lxml sqlalchemy tabulate 2>/dev/null || true
 `,
   },
+  {
+    id: "scientific",
+    title: "Scientific Python stack",
+    tier: "optional",
+    description: "numpy, scipy, pandas, matplotlib, sympy (plus optional Jupyter, R, Julia).",
+    preview: "pip3 install --break-system-packages numpy scipy pandas matplotlib sympy",
+    detect: `python3 -c 'import numpy, scipy, pandas, matplotlib, sympy' >/dev/null 2>&1`,
+    install: `command -v python3 >/dev/null 2>&1 || pkg_install python3 python3-pip
+pip3 install --break-system-packages -q numpy scipy pandas matplotlib sympy || warn "scientific install failed"`,
+  },
+  {
+    id: "db-clients",
+    title: "Database clients",
+    tier: "optional",
+    description: "psql and pgcli for PostgreSQL work.",
+    detect: "command -v psql >/dev/null 2>&1 || command -v pgcli >/dev/null 2>&1",
+    install: `pkg_install postgresql-client || true
+pipx install pgcli 2>/dev/null || true`,
+  },
 ];
 
 export function componentById(id: string): Component | undefined {
