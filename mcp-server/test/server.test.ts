@@ -22,13 +22,13 @@ describe("opencode-workbench server", () => {
     expect(names).toEqual([
       "apply_clone",
       "bootstrap_host",
+      "get_workbench_info",
       "inspect_target",
       "install_component",
       "list_required_credentials",
       "plan_clone",
       "run_auth_flow",
       "verify_clone",
-      "workbench_info",
     ]);
     await client.close();
   });
@@ -47,9 +47,9 @@ describe("opencode-workbench server", () => {
     await client.close();
   });
 
-  it("answers workbench_info with components and optional MCPs", async () => {
+  it("answers get_workbench_info with components and optional MCPs", async () => {
     const client = await connect();
-    const res = await client.callTool({ name: "workbench_info", arguments: {} });
+    const res = await client.callTool({ name: "get_workbench_info", arguments: {} });
     const info = res.structuredContent as {
       components: Array<{ id: string; tier: string }>;
       optionalMcp: string[];

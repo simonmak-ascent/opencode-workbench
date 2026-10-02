@@ -12,7 +12,7 @@ npx -y mcp-tdqs lint --command 'node mcp-server/dist/index.js' \
 
 | Tool | Params | Coverage | Annotations | Output schema | Cost | Warning |
 |------|--------|----------|-------------|---------------|------|---------|
-| workbench_info | 0 | 100% | yes | yes | 0 | — |
+| workbench_info (now `get_workbench_info`) | 0 | 100% | yes | yes | 0 | — |
 | inspect_target | 1 | 100% | yes | yes | 4 | shadow-candidate (vs bootstrap_host) |
 | plan_clone | 6 | 100% | yes | yes | 4 | shadow-candidate |
 | apply_clone | 7 | 100% | yes | yes | 4 | shadow-candidate |

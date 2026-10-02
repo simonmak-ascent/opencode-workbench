@@ -199,7 +199,7 @@ function fail(message: string, error: unknown) {
 
 export function registerTools(server: McpServer): void {
   server.registerTool(
-    "workbench_info",
+    "get_workbench_info",
     {
       title: "Workbench server info",
       description:
@@ -323,10 +323,10 @@ export function registerTools(server: McpServer): void {
     {
       title: "Install one Workbench component",
       description:
-        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from workbench_info. Idempotent and consent-gated: without `confirm:true` it returns the plan. Use it for one targeted component; use apply_clone for a component subset, or bootstrap_host for a first-time end-to-end provision — do not combine them for the same host and change.",
+        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from get_workbench_info. Idempotent and consent-gated: without `confirm:true` it returns the plan. Use it for one targeted component; use apply_clone for a component subset, or bootstrap_host for a first-time end-to-end provision — do not combine them for the same host and change.",
       inputSchema: {
         target: targetShape,
-        component: z.string().describe("Component id from workbench_info."),
+        component: z.string().describe("Component id from get_workbench_info."),
         workspace: z.string().optional().describe("Target directory for the profile repo."),
         confirm: z.boolean().optional().describe("Set true to actually install. When absent, the call returns a plan and makes no changes."),
       },

@@ -37,7 +37,7 @@ mcp-server/src/
 
 | Tool | Purpose |
 |------|---------|
-| `workbench_info` | Repo, components by tier, optional MCP add-ons. |
+| `get_workbench_info` | Repo, components by tier, optional MCP add-ons. |
 | `inspect_target` | OS/arch/pkg-manager/Node/Docker/OpenCode and the *names* of credentials present. |
 | `plan_clone` | Diff the target against the profile → steps (with privileged-command previews). |
 | `apply_clone` | Consent-gated: without `confirm:true` returns the plan; with it, clones + installs. |

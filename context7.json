@@ -9,7 +9,7 @@
   ],
   "rules": [
     "Run locally with `npx -y @simonmak-ascent/opencode-workbench` (Node stdio MCP server; no API key).",
-    "Drive a clone with the tool order `workbench_info` → `inspect_target` → `plan_clone` → `apply_clone` → `verify_clone`; use `install_component` to install a single component by id, and `bootstrap_host` for a one-call end-to-end provision (platform scan + OpenCode + apply + verify; `help:true` documents parameters).",
+    "Drive a clone with the tool order `get_workbench_info` → `inspect_target` → `plan_clone` → `apply_clone` → `verify_clone`; use `install_component` to install a single component by id, and `bootstrap_host` for a one-call end-to-end provision (platform scan + OpenCode + apply + verify; `help:true` documents parameters).",
     "`apply_clone` and `install_component` are consent-gated: without `confirm:true` they return a plan and change nothing.",
     "Every tool takes a `target` of `{mode: \"local\"}` or `{mode: \"ssh\", host, user, port?, identityFile?}`.",
     "The connector never reads, transmits or writes secret values; `apply_clone` writes an empty `~/.env.workbench` template (mode 600) listing the `{env:VAR}` names to fill in.",
