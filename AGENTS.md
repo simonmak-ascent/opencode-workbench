@@ -23,7 +23,7 @@ offloaded to a compute box (`cs run "pnpm test"`) or CI — do not run them loca
   The SWAS box is provisioned by the equivalent manual steps documented here
   (opencode CLI, npm-global MCP servers, vendored MCPs, Docker containers,
   toolchain) — see `docs/architecture/workstation-playbook.md`.
-- `opencode.json` — the canonical workbench config: 30 MCP servers, all secrets
+- `opencode.json` — the canonical workbench config: 29 MCP servers, all secrets
   use `{env:VAR}` syntax. Copied to both `/workspaces/workbench/`
   (project config) and `~/.config/opencode/opencode.json` (global) on SWAS.
   If you edit the repo copy, re-sync both.
@@ -38,7 +38,7 @@ offloaded to a compute box (`cs run "pnpm test"`) or CI — do not run them loca
 ```bash
 # Local thin client → SWAS
 cs host                                          # workbench (set once)
-cs run "pnpm check && pnpm test"                 # sync + run on SWAS
+cs run "pnpm typecheck && pnpm test"             # sync + run on SWAS (no `check` script)
 cs provision                                     # sync + install deps on SWAS
 cs ssh "<cmd>"                                   # raw command on SWAS
 
@@ -87,8 +87,12 @@ bash .devcontainer/start-browserless.sh
   (runtime) — must stay in sync.
 - Vendored MCP entry points: `~/.local/bin/perplexity-agent-mcp/index.js`,
   `~/.local/bin/browserless-mcp/dist/index.js` (on SWAS: `/home/node/.local/bin/`).
-- 48 global skills (`~/.config/opencode/skills/`) + repo skills in
-  `.opencode/skills/`; 4 subagents; plugins `memory.ts` + `doc-tools.ts`.
+- Model `deepseek/deepseek-v4-pro` (small: `deepseek/deepseek-v4-flash`);
+  `default_agent` is `vdd` (the only subagent defined in `opencode.json`).
+- 28 repo skills in `.opencode/skills/`; global skills live under
+  `~/.config/opencode/skills/` (not this repo).
+- Plugins: `./plugins/memory.ts` + `./plugins/doc-tools.ts` (plus npm
+  `opencode-env-protect`, `opencode-sentry-monitor`).
 - LSP: enabled (built-in).
 
 ## CI
