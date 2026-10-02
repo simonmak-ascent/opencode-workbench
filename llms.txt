@@ -1,12 +1,12 @@
-# OpenCode Workbench (workbench-mcp)
+# OpenCode Workbench (opencode-workbench)
 
 > Open-source (MIT) MCP server + connector that clones the OpenCode workbench installation onto Linux machines — locally or over SSH — reproducing the same OpenCode config, MCP servers, agent skills, plugins, and Docker tooling. Works with Claude Code, Cursor, OpenCode, VS Code and other MCP clients.
 
 ## Connect
 
-- Local stdio server (no API key): `npx -y github:simonplmak-cloud/workbench`
-- Glama listing: https://glama.ai/mcp/servers/simonplmak-cloud/workbench
-- Context7 library ID: `/simonplmak-cloud/workbench`
+- Local stdio server (no API key): `npx -y github:simonplmak-cloud/opencode-workbench`
+- Glama listing: https://glama.ai/mcp/servers/simonplmak-cloud/opencode-workbench
+- Context7 library ID: `/simonplmak-cloud/opencode-workbench`
 
 ## MCP tools (6)
 
@@ -27,6 +27,6 @@ Every tool takes a `target`:
 
 ## Docs
 
-- [README and quick start](https://github.com/simonplmak-cloud/workbench#readme)
-- [MCP server README](https://github.com/simonplmak-cloud/workbench/tree/main/mcp-server)
-- [Clone architecture](https://github.com/simonplmak-cloud/workbench/blob/main/docs/architecture/clone-mcp.md)
+- [README and quick start](https://github.com/simonplmak-cloud/opencode-workbench#readme)
+- [MCP server README](https://github.com/simonplmak-cloud/opencode-workbench/tree/main/mcp-server)
+- [Clone architecture](https://github.com/simonplmak-cloud/opencode-workbench/blob/main/docs/architecture/clone-mcp.md)
