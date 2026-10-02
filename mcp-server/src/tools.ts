@@ -4,7 +4,9 @@ import {
   apply,
   inspect,
   plan,
+  removeComponent,
   targetFromSpec,
+  updateComponent,
   verify,
   type CloneOptions,
 } from "./clone.js";
@@ -268,7 +270,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Apply a Workbench clone",
       description:
-        "Install the Workbench profile on a target: clone the profile repo and install missing components (repo, OpenCode CLI, Node/pnpm, npm/vendored/research MCPs, skills, plugins, optional Docker), writing a rendered `opencode.json` and an empty, names-only `~/.env.workbench` (mode 600). Idempotent — present components are skipped. Consent-gated: without `confirm:true` it returns the plan and changes nothing. Use it for a component subset or per-component control on an already-provisioned host; for a first-time provision use bootstrap_host, and do not call both for the same host and change.",
+        "Install the Workbench profile on a target: clone the profile repo and install missing components (repo, OpenCode CLI, Node/pnpm, npm/vendored/research MCPs, skills, plugins, optional Docker). Writes and OVERWRITES `<home>/.config/opencode/opencode.json` and copies `AGENTS.md`; on an existing clone it runs `git reset --hard origin/main` (discarding local edits in the profile repo); global npm installs can take minutes and require write permission (plus SSH access for `mode:ssh`). Writes an empty, names-only `~/.env.workbench` (mode 600) and never secret values. Idempotent — present components are skipped. Consent-gated: without `confirm:true` it returns the plan and changes nothing. Use it for a component subset or per-component control on an already-provisioned host; for a first-time provision use bootstrap_host, and do not call both for the same host and change.",
       inputSchema: {
         target: targetShape,
         confirm: z.boolean().optional().describe("Set true to actually install. When absent, the call returns a plan and makes no changes."),
@@ -323,7 +325,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Install one Workbench component",
       description:
-        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from get_workbench_info. Idempotent and consent-gated: without `confirm:true` it returns the plan. Use it for one targeted component; use apply_clone for a component subset, or bootstrap_host for a first-time end-to-end provision — do not combine them for the same host and change.",
+        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from get_workbench_info. Overwrites that component's files when present (e.g. `skills`/`plugins` replace the copies under `<home>/.config/opencode`); global installs need write permission and can take minutes. Idempotent and consent-gated: without `confirm:true` it returns the plan. Use it for one targeted component; use apply_clone for a component subset, or bootstrap_host for a first-time end-to-end provision — do not combine them for the same host and change.",
       inputSchema: {
         target: targetShape,
         component: z.string().describe("Component id from get_workbench_info."),
@@ -349,6 +351,79 @@ export function registerTools(server: McpServer): void {
         return structured(await apply(spec, { components: [component], workspace }));
       } catch (e) {
         return fail("install_component failed", e);
+      }
+    },
+  );
+
+  const componentActionOutput = z.object({
+    target: z.string().describe("Label of the target."),
+    id: z.string().describe("Component id acted on."),
+    action: z.enum(["removed", "updated", "absent", "manual"]).describe("What happened: removed, updated, already absent, or manual (no automated uninstall)."),
+    code: z.number().describe("Exit code of the action."),
+    output: z.string().describe("Captured output (truncated)."),
+    requiresConfirmation: z.boolean().optional().describe("True when the call returned a preview without acting; re-call with confirm:true."),
+  });
+
+  server.registerTool(
+    "remove_component",
+    {
+      title: "Remove one Workbench component",
+      description:
+        "Uninstall a single Workbench component by id from a target — the inverse of install_component — for a bounded, documented subset (`opencode`, `pnpm`, `uv`, `npm-mcps`, `vendored-mcps`, `research-mcps`, `github-mcp`, `skills`, `plugins`, `docker-containers`, `playwright-browsers`); `component` must be an id from get_workbench_info. Idempotent: an already-absent component reports `absent`; components with no automated uninstall (system packages such as git/curl/node) report `manual` and require manual removal. Consent-gated and destructive: without `confirm:true` it returns a preview and changes nothing. Removes only that component's files — it does not delete `opencode.json` or the profile repo. Use it to tear down one component; to remove several, call it per id.",
+      inputSchema: {
+        target: targetShape,
+        component: z.string().describe("Component id from get_workbench_info."),
+        workspace: z.string().optional().describe("Profile repo directory (used by components whose removal needs it)."),
+        confirm: z.boolean().optional().describe("Set true to actually remove. When absent, the call returns a preview and makes no changes."),
+        dryRun: z.boolean().optional().describe("Report the action without changing anything."),
+      },
+      outputSchema: componentActionOutput,
+      annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: true },
+    },
+    async ({ target, component, workspace, confirm, dryRun }: { target: TargetArg; component: string; workspace?: string; confirm?: boolean; dryRun?: boolean }) => {
+      try {
+        const c = componentById(component);
+        if (!c) throw new Error(`unknown component '${component}'`);
+        const spec = targetFromSpec(toSpec(target));
+        if (confirm !== true) {
+          const preview = await removeComponent(spec, component, { workspace, dryRun: true });
+          return structured({ ...preview, requiresConfirmation: true });
+        }
+        return structured(await removeComponent(spec, component, { workspace, dryRun }));
+      } catch (e) {
+        return fail("remove_component failed", e);
+      }
+    },
+  );
+
+  server.registerTool(
+    "update_component",
+    {
+      title: "Update one Workbench component",
+      description:
+        "Update (re-install / upgrade in place) a single Workbench component by id on a target by re-running its install script, which fetches the current version (e.g. `opencode` re-runs the official installer; `npm-mcps` reinstalls the latest globals). Idempotent and consent-gated: without `confirm:true` it returns a preview and changes nothing. Requires write permission; global installs can take minutes. Use it to refresh one component; use apply_clone to reconcile the whole profile, or bootstrap_host to also upgrade the platform and pin the OpenCode version.",
+      inputSchema: {
+        target: targetShape,
+        component: z.string().describe("Component id from get_workbench_info."),
+        workspace: z.string().optional().describe("Profile repo directory (used by components whose update needs it)."),
+        confirm: z.boolean().optional().describe("Set true to actually update. When absent, the call returns a preview and makes no changes."),
+        dryRun: z.boolean().optional().describe("Report the action without changing anything."),
+      },
+      outputSchema: componentActionOutput,
+      annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: true },
+    },
+    async ({ target, component, workspace, confirm, dryRun }: { target: TargetArg; component: string; workspace?: string; confirm?: boolean; dryRun?: boolean }) => {
+      try {
+        const c = componentById(component);
+        if (!c) throw new Error(`unknown component '${component}'`);
+        const spec = targetFromSpec(toSpec(target));
+        if (confirm !== true) {
+          const preview = await updateComponent(spec, component, { workspace, dryRun: true });
+          return structured({ ...preview, requiresConfirmation: true });
+        }
+        return structured(await updateComponent(spec, component, { workspace, dryRun }));
+      } catch (e) {
+        return fail("update_component failed", e);
       }
     },
   );
@@ -511,7 +586,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Bootstrap a bare Linux host",
       description:
-        "Provision a bare Linux target end-to-end in one call: scan the platform from the kernel up and return a dry-run upgrade plan, install the latest stable OpenCode and record the resolved version, apply the VDD profile config, and verify parity. Pass `help:true` for full parameter documentation without contacting the target. Consent-gated: without `confirm:true` it returns a plan and changes nothing. Set `upgrade:true` (root/sudo) to run the platform upgrade; default is plan-only. Never reads or transmits secret values. Use it for a first-time provision of a bare host — do NOT also call inspect_target, plan_clone, apply_clone, or install_component for the same host and change; use those granular tools instead when you need step-by-step control of an existing profile.",
+        "Provision a bare Linux target end-to-end in one call: scan the platform from the kernel up and return a dry-run upgrade plan, install the latest stable OpenCode and record the resolved version, apply the VDD profile config, and verify parity. Requires SSH access for `mode:ssh`; a full run can take many minutes (platform upgrade + installs). Pass `help:true` for full parameter documentation without contacting the target. Consent-gated: without `confirm:true` it returns a plan and changes nothing. Set `upgrade:true` (requires root/sudo) to run the platform upgrade; default is plan-only. Never reads or transmits secret values. Use it for a first-time provision of a bare host — do NOT also call inspect_target, plan_clone, apply_clone, or install_component for the same host and change; use those granular tools instead when you need step-by-step control of an existing profile.",
       inputSchema: {
         target: targetShape.optional(),
         help: z.boolean().optional().describe("Return parameter documentation and skip all target access."),

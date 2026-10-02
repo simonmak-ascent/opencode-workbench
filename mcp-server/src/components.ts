@@ -340,3 +340,30 @@ export function componentById(id: string): Component | undefined {
 export function defaultComponentIds(): string[] {
   return COMPONENTS.filter((c) => c.tier === "required" || c.tier === "core").map((c) => c.id);
 }
+
+/**
+ * Bounded, idempotent uninstall scripts for the components whose removal is
+ * automated. Components absent from this map cannot be removed automatically
+ * (system packages such as git/curl/node) and are reported as `manual`.
+ */
+export const UNINSTALL_SCRIPTS: Record<string, string> = {
+  pnpm: `command -v npm >/dev/null 2>&1 && npm rm -g pnpm >/dev/null 2>&1 || true`,
+  opencode: `rm -rf "$WB_HOME/.opencode" "$WB_HOME/.local/bin/opencode"
+command -v npm >/dev/null 2>&1 && npm rm -g opencode-ai >/dev/null 2>&1 || true`,
+  uv: `rm -f "$WB_HOME/.local/bin/uv" "$WB_HOME/.local/bin/uvx"`,
+  "research-mcps": `command -v npm >/dev/null 2>&1 && npm rm -g --silent @simonmak-ascent/primary-sources-mcp >/dev/null 2>&1 || true`,
+  "npm-mcps": `command -v npm >/dev/null 2>&1 || { warn "npm missing"; exit 1; }
+${CORE_NPM_MCPS.map((p) => `  npm rm -g --silent ${p} >/dev/null 2>&1 || true`).join("\n")}`,
+  "vendored-mcps": `rm -rf "$WB_HOME/.local/bin/perplexity-agent-mcp" "$WB_HOME/.local/bin/browserless-mcp"`,
+  "github-mcp": `rm -f "$WB_HOME/.local/bin/github-mcp-server"`,
+  skills: `rm -rf "$WB_HOME/.config/opencode/skills"`,
+  plugins: `rm -rf "$WB_HOME/.config/opencode/plugins"`,
+  "docker-containers": `command -v docker >/dev/null 2>&1 || { warn "docker missing"; exit 1; }
+docker rm -f pg-memory browserless >/dev/null 2>&1 || true`,
+  "playwright-browsers": `rm -rf "$WB_HOME/.cache/ms-playwright"`,
+};
+
+/** Uninstall script for a component id, or undefined when removal is manual. */
+export function uninstallScript(id: string): string | undefined {
+  return UNINSTALL_SCRIPTS[id];
+}

@@ -6,6 +6,7 @@ import {
   PREAMBLE,
   componentById,
   defaultComponentIds,
+  uninstallScript,
   type Component,
 } from "./components.js";
 import {
@@ -300,5 +301,70 @@ export async function verify(target: Target, options: CloneOptions = {}): Promis
     envExists: checks.stdout.includes("env_ok"),
     components,
     missing: components.filter((c) => !c.present).map((c) => c.id),
+  };
+}
+
+export interface ComponentActionResult {
+  target: string;
+  id: string;
+  action: "removed" | "updated" | "absent" | "manual";
+  code: number;
+  output: string;
+}
+
+/**
+ * Remove one component from a target (reverse of install_component). Idempotent:
+ * an already-absent component returns `absent`. Components without an automated
+ * uninstall (system packages) return `manual`. Never touches secret values.
+ */
+export async function removeComponent(
+  target: Target,
+  id: string,
+  options: CloneOptions = {},
+): Promise<ComponentActionResult> {
+  const c = componentById(id);
+  if (!c) throw new Error(`unknown component '${id}'`);
+  const script = uninstallScript(id);
+  const present = await detect(target, [id]);
+  if (options.dryRun) {
+    return { target: target.label, id, action: present[id] ? "removed" : "absent", code: 0, output: "(dry run)" };
+  }
+  if (present[id] !== true) {
+    return { target: target.label, id, action: "absent", code: 0, output: "already absent" };
+  }
+  if (!script) {
+    return { target: target.label, id, action: "manual", code: 0, output: "no automated uninstall; remove manually" };
+  }
+  const res = await target.run(withEnv(script, options.workspace || ""), { timeoutMs: 600_000 });
+  return {
+    target: target.label,
+    id,
+    action: "removed",
+    code: res.code,
+    output: `${(res.stdout + res.stderr).trim().slice(0, 1200)}`,
+  };
+}
+
+/**
+ * Update (re-install / upgrade) one component in place. Idempotent: runs the
+ * component's install script, which upgrades to the current version.
+ */
+export async function updateComponent(
+  target: Target,
+  id: string,
+  options: CloneOptions = {},
+): Promise<ComponentActionResult> {
+  const c = componentById(id);
+  if (!c) throw new Error(`unknown component '${id}'`);
+  if (options.dryRun) {
+    return { target: target.label, id, action: "updated", code: 0, output: "(dry run)" };
+  }
+  const res = await target.run(withEnv(c.install, options.workspace || ""), { timeoutMs: 600_000 });
+  return {
+    target: target.label,
+    id,
+    action: "updated",
+    code: res.code,
+    output: `${(res.stdout + res.stderr).trim().slice(0, 1200)}`,
   };
 }

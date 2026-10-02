@@ -1,19 +1,20 @@
 # OpenCode Workbench (opencode-workbench)
 
 > Open-source (MIT) MCP server + connector that provisions and clones the OpenCode
-> workbench onto Linux machines — locally or over SSH. Nine tools cover a
+> workbench onto Linux machines — locally or over SSH. Eleven tools cover a
 > kernel-up platform scan, a one-call bootstrap, an idempotent, consent-gated
-> clone, and value-blind credential guidance. No secret values are ever read,
-> transmitted, or written.
+> clone, the install/update/remove lifecycle, and value-blind credential guidance.
+> No secret values are ever read, transmitted, or written.
 
 ## Connect
 
 - Local stdio server: `npx -y @simonmak-ascent/opencode-workbench`
 - Hosted (Streamable HTTP): `https://opencode-workbench.simonmak.com/mcp`
+- Homepage: https://opencode-workbench.simonmak.com
 - Glama: https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench
 - Context7 library ID: `/simonmak-ascent/opencode-workbench`
 
-## MCP tools (9)
+## MCP tools (11)
 
 - `get_workbench_info` — describe this server: repo, components by tier, optional MCP add-ons
 - `inspect_target` — probe a machine: OS, arch, package manager, Node, Docker, OpenCode, home and npm-global paths
@@ -21,6 +22,8 @@
 - `apply_clone` — consent-gated: without `confirm:true` returns the plan; with it, clones + installs the profile (idempotent)
 - `verify_clone` — re-check config, env template, and every component's detection
 - `install_component` — install a single component by id (also `confirm`-gated)
+- `remove_component` — uninstall a single component by id (bounded subset; `confirm`-gated)
+- `update_component` — update/upgrade a single component in place (`confirm`-gated)
 - `list_required_credentials` — value-blind: which credentials are missing and how to acquire each
 - `run_auth_flow` — emit-and-verify acquisition guidance for one credential
 - `bootstrap_host` — one-call provisioning: kernel-up platform scan + dry-run upgrade plan, latest-stable OpenCode with recorded version, apply + verify; `help:true` documents every parameter without touching the target

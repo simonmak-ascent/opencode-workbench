@@ -42,6 +42,8 @@ mcp-server/src/
 | `plan_clone` | Diff the target against the profile → steps (with privileged-command previews). |
 | `apply_clone` | Consent-gated: without `confirm:true` returns the plan; with it, clones + installs. |
 | `install_component` | Install one component by id (also `confirm`-gated). |
+| `remove_component` | Uninstall one component by id (bounded subset; `confirm`-gated). |
+| `update_component` | Update/upgrade one component in place (`confirm`-gated). |
 | `verify_clone` | Re-check config, env template, and every component. |
 | `list_required_credentials` | Value-blind: which keys are missing and how to acquire each. |
 | `run_auth_flow` | Emit-and-verify acquisition guidance for one credential. |

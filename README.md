@@ -8,6 +8,8 @@
 
 > **A reproducible, self-documenting, and recoverable OpenCode development workstation** — configuration, agent skills, MCP stack, and an MCP server that clones the entire setup onto any Linux machine (locally or over SSH).
 
+**Homepage & remote MCP:** https://opencode-workbench.simonmak.com · `POST https://opencode-workbench.simonmak.com/mcp`
+
 ## Purpose
 
 This repository is the **single source of truth** for a complete cloud development workstation. Everything needed to rebuild from scratch is versioned here:

@@ -27,7 +27,9 @@ describe("opencode-workbench server", () => {
       "install_component",
       "list_required_credentials",
       "plan_clone",
+      "remove_component",
       "run_auth_flow",
+      "update_component",
       "verify_clone",
     ]);
     await client.close();
@@ -87,6 +89,32 @@ describe("opencode-workbench server", () => {
     expect(plan.steps.some((s) => s.id === "git")).toBe(true);
     expect(plan.steps.some((s) => s.id === "opencode")).toBe(true);
     expect(Array.isArray(plan.toInstall)).toBe(true);
+    await client.close();
+  });
+
+  it("previews remove_component without acting", async () => {
+    const client = await connect();
+    const res = await client.callTool({
+      name: "remove_component",
+      arguments: { target: { mode: "local" }, component: "skills" },
+    });
+    expect(res.isError).toBeFalsy();
+    const out = res.structuredContent as { requiresConfirmation?: boolean; action: string };
+    expect(out.requiresConfirmation).toBe(true);
+    expect(["removed", "absent", "manual"]).toContain(out.action);
+    await client.close();
+  });
+
+  it("previews update_component without acting", async () => {
+    const client = await connect();
+    const res = await client.callTool({
+      name: "update_component",
+      arguments: { target: { mode: "local" }, component: "skills" },
+    });
+    expect(res.isError).toBeFalsy();
+    const out = res.structuredContent as { requiresConfirmation?: boolean; action: string };
+    expect(out.requiresConfirmation).toBe(true);
+    expect(out.action).toBe("updated");
     await client.close();
   });
 });

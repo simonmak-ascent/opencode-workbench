@@ -38,7 +38,9 @@ From a checkout, use the local build instead:
 | `inspect_target` | OS/arch/pkg-manager/Node/Docker/OpenCode/home/npm paths. |
 | `plan_clone` | Diff the target against the profile → steps to install / present / manual. |
 | `apply_clone` | Clone the profile + install missing components + write rendered config. Idempotent. |
-| `install_component` | Install a single component by id. |
+| `install_component` | Install a single component by id (consent-gated). |
+| `remove_component` | Uninstall a single component by id (bounded subset; consent-gated). |
+| `update_component` | Update/upgrade a single component in place (consent-gated). |
 | `verify_clone` | Re-check config, env template, and every component. |
 | `bootstrap_host` | One-call provisioning: kernel-up platform scan + dry-run upgrade plan, latest-stable OpenCode + version pin, apply, verify; `help:true` documents parameters without touching the target. |
 | `list_required_credentials` | Value-blind: which credentials are missing and how to acquire each. |
