@@ -19,15 +19,15 @@
     <meta property="og:url" content="https://opencode-workbench.simonmak.com/" />
     <style>
       :root {
-        --bg: #0b0f14;
-        --panel: #121821;
-        --panel-2: #0f141b;
-        --border: #222c39;
-        --fg: #e8edf4;
-        --muted: #9fb0c3;
-        --accent: #7c9cff;
-        --accent-2: #45d0b3;
-        --code: #0a0e13;
+        --bg: oklch(0.12 0.01 285);
+        --panel: oklch(0.15 0.01 285);
+        --panel-2: oklch(0.13 0.01 285);
+        --border: oklch(0.25 0.01 285);
+        --fg: oklch(0.95 0.005 90);
+        --muted: oklch(0.7 0.005 90);
+        --accent: oklch(0.52 0.1 195);
+        --accent-2: oklch(0.72 0.08 195);
+        --code: oklch(0.1 0.01 285);
         --radius: 14px;
         --max: 1080px;
       }
@@ -35,7 +35,7 @@
       html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        background: radial-gradient(1200px 600px at 70% -10%, #16233a 0%, var(--bg) 55%) no-repeat, var(--bg);
+        background: radial-gradient(1200px 600px at 70% -10%, oklch(0.2 0.03 195) 0%, var(--bg) 55%) no-repeat, var(--bg);
         color: var(--fg);
         font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -97,7 +97,7 @@
       .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
 
       .pill { display: inline-block; padding: 3px 9px; border: 1px solid var(--border); border-radius: 999px; font-size: 12px; color: var(--muted); margin: 0 6px 6px 0; }
-      .pill.good { color: var(--accent-2); border-color: #1f4a42; }
+      .pill.good { color: var(--accent-2); border-color: #154c52; }
 
       footer { border-top: 1px solid var(--border); padding: 26px 0 44px; color: var(--muted); font-size: 14px; margin-top: 20px; }
       .foot-links { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 10px; }
@@ -108,8 +108,8 @@
       <div class="wrap nav-inner">
         <div class="brand">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <rect x="2" y="3" width="20" height="18" rx="3" stroke="#7c9cff" stroke-width="1.6" />
-            <path d="M6 8h8M6 12h12M6 16h6" stroke="#45d0b3" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="2" y="3" width="20" height="18" rx="3" stroke="#1f9fb0" stroke-width="1.6" />
+            <path d="M6 8h8M6 12h12M6 16h6" stroke="#4db6c4" stroke-width="1.6" stroke-linecap="round" />
           </svg>
           <span>opencode-workbench</span>
         </div>
