@@ -42,7 +42,6 @@ From a checkout, use the local build instead:
 | `remove_component` | Uninstall a single component by id (bounded subset; consent-gated). |
 | `update_component` | Update/upgrade a single component in place (consent-gated). |
 | `verify_clone` | Re-check config, env template, and every component. |
-| `provision_host` | One-call provisioning: kernel-up platform scan + dry-run upgrade plan, latest-stable OpenCode + version pin, apply, verify; `help:true` documents parameters without touching the target. |
 | `list_required_credentials` | Value-blind: which credentials are missing and how to acquire each. |
 | `run_auth_flow` | Emit-and-verify acquisition guidance for one credential. |
 

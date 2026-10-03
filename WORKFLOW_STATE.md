@@ -10,7 +10,7 @@
 | Phase #0 — Verify Docs | **COMPLETED** |
 | Phase #1 — Research | **COMPLETED** |
 | Phase #2 — Architecture | **COMPLETED** |
-| Phase #3 — Implementation | **COMPLETED** (clone MCP + provision_host shipped) |
+| Phase #3 — Implementation | **COMPLETED** (clone MCP shipped) |
 | VDD chain (Phase 0–8) | **COMPLETED** — `constitution.md` + `vdd/` (gates G1–G7 PASS) |
 | Distribution | In progress — npm published; Vercel live; registry publish prepared |
 
@@ -29,7 +29,7 @@ Timestamp: 2026-10-03
 |------|--------|--------|
 | Clone engine (inspect/plan/apply/verify) | DONE | `mcp-server/src/clone.ts` |
 | Consent gate + value-blind credentials | DONE | `apply_clone`/`install_component` `confirm:true`; `list_required_credentials`, `run_auth_flow` |
-| One-call provisioning | DONE | `provision_host` (platform scan + upgrade plan + OpenCode pin + verify + `help`) |
+| One-call provisioning | REMOVED | `provision_host` removed in v4.0.0; use `apply_clone` (inspect → plan → apply → verify) |
 | Tests + CI | DONE | 49 tests; `mcp-server.yml` |
 
 ### VDD chain — DELIVERED

@@ -11,11 +11,16 @@
 
 ## MCP tools
 
-- `provision_host`: install and configure the full OpenCode workstation on a host
-- `workspace`: inspect and manage the provisioned workspace
-- `upgrade`: update components to their latest versions
-- `components`: list / manage optional components (github-mcp, docker, data-tools, sandbox, …)
-- `help`: discover capabilities and configuration
+- `describe_workbench`: describe the server — repo, components by tier, optional MCP add-ons
+- `inspect_target`: probe a machine (OS, arch, package manager, Node, Docker, OpenCode)
+- `plan_clone`: diff a target against the profile → install / present / manual steps
+- `apply_clone`: consent-gated clone + install of the profile (idempotent)
+- `verify_clone`: re-check config, env template, and every component
+- `install_component`: install a single component by id (consent-gated)
+- `remove_component`: uninstall a single component by id (consent-gated)
+- `update_component`: update a single component in place (consent-gated)
+- `list_required_credentials`: value-blind list of missing credentials
+- `run_auth_flow`: emit-and-verify acquisition guidance for one credential
 
 ## Docs
 

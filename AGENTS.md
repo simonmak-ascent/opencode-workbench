@@ -15,7 +15,7 @@ offloaded to a compute box (`cs run "pnpm test"`) or CI — do not run them loca
 - `mcp-server/` — the `opencode-workbench` MCP server + connector (TypeScript).
   Tools: `describe_workbench`, `inspect_target`, `plan_clone`, `apply_clone`,
   `verify_clone`, `install_component`, `remove_component`, `update_component`,
-  `list_required_credentials`, `run_auth_flow`, `provision_host`.
+  `list_required_credentials`, `run_auth_flow`.
   Local + SSH transports.
   See `mcp-server/README.md` and `docs/architecture/clone-mcp.md`.
 - `connector.json` — connector manifest / registration snippet.

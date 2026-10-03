@@ -35,9 +35,9 @@ Notes:
 
 ## MCP Tool Surface
 
-The server exposes **11 tools**: `describe_workbench`, `inspect_target`, `plan_clone`,
+The server exposes **10 tools**: `describe_workbench`, `inspect_target`, `plan_clone`,
 `apply_clone`, `verify_clone`, `install_component`, `remove_component`,
-`update_component`, `list_required_credentials`, `run_auth_flow`, `provision_host`.
+`update_component`, `list_required_credentials`, `run_auth_flow`.
 
 ## Agent Configuration
 

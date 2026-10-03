@@ -46,6 +46,11 @@ configuration, on localhost or a remote SSH target.
 | I-006 | Every MCP tool passes TDQS with no defects (target 5/5; floor tier A) | Operator / agent consumers | `mcp-tdqs lint` 0 errors; `mcp-tdqs score` tier + score |
 | I-007 | Server discoverable in the top free MCP registries | Operator | Listed/live in Official MCP Registry + Glama + Smithery + PulseMCP + mcp.so |
 
+> **[AMEND 2026-10-03]** I-001 and I-005 are served by the ordered chain
+> `describe_workbench → inspect_target → plan_clone → apply_clone → verify_clone`;
+> the overlapping one-call `provision_host` entry was removed in v4.0.0 to raise
+> TDQS coherence. I-001's "minimal commands" is now measured on that chain.
+
 ## Stakeholder Map
 
 | Role | Interest | Influence | Engagement Strategy |
