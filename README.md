@@ -2,6 +2,8 @@
 
 [![Secret Scan](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/secret-scan.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/secret-scan.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.simonmak--ascent%2Fopencode--workbench-4CAF50)](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.simonmak-ascent/opencode-workbench)
+[![Glama](https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench/badges/score.svg)](https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench)
 [![MCP Server](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/mcp-server.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/mcp-server.yml)
 [![Validate Documentation](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/validate-docs.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/validate-docs.yml)
 [![MCP Tool Definition Quality](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/tdqs.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/tdqs.yml)
