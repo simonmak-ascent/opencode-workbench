@@ -1,0 +1,12 @@
+# OpenCode Workbench
+
+> A reproducible, self-documenting, and recoverable OpenCode development workstation — configuration, agent skills, MCP stack, and an MCP server that provisions the entire setup onto any Linux machine (locally or over SSH).
+
+Live site: https://opencode-workbench.simonmak.com
+Remote MCP: https://opencode-workbench.simonmak.com/mcp
+Package: https://www.npmjs.com/package/@simonmak-ascent/opencode-workbench
+MCP Registry: io.github.simonmak-ascent/opencode-workbench
+Repository: https://github.com/simonmak-ascent/opencode-workbench
+
+## Author
+Simon Mak — https://simonmak.com
