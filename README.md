@@ -1,18 +1,20 @@
 # OpenCode Workbench
 
+<!-- mcp-name: io.github.simonmak-ascent/opencode-workbench -->
+
+> **A reproducible, self-documenting, and recoverable OpenCode development workstation** — configuration, agent skills, MCP stack, and an MCP server that clones the entire setup onto any Linux machine (locally or over SSH).
+
 [![Secret Scan](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/secret-scan.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/secret-scan.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![MCP Tool Definition Quality](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/tdqs.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/tdqs.yml)
 [![MCP Registry](https://img.shields.io/badge/MCP%20Registry-io.github.simonmak--ascent%2Fopencode--workbench-4CAF50)](https://registry.modelcontextprotocol.io/v0/servers?search=io.github.simonmak-ascent/opencode-workbench)
 [![Glama](https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench/badges/score.svg)](https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench)
 [![MCP Server](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/mcp-server.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/mcp-server.yml)
 [![Validate Documentation](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/validate-docs.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/validate-docs.yml)
-[![MCP Tool Definition Quality](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/tdqs.yml/badge.svg)](https://github.com/simonmak-ascent/opencode-workbench/actions/workflows/tdqs.yml)
-
-> **A reproducible, self-documenting, and recoverable OpenCode development workstation** — configuration, agent skills, MCP stack, and an MCP server that clones the entire setup onto any Linux machine (locally or over SSH).
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Homepage & remote MCP:** https://opencode-workbench.simonmak.com · `POST https://opencode-workbench.simonmak.com/mcp`
 
-## Purpose
+## Overview
 
 This repository is the **single source of truth** for a complete cloud development workstation. Everything needed to rebuild from scratch is versioned here:
 
