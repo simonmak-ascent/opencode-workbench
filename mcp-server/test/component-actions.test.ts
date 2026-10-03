@@ -23,6 +23,7 @@ describe("component uninstall coverage", () => {
       "plugins",
       "docker-containers",
       "playwright-browsers",
+      "sandbox",
     ]) {
       expect(typeof uninstallScript(id), `missing uninstall for ${id}`).toBe("string");
     }

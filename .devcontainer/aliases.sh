@@ -1,4 +1,5 @@
 alias ll="ls -lah"
 alias gs="git status"
 alias op="opencode"
+alias ocs="opencode-sandbox"
 alias workspaces="cd /workspaces"

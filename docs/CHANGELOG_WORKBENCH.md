@@ -3,6 +3,16 @@
 > All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-10-03] — v3.1.0
+
+### Added
+- **`sandbox` component** — optional [bubblewrap](https://github.com/containers/bubblewrap)
+  sandbox for the OpenCode CLI. Installs `~/.local/bin/opencode-sandbox` (alias `ocs`),
+  which runs `opencode` with a read-only system, writable workspace + OpenCode state only,
+  and no access to `~/.ssh`, cloud credentials or `~/.env.workbench`. Wrapper:
+  `scripts/sandbox/opencode-sandbox.sh`.
+- Documented the sandbox under `docs/security-model.md` (Layer 2b) and `mcp-server/README.md`.
+
 ## [2026-10-03] — v3.0.0
 
 ### Breaking
@@ -153,7 +163,7 @@
 
 ### Changed
 - **Active model**: `kimi-for-coding/k3` → `deepseek/deepseek-v4-pro`
-- **devcontainer.json `remoteEnv`**: Added 6 missing env vars (BROWSERLESS_TOKEN, PERPLEXITY_API_KEY, BRAVE_API_KEY, FIGMA_TOKEN, SENTRY_AUTH_TOKEN, SIMONPLMAK_CLOUD_PAT, DEEPSEEK_API_KEY, DB_PATH)
+- **devcontainer.json `remoteEnv`**: Added 6 missing env vars (BROWSERLESS_TOKEN, PERPLEXITY_API_KEY, BRAVE_API_KEY, FIGMA_TOKEN, SENTRY_AUTH_TOKEN, SIMONMAK_ASCENT_PAT, DEEPSEEK_API_KEY, DB_PATH)
 - **Figma MCP**: Fixed env var name from `FIGMA_TOKEN` → `FIGMA_API_KEY`
 - Runtime sync: `~/.config/opencode/opencode.json` synced from repo
 - Updated `docs/environment-inventory.md` — reflected model change, added new vars

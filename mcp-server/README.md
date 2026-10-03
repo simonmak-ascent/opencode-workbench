@@ -58,7 +58,7 @@ Every tool takes a `target`:
 
 - **required** — `git`, `curl`, `node` (>=20), `opencode`
 - **core** — `pnpm`, `uv`, `gh`, `npm-mcps`, `vendored-mcps`, `research-mcps`, `skills`, `plugins`, `playwright-browsers`
-- **optional** — `github-mcp`, `docker`, `docker-containers`, `data-tools`, `scientific`, `db-clients`
+- **optional** — `github-mcp`, `docker`, `docker-containers`, `data-tools`, `scientific`, `db-clients`, `sandbox`
 
 Add-ons (esg-hub, humanity4ai, saga, surrealdb, google-workspace, google-search,
 ms-365, stripe, alibaba-cloud-ops, designlang, difflens) are omitted from the rendered
@@ -69,6 +69,11 @@ config unless you pass `enabledMcp`/run with the full profile.
 The connector **never reads, transmits, or writes secret values**. It writes an empty
 `~/.env.workbench` template (mode `600`) listing the `{env:VAR}` names the rendered
 config references. Fill them on the target.
+
+The optional `sandbox` component installs [bubblewrap](https://github.com/containers/bubblewrap)
+and an `opencode-sandbox` wrapper that runs the OpenCode CLI with a read-only system and
+only the workspace + OpenCode's own state directories mounted — `~/.ssh`, cloud
+credentials and `~/.env.workbench` stay outside the sandbox.
 
 ## Development
 
