@@ -40,7 +40,7 @@
 | Tier | Description | Examples | Storage |
 |------|-------------|----------|---------|
 | **Tier 0 — Platform** | GitHub-injected tokens | `GITHUB_TOKEN`, `GH_TOKEN` | Automatic |
-| **Tier 1 — Critical** | Required for core function | `DEEPSEEK_API_KEY`, `SIMONPLMAK_CLOUD_PAT` | build box Secrets |
+| **Tier 1 — Critical** | Required for core function | `DEEPSEEK_API_KEY`, `SIMONMAK_ASCENT_PAT` | build box Secrets |
 | **Tier 2 — Operational** | Required for MCP servers | `BRAVE_API_KEY`, `SENTRY_AUTH_TOKEN`, `FIGMA_TOKEN`, `PERPLEXITY_API_KEY`, `BROWSERLESS_TOKEN` | build box Secrets |
 | **Tier 3 — Optional** | Nice to have, not critical | `OPENROUTER_API_KEY`, `GOOGLE_API_KEY`, `KIMI_API_KEY` | build box Secrets |
 | **Tier 4 — Non-Secret** | Configuration only | `DATABASE_URL`, `DB_PATH`, `BROWSERLESS_HOST` | `devcontainer.json` |
@@ -56,6 +56,23 @@
 - Secrets only accessible to processes that need them
 - Each MCP server receives only its required environment variables
 - `opencode.json` uses named `{env:VAR}` references (not blanket env passthrough)
+
+### Layer 2b: OpenCode Sandboxing
+The optional `sandbox` component installs **bubblewrap** and `~/.local/bin/opencode-sandbox`,
+a wrapper that runs the OpenCode CLI (`opencode-sandbox [args...]`, alias `ocs`) inside a
+bubblewrap namespace:
+
+- **Read-only system** — `/usr`, `/etc`, `/bin`, `/lib`, `/opt`, `/run` are mounted `--ro-bind`.
+- **Writable, scoped state** — only the workspace and OpenCode's own directories
+  (`~/.config/opencode`, `~/.local/share/opencode`, `~/.cache/opencode`,
+  `~/.local/state/opencode`) are writable.
+- **Secrets excluded** — `~/.ssh`, `~/.env.workbench`, `~/.aws`, `~/.config/gh` and
+  other home paths are **not** mounted, so the agent cannot read them.
+- **Network allowed by default** (remote model APIs); set `OPENCODE_SANDBOX_NO_NET=1`
+  for `--unshare-net` isolation.
+
+Requires kernel support for unprivileged user namespaces; where unavailable the installer
+warns and the component fails closed (run `opencode` directly only if you accept that).
 
 ### Layer 3: Documentation Discipline
 - Secrets documented by name and purpose only

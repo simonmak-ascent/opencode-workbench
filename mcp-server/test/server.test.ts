@@ -57,6 +57,7 @@ describe("opencode-workbench server", () => {
       optionalMcp: string[];
     };
     expect(info.components.some((c) => c.id === "opencode" && c.tier === "required")).toBe(true);
+    expect(info.components.some((c) => c.id === "sandbox" && c.tier === "optional")).toBe(true);
     expect(info.optionalMcp).toContain("saga");
     await client.close();
   });

@@ -20,6 +20,7 @@ This repository is the **single source of truth** for a complete cloud developme
 - Operational prompts (disaster recovery, backup, security)
 - Recovery procedures (playbook, checklist, gap analysis)
 - Security governance (secret management, threat model)
+- OpenCode sandbox (bubblewrap) — run the agent with a read-only system and no secret mounts
 - **`opencode-workbench`** — an MCP server that installs this profile on any Linux box
 
 **No important knowledge exists only in human memory.**
@@ -181,7 +182,7 @@ All secrets stored in the build box Secrets. Never in repository files.
 |---|--------|---------|
 | 1 | `DEEPSEEK_API_KEY` | OpenCode (primary model) |
 | 2 | `OPENCODE_API_KEY` | OpenCode Zen / Console Go providers |
-| 3 | `SIMONPLMAK_CLOUD_PAT` | GitHub MCP, shadcn MCP, `gh` |
+| 3 | `SIMONMAK_ASCENT_PAT` | GitHub MCP, shadcn MCP, `gh` |
 | 4 | `PERPLEXITY_API_KEY` | Perplexity MCP |
 | 5 | `BRAVE_API_KEY` | Brave Search MCP |
 | 6 | `BROWSERLESS_TOKEN` | Browserless MCP + container |

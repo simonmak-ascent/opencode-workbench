@@ -330,6 +330,25 @@ pip3 install --break-system-packages -q numpy scipy pandas matplotlib sympy || w
     install: `pkg_install postgresql-client || true
 pipx install pgcli 2>/dev/null || true`,
   },
+  {
+    id: "sandbox",
+    title: "OpenCode sandbox (bubblewrap)",
+    tier: "optional",
+    description:
+      "Runs the OpenCode CLI in a bubblewrap sandbox: read-only system, writable workspace, and no access to ~/.ssh, cloud credentials or ~/.env.workbench.",
+    preview: "install bubblewrap and ~/.local/bin/opencode-sandbox",
+    detect: `command -v bwrap >/dev/null 2>&1 && [ -x "$WB_HOME/.local/bin/opencode-sandbox" ]`,
+    install: `
+command -v bwrap >/dev/null 2>&1 || pkg_install bubblewrap || true
+command -v bwrap >/dev/null 2>&1 || { warn "bubblewrap unavailable (kernel may block unprivileged user namespaces)"; exit 1; }
+if [ -z "\${WB_REPO:-}" ] || [ ! -f "$WB_REPO/scripts/sandbox/opencode-sandbox.sh" ]; then
+  warn "sandbox script not found under WB_REPO"; exit 1
+fi
+mkdir -p "$WB_HOME/.local/bin"
+install -m 0755 "$WB_REPO/scripts/sandbox/opencode-sandbox.sh" "$WB_HOME/.local/bin/opencode-sandbox"
+ok "opencode-sandbox -> ~/.local/bin/opencode-sandbox"
+`,
+  },
 ];
 
 export function componentById(id: string): Component | undefined {
@@ -361,6 +380,7 @@ ${CORE_NPM_MCPS.map((p) => `  npm rm -g --silent ${p} >/dev/null 2>&1 || true`).
   "docker-containers": `command -v docker >/dev/null 2>&1 || { warn "docker missing"; exit 1; }
 docker rm -f pg-memory browserless >/dev/null 2>&1 || true`,
   "playwright-browsers": `rm -rf "$WB_HOME/.cache/ms-playwright"`,
+  sandbox: `rm -f "$WB_HOME/.local/bin/opencode-sandbox"`,
 };
 
 /** Uninstall script for a component id, or undefined when removal is manual. */

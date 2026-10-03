@@ -63,7 +63,7 @@ bash scripts/recovery/validate-recovery.sh        # verify workstation is in goo
 | `DB_PATH` | `/workspaces/opencode-workbench/.saga/.tracker.db` |
 | `DEEPSEEK_API_KEY` | primary model: `deepseek/deepseek-v4-pro` |
 | `OPENCODE_API_KEY` | OpenCode Zen + Console Go providers |
-| `SIMONPLMAK_CLOUD_PAT` | GitHub MCP (binary) + shadcn MCP + `gh` auth |
+| `SIMONMAK_ASCENT_PAT` | GitHub MCP (binary) + shadcn MCP + `gh` auth |
 | `NPM_TOKEN` | GitHub Packages (`@simonmak-ascent`) — same PAT |
 | `VERCEL_ACCESS_TOKEN`, `PERPLEXITY_API_KEY`, `BRAVE_API_KEY`, `SENTRY_AUTH_TOKEN`, `MOONSHOT_API_KEY`, `SURREAL_*`, `ALIBABA_CLOUD_*`, `AZURE_*`, `STRIPE_SECRET_KEY` | respective MCP servers/providers |
 
@@ -83,6 +83,7 @@ bash .devcontainer/start-browserless.sh
 - **Toolchain**: `node` 22, `corepack`/`pnpm`, `uv` + Python 3.11, `rsync`, `gcc-c++`
 - **CLI**: `gh`, `vercel`, `opencode` (aliased as `op`), `opencode serve`
 - **Playwright**: chromium (headless shell) + RHEL system libs
+- **Sandbox**: `opencode-sandbox` (bubblewrap) — run OpenCode with a read-only system, a writable workspace, and no access to `~/.ssh` or `~/.env.workbench`; installed by the optional `sandbox` component (`scripts/sandbox/opencode-sandbox.sh`)
 
 ## OpenCode
 
