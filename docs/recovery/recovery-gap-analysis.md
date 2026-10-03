@@ -68,8 +68,7 @@
 - Agent skills: **45** (was 28).
 - Clone MCP hardened and extended: consent gate (`confirm:true` on
   `apply_clone`/`install_component`), value-blind credential tools
-  (`list_required_credentials`, `run_auth_flow`), and `provision_host` (one-call
-  provisioning with a kernel-up scan and a recorded OpenCode version pin).
+  (`list_required_credentials`, `run_auth_flow`).
 - Distribution: npm `@simonmak-ascent/opencode-workbench@1.1.2` published; hosted
   connector live at `https://opencode-workbench.simonmak.com/mcp`; `server.json`
   + GitHub-OIDC registry-publish workflow added.

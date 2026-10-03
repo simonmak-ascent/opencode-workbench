@@ -26,26 +26,11 @@ describe("opencode-workbench server", () => {
       "install_component",
       "list_required_credentials",
       "plan_clone",
-      "provision_host",
       "remove_component",
       "run_auth_flow",
       "update_component",
       "verify_clone",
     ]);
-    await client.close();
-  });
-
-  it("documents provision_host without touching a target", async () => {
-    const client = await connect();
-    const res = await client.callTool({ name: "provision_host", arguments: { help: true } });
-    expect(res.isError).toBeFalsy();
-    const out = res.structuredContent as {
-      mode: string;
-      help?: { parameters: Array<{ name: string }> };
-    };
-    expect(out.mode).toBe("help");
-    expect(out.help?.parameters.map((p) => p.name)).toContain("upgrade");
-    expect(out.help?.parameters.map((p) => p.name)).toContain("opencodeVersion");
     await client.close();
   });
 

@@ -77,8 +77,14 @@ Derived from: `vdd/strategy.md`. Scope: Infrastructure only.
 | A-010 | Registry-listing runbook + claim/verify each of the 5 registries; automate what the API allows | MUST | Distribution | M | A-009 |
 | A-011 | Capture a full `mcp-tdqs score` (tier A floor) and wire a CI gate when a scorer key is available | SHOULD | P1 | M | A-008 |
 | A-012 | Add an optional `sandbox` component: a bubblewrap wrapper (`scripts/sandbox/opencode-sandbox.sh`) confining the OpenCode CLI (read-only system, no `~/.ssh`/secret mounts) | SHOULD | Security | S | None |
+| A-013 | Remove the orchestrator `provision_host` (and `bootstrap.ts`/`platform.ts`) to eliminate tool-purpose overlap with `apply_clone`, raising TDQS coherence | MUST | P1 | S | A-002 |
 
-**AMEND dependency map:** `A-002 → A-008 → A-011`; `A-009 → A-010`.
+**AMEND dependency map:** `A-002 → A-008 → A-011`; `A-009 → A-010`; `A-002 → A-013`.
+
+> **[AMEND 2026-10-03 — v4.0.0]** A-013 supersedes A-002's one-call orchestrator:
+> `provision_host`, `bootstrap.ts` and `platform.ts` were removed (tool count 11 → 10).
+> The `bootstrap-bare-host` spec's orchestrator ACs are retired; its inspect/apply/verify
+> ACs are served by `clone.ts` via `plan_clone`/`apply_clone`/`verify_clone`.
 **AMEND blocker:** A-011 (full score) and Smithery/PulseMCP listing require credentials the
 agent does not hold (TDQS hosted API key, Smithery API key, PulseMCP submission); Glama is
 already live/claimable and the Official Registry supports GitHub OIDC.

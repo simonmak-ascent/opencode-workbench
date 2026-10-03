@@ -149,7 +149,7 @@
       </section>
 
       <section id="tools">
-        <h2>11 tools over one MCP surface</h2>
+        <h2>10 tools over one MCP surface</h2>
         <p class="muted">Read-only discovery and planning; consent-gated mutations; value-blind credential handling.</p>
         <div class="table-scroll">
           <table>
@@ -167,7 +167,6 @@
               <tr><td><code>verify_clone</code></td><td>Re-check config, env template, and every component.</td><td>read-only</td></tr>
               <tr><td><code>list_required_credentials</code></td><td>Which credentials are missing and how to acquire each (value-blind).</td><td>read-only</td></tr>
               <tr><td><code>run_auth_flow</code></td><td>Emit-and-verify acquisition guidance for one credential.</td><td>read-only</td></tr>
-              <tr><td><code>provision_host</code></td><td>One-call end-to-end provision: platform scan + upgrade plan, latest-stable OpenCode with recorded version, apply, verify; <code>help:true</code>.</td><td>mutating</td></tr>
             </tbody>
           </table>
         </div>
@@ -199,13 +198,7 @@
   }
 }</code></pre>
         <h3>Then drive a clone</h3>
-        <pre><code>inspect_target  →  plan_clone  →  apply_clone { confirm: true }  →  verify_clone
-
-# or one call, end to end:
-provision_host  { target: { mode: "ssh", host: "box", user: "me" }, confirm: true }
-
-# see every parameter:
-provision_host  { help: true }</code></pre>
+        <pre><code>describe_workbench  →  inspect_target  →  plan_clone  →  apply_clone { confirm: true }  →  verify_clone</code></pre>
       </section>
 
       <section id="security">

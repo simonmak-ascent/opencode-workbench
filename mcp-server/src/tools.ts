@@ -15,7 +15,6 @@ import { COMPONENTS, componentById, defaultComponentIds } from "./components.js"
 import { OPTIONAL_MCP_IDS } from "./render.js";
 import { REPO_URL, REPO_WEB, packageRoot } from "./profile.js";
 import { REQUIRED_CREDENTIALS, credentialByVar, credentialStatus } from "./credential-catalog.js";
-import { bootstrap } from "./bootstrap.js";
 
 const targetShape = z
   .object({
@@ -232,7 +231,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Inspect a Linux target",
       description:
-        "Probe one Linux machine — this host (`local`) or a remote host over SSH (`ssh`) — and report its OS, kernel, architecture, package manager, Node/npm, OpenCode, Docker, and per-tool detection flags, plus the names (never values) of credentials present. Read-only: it runs a single shell probe on the target, installs nothing, writes nothing, and contacts no external service; `target.cwd` sets the working directory for relative checks, and `target.port`/`identityFile` are passed to ssh. Use it to see what a clone would touch, then plan_clone to turn that into an ordered plan; for a first-time end-to-end provision use provision_host.",
+        "Probe one Linux machine — this host (`local`) or a remote host over SSH (`ssh`) — and report its OS, kernel, architecture, package manager, Node/npm, OpenCode, Docker, and per-tool detection flags, plus the names (never values) of credentials present. Read-only: it runs a single shell probe on the target, installs nothing, writes nothing, and contacts no external service; `target.cwd` sets the working directory for relative checks, and `target.port`/`identityFile` are passed to ssh. Use it to see what a clone would touch, then plan_clone to turn that into an ordered plan and apply_clone to perform it.",
       inputSchema: { target: targetShape },
       outputSchema: inspectOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -251,7 +250,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Plan a Workbench clone",
       description:
-        "Return a read-only plan for a target: compare it against the Workbench profile and list each component as `install`, `present`, or `manual`, with the commands that would run. It clones nothing and writes nothing; `components` narrows the plan and `workspace` sets where the profile repo is expected. Use it to preview before apply_clone (which performs the changes) or provision_host (which plans and applies in one call).",
+        "Return a read-only plan for a target: compare it against the Workbench profile and list each component as `install`, `present`, or `manual`, with the commands that would run. It clones nothing and writes nothing; `components` narrows the plan and `workspace` sets where the profile repo is expected. Use it to preview before apply_clone, which performs the changes.",
       inputSchema: { target: targetShape, ...optionsShape },
       outputSchema: planOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -270,7 +269,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Apply a Workbench clone",
       description:
-        "Apply the Workbench profile to a target: clone the repo and install missing components (OpenCode CLI, Node/pnpm, MCP servers, skills, plugins, optional Docker). It OVERWRITES `<home>/.config/opencode/opencode.json`, copies `AGENTS.md`, resets an existing profile repo to `origin/main`, and runs global installs that need write permission (plus SSH for `mode:ssh`) and can take minutes. Writes a names-only `~/.env.workbench` (mode 600); never secret values. Consent-gated and idempotent: without `confirm:true` it returns the plan and changes nothing. To preview only, use plan_clone; for a first-time provision, use provision_host.",
+        "Apply the Workbench profile to a target: clone the repo and install missing components (OpenCode CLI, Node/pnpm, MCP servers, skills, plugins, optional Docker). It OVERWRITES `<home>/.config/opencode/opencode.json`, copies `AGENTS.md`, resets an existing profile repo to `origin/main`, and runs global installs that need write permission (plus SSH for `mode:ssh`) and can take minutes. Writes a names-only `~/.env.workbench` (mode 600); never secret values. Consent-gated and idempotent: without `confirm:true` it returns the plan and changes nothing. To preview only, use plan_clone.",
       inputSchema: {
         target: targetShape,
         confirm: z.boolean().optional().describe("Set true to actually install. When absent, the call returns a plan and makes no changes."),
@@ -306,7 +305,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Verify a Workbench clone",
       description:
-        "Re-check a target after a clone: return a per-component `present`/`missing` list plus whether `opencode.json` and `~/.env.workbench` exist. Read-only: it checks files and re-runs detection, making no changes; `components` narrows the check. Use it after apply_clone; provision_host runs it automatically, so call verify_clone directly only for a targeted re-check. For a pre-clone preview use plan_clone.",
+        "Re-check a target after a clone: return a per-component `present`/`missing` list plus whether `opencode.json` and `~/.env.workbench` exist. Read-only and idempotent: it checks files and re-runs detection, writing nothing. `target` selects the machine (`local` or SSH) and its `home` is where the `opencode.json` and `~/.env.workbench` checks run; `components` restricts the check to those ids (omit it to check every component). Use it after apply_clone and after component changes; for a pre-clone preview use plan_clone.",
       inputSchema: { target: targetShape, ...optionsShape },
       outputSchema: verifyOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -325,7 +324,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Install one Workbench component",
       description:
-        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from describe_workbench. Overwrites that component's files when present (e.g. `skills`/`plugins` replace the copies under `<home>/.config/opencode`); global installs need write permission and can take minutes. Idempotent and consent-gated: without `confirm:true` it returns the plan. Use it for one targeted component on an existing host; use apply_clone for a subset, or provision_host for a first-time end-to-end provision.",
+        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from describe_workbench. Overwrites that component's files when present (e.g. `skills`/`plugins` replace the copies under `<home>/.config/opencode`); global installs need write permission and can take minutes. Idempotent and consent-gated: without `confirm:true` it returns the plan. Use it for one targeted component; use apply_clone to install the full default set.",
       inputSchema: {
         target: targetShape,
         component: z.string().describe("Component id from describe_workbench."),
@@ -401,7 +400,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Update one Workbench component",
       description:
-        "Update one Workbench component in place by id: re-run its install script to fetch the current version (e.g. `opencode` re-runs the official installer; `npm-mcps` reinstalls the latest globals). OVERWRITES the component's files and needs write permission; global installs can take minutes. `workspace` points at the profile repo when needed; `dryRun` previews. Consent-gated: without `confirm:true` it returns a preview. For the whole profile use apply_clone; for the platform plus an OpenCode version pin use provision_host.",
+        "Update one Workbench component in place by id: re-run its install script to fetch the current version (e.g. `opencode` re-runs the official installer; `npm-mcps` reinstalls the latest globals). OVERWRITES the component's files and needs write permission; global installs can take minutes. `workspace` points at the profile repo when needed; `dryRun` previews. Consent-gated: without `confirm:true` it returns a preview. For the whole profile use apply_clone.",
       inputSchema: {
         target: targetShape,
         component: z.string().describe("Component id from describe_workbench."),
@@ -433,7 +432,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "List required credentials",
       description:
-        "List the credentials the profile references, which the target already provides, and how to acquire each missing one. Value-blind: it reads only whether each env var is set — no values, no network, no writes. Returns `present`/`missing` var-name arrays plus one guidance record per credential (`var`, `purpose`, `url`, `method`, `command`). Use it after plan_clone to see what would degrade; act on one credential with run_auth_flow.",
+        "List the credentials the profile references, which the target already provides, and how to acquire each missing one. Value-blind: it reads only whether each env var is set — no values, no network, no writes. `target` selects the machine (`local` or SSH); its `home` determines the `template` path returned and the env file the presence check reads. Returns `present`/`missing` var-name arrays plus one guidance record per credential (`var`, `purpose`, `url`, `method`, `command`). Use it after plan_clone to see what would degrade; act on one credential with run_auth_flow.",
       inputSchema: { target: targetShape },
       outputSchema: credentialsOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -501,146 +500,4 @@ export function registerTools(server: McpServer): void {
     },
   );
 
-  const bootstrapHelp = {
-    name: "provision_host",
-    description:
-      "Provision a bare Linux host (local or SSH) into a VDD-configured OpenCode workstation in one call: scan the platform from the kernel up, return a dry-run upgrade plan, install the latest stable OpenCode and record its version, apply the VDD profile, and verify.",
-    parameters: [
-      { name: "target", type: "object", required: false, description: "Machine to provision; required unless help=true. { mode: local|ssh, host?, user?, port?, identityFile?, cwd? }." },
-      { name: "help", type: "boolean", required: false, description: "Return this parameter reference and contact no target." },
-      { name: "confirm", type: "boolean", required: false, description: "Set true to actually provision. When absent, a plan (platform + upgrade + components) is returned and nothing changes." },
-      { name: "workspace", type: "string", required: false, description: "Target directory for the profile repo." },
-      { name: "components", type: "string[]", required: false, description: "Component ids to include; defaults to required+core." },
-      { name: "upgrade", type: "boolean", required: false, description: "Execute the platform upgrade (default false = plan only)." },
-      { name: "assumeYes", type: "boolean", required: false, description: "Use non-interactive upgrade flags (default true)." },
-      { name: "opencodeVersion", type: "string", required: false, description: "Pin a specific OpenCode version (default: latest stable)." },
-      { name: "dryRun", type: "boolean", required: false, description: "Report only; make no changes." },
-    ],
-  };
-
-  const bootstrapHelpOutput = z.object({
-    name: z.string(),
-    description: z.string(),
-    parameters: z.array(
-      z.object({
-        name: z.string(),
-        type: z.string(),
-        required: z.boolean(),
-        description: z.string(),
-      }),
-    ),
-  });
-
-  const bootstrapPlatformOutput = z.object({
-    osId: z.string().nullable(),
-    osIdLike: z.array(z.string()),
-    osName: z.string().nullable(),
-    osVersion: z.string().nullable(),
-    kernel: z.string().nullable(),
-    arch: z.string().nullable(),
-    packageManager: z.string().nullable(),
-    family: z.string(),
-  });
-
-  const bootstrapUpgradeOutput = z.object({
-    packageManager: z.string().nullable(),
-    family: z.string(),
-    commands: z.array(z.string()),
-    upgradable: z.number().nullable(),
-    executed: z.boolean(),
-    output: z.array(z.string()),
-    rebootAdvisory: z.boolean(),
-  });
-
-  const bootstrapResultOutput = z.object({
-    target: z.string(),
-    platform: bootstrapPlatformOutput.describe("Platform report from the kernel up."),
-    upgrade: bootstrapUpgradeOutput.describe("Dry-run platform upgrade plan."),
-    opencode: z.object({
-      installed: z.boolean(),
-      version: z.string().nullable().describe("Resolved OpenCode build — the version pin."),
-      requested: z.string().nullable(),
-    }),
-    apply: applyOutput,
-    verify: verifyOutput,
-    warnings: z.array(z.string()),
-  });
-
-  const bootstrapOutput = z.object({
-    mode: z.enum(["help", "confirm", "result"]),
-    help: bootstrapHelpOutput.optional(),
-    confirm: z
-      .object({
-        target: z.string(),
-        platform: bootstrapPlatformOutput,
-        upgrade: bootstrapUpgradeOutput,
-        toInstall: z.array(z.string()),
-        commands: z.array(z.object({ id: z.string(), command: z.string().optional() })),
-      })
-      .optional(),
-    result: bootstrapResultOutput.optional(),
-  });
-
-  server.registerTool(
-    "provision_host",
-    {
-      title: "Provision a bare Linux host",
-      description:
-        "Provision a bare Linux host end-to-end in one call: scan the platform from the kernel up and return a dry-run upgrade plan, install the latest stable OpenCode and record the resolved version, apply the VDD profile, and verify parity. It makes no change until `confirm:true`; `upgrade:true` needs root/sudo, and the installs mean a full run can take many minutes; it requires SSH for `mode:ssh` and OVERWRITES `<home>/.config/opencode/opencode.json`. Pass `help:true` for full parameter documentation without contacting the target. Never reads or transmits secret values. Boundary: use provision_host for a first-time provision of a bare host; use the granular tools (inspect_target, plan_clone, apply_clone, verify_clone, install_component, update_component, remove_component) for step-by-step changes to an existing host.",
-      inputSchema: {
-        target: targetShape.optional(),
-        help: z.boolean().optional().describe("Return parameter documentation and skip all target access."),
-        confirm: z.boolean().optional().describe("Set true to actually provision. When absent, the call returns a plan and makes no changes."),
-        ...optionsShape,
-        upgrade: z.boolean().optional().describe("Execute the platform upgrade (default false: plan only)."),
-        assumeYes: z.boolean().optional().describe("Use non-interactive upgrade flags (default true)."),
-        opencodeVersion: z.string().optional().describe("Pin a specific OpenCode version (default: latest stable)."),
-      },
-      outputSchema: bootstrapOutput,
-      annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: true },
-    },
-    async (args: {
-      target?: TargetArg;
-      help?: boolean;
-      confirm?: boolean;
-    } & Partial<CloneOptions> & { upgrade?: boolean; assumeYes?: boolean; opencodeVersion?: string }) => {
-      try {
-        if (args.help) {
-          return structured({ mode: "help" as const, help: bootstrapHelp });
-        }
-        if (!args.target) throw new Error("target is required unless help=true");
-        const spec = targetFromSpec(toSpec(args.target));
-        const base = {
-          components: args.components,
-          workspace: args.workspace,
-          profileUrl: args.profileUrl,
-          skipRepo: args.skipRepo,
-          dryRun: args.dryRun,
-          upgrade: args.upgrade,
-          assumeYes: args.assumeYes,
-          opencodeVersion: args.opencodeVersion,
-        };
-        if (args.confirm !== true && args.dryRun !== true) {
-          const p = await plan(spec, toOptions(args));
-          const preview = await bootstrap(spec, { ...base, upgrade: false, dryRun: true });
-          return structured({
-            mode: "confirm" as const,
-            confirm: {
-              target: preview.target,
-              platform: preview.platform,
-              upgrade: preview.upgrade,
-              toInstall: p.toInstall,
-              commands: p.steps
-                .filter((s) => s.action === "install")
-                .map((s) => ({ id: s.id, command: s.command })),
-            },
-          });
-        }
-        const result = await bootstrap(spec, base);
-        return structured({ mode: "result" as const, result });
-      } catch (e) {
-        return fail("provision_host failed", e);
-      }
-    },
-  );
 }

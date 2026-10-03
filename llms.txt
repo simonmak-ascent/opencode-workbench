@@ -1,9 +1,9 @@
 # OpenCode Workbench (opencode-workbench)
 
 > Open-source (MIT) MCP server + connector that provisions and clones the OpenCode
-> workbench onto Linux machines — locally or over SSH. Eleven tools cover a
-> kernel-up platform scan, a one-call bootstrap, an idempotent, consent-gated
-> clone, the install/update/remove lifecycle, and value-blind credential guidance.
+> workbench onto Linux machines — locally or over SSH. Ten tools cover a
+> kernel-up platform scan, an idempotent, consent-gated clone, the
+> install/update/remove lifecycle, and value-blind credential guidance.
 > No secret values are ever read, transmitted, or written.
 
 ## Connect
@@ -14,7 +14,7 @@
 - Glama: https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench
 - Context7 library ID: `/simonmak-ascent/opencode-workbench`
 
-## MCP tools (11)
+## MCP tools (10)
 
 - `describe_workbench` — describe this server: repo, components by tier, optional MCP add-ons
 - `inspect_target` — probe a machine: OS, arch, package manager, Node, Docker, OpenCode, home and npm-global paths
@@ -26,7 +26,6 @@
 - `update_component` — update/upgrade a single component in place (`confirm`-gated)
 - `list_required_credentials` — value-blind: which credentials are missing and how to acquire each
 - `run_auth_flow` — emit-and-verify acquisition guidance for one credential
-- `provision_host` — one-call provisioning: kernel-up platform scan + dry-run upgrade plan, latest-stable OpenCode with recorded version, apply + verify; `help:true` documents every parameter without touching the target
 
 Every tool takes a `target`:
 
@@ -35,7 +34,6 @@ Every tool takes a `target`:
 ```
 
 `apply_clone` options: `components[]`, `workspace`, `profileUrl`, `skipRepo`, `dryRun`, `confirm`.
-`provision_host` options: `help`, `confirm`, `upgrade`, `assumeYes`, `opencodeVersion`, `dryRun`.
 
 ## Docs
 

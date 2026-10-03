@@ -3,6 +3,24 @@
 > All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-10-03] — v4.0.0
+
+### Breaking
+- Removed the MCP tool **`provision_host`** (one-call provisioning). It overlapped
+  `apply_clone` + `install_component` and was the main source of tool-purpose
+  ambiguity in TDQS disambiguation. Clients that call `provision_host` must switch
+  to the ordered `inspect_target → plan_clone → apply_clone { confirm: true } →
+  verify_clone` flow (or `install_component`/`update_component` for single steps).
+  Tool count 11 → **10**.
+- Removed the internal `bootstrap.ts` / `platform.ts` orchestration modules and
+  their tests (`platform.test.ts`) alongside the tool.
+
+### Changed
+- TDQS (spec 1.2, hosted): **overall 4.8 / coherence 5.0 / description-quality 4.7**
+  (was 4.4–4.6 / 4.6 / 4.6). Disambiguation 4→5, naming 4→5, tool-count 5,
+  completeness 5. Parameter-semantics wording added to `verify_clone` and
+  `list_required_credentials`.
+
 ## [2026-10-03] — v3.1.0
 
 ### Added
