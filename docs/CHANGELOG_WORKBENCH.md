@@ -3,6 +3,18 @@
 > All notable changes to the workbench configuration.
 > Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2026-10-03] — v4.0.1
+
+### Changed
+- Description pass to lift the remaining TDQS 4/5 sub-dimensions: concrete
+  consequences beyond the annotations (probe runs as the target user over SSH and
+  can take seconds; updates may change the resolved version; removals never touch
+  `opencode.json`) and explicit parameter defaults/interactions on every tool
+  (`components` default required+core, `workspace` default `~/opencode-workbench`,
+  `confirm` default false, `var` must come from `list_required_credentials`).
+- TDQS (hosted): **overall 4.8 / coherence 5.0 / mean 4.8** (was mean 4.7);
+  `inspect_target`, `apply_clone`, `remove_component` 4.6–4.7 → 4.9.
+
 ## [2026-10-03] — v4.0.0
 
 ### Breaking

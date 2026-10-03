@@ -204,7 +204,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Workbench server info",
       description:
-        "Describe this MCP server and its capabilities without contacting any target: repository URL, the default component set, components grouped by tier (required/core/optional), and optional MCP add-ons. Read-only and static — it reads only the bundled profile, makes no network call, and touches no target. Use it to look up a component id for install_component/remove_component/update_component, or to see available add-ons; use inspect_target for a machine's live state.",
+        "Describe this MCP server from its bundled profile without contacting any target or making a network call: repository URL, the default component set, components grouped by tier (required/core/optional), and optional MCP add-ons. It takes no parameters, is always safe, and returns instantly. Use it first to resolve a component id for install_component/remove_component/update_component or to see available add-ons; use inspect_target for a machine's live state.",
       inputSchema: {},
       outputSchema: infoOutput,
       annotations: { readOnlyHint: true, idempotentHint: true },
@@ -231,7 +231,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Inspect a Linux target",
       description:
-        "Probe one Linux machine — this host (`local`) or a remote host over SSH (`ssh`) — and report its OS, kernel, architecture, package manager, Node/npm, OpenCode, Docker, and per-tool detection flags, plus the names (never values) of credentials present. Read-only: it runs a single shell probe on the target, installs nothing, writes nothing, and contacts no external service; `target.cwd` sets the working directory for relative checks, and `target.port`/`identityFile` are passed to ssh. Use it to see what a clone would touch, then plan_clone to turn that into an ordered plan and apply_clone to perform it.",
+        "Probe one Linux machine — this host (`local`) or a remote host over SSH (`ssh`) — and report its OS, kernel, architecture, package manager, Node/npm, OpenCode, Docker, and per-tool detection flags, plus the names (never values) of credentials present. Read-only: it runs one shell probe as the target user (over SSH when `mode:ssh`), installs nothing, writes nothing, contacts no external service, and can take a few seconds per hop. Parameter semantics: `target.mode` selects local vs ssh (default `local`); `target.host` is required only for ssh; `target.user` defaults to the ssh config/current user; `target.cwd` sets the directory for relative checks; `target.port`/`identityFile` pass straight to ssh. Use it to see what a clone would touch, then plan_clone to turn that into an ordered plan and apply_clone to perform it.",
       inputSchema: { target: targetShape },
       outputSchema: inspectOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -250,7 +250,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Plan a Workbench clone",
       description:
-        "Return a read-only plan for a target: compare it against the Workbench profile and list each component as `install`, `present`, or `manual`, with the commands that would run. It clones nothing and writes nothing; `components` narrows the plan and `workspace` sets where the profile repo is expected. Use it to preview before apply_clone, which performs the changes.",
+        "Return a read-only plan for a target: compare it against the Workbench profile and list each component as `install`, `present`, or `manual`, with the commands that would run. It still runs a detection probe on the target (same access as inspect_target) but clones nothing and writes nothing. Parameter semantics: `components` restricts the diff to those ids (default: required+core); `workspace` sets the expected profile path on the target (default `~/opencode-workbench`); `profileUrl` overrides the git remote. Use it to preview before apply_clone, which performs the changes.",
       inputSchema: { target: targetShape, ...optionsShape },
       outputSchema: planOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -269,7 +269,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Apply a Workbench clone",
       description:
-        "Apply the Workbench profile to a target: clone the repo and install missing components (OpenCode CLI, Node/pnpm, MCP servers, skills, plugins, optional Docker). It OVERWRITES `<home>/.config/opencode/opencode.json`, copies `AGENTS.md`, resets an existing profile repo to `origin/main`, and runs global installs that need write permission (plus SSH for `mode:ssh`) and can take minutes. Writes a names-only `~/.env.workbench` (mode 600); never secret values. Consent-gated and idempotent: without `confirm:true` it returns the plan and changes nothing. To preview only, use plan_clone.",
+        "Apply the Workbench profile to a target: clone the repo and install missing components (OpenCode CLI, Node/pnpm, MCP servers, skills, plugins, optional Docker). It OVERWRITES `<home>/.config/opencode/opencode.json`, copies `AGENTS.md`, resets an existing profile repo to `origin/main`, and runs global installs that need write permission (plus SSH for `mode:ssh`) and can take minutes. Writes a names-only `~/.env.workbench` (mode 600); never secret values. Consent-gated and idempotent: without `confirm:true` it returns the plan and changes nothing. Parameter semantics: `components` defaults to required+core; `workspace` defaults to `~/opencode-workbench`; `skipRepo` skips the clone/update; `profileUrl` overrides the git remote; `dryRun` returns the plan. To preview only, use plan_clone.",
       inputSchema: {
         target: targetShape,
         confirm: z.boolean().optional().describe("Set true to actually install. When absent, the call returns a plan and makes no changes."),
@@ -305,7 +305,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Verify a Workbench clone",
       description:
-        "Re-check a target after a clone: return a per-component `present`/`missing` list plus whether `opencode.json` and `~/.env.workbench` exist. Read-only and idempotent: it checks files and re-runs detection, writing nothing. `target` selects the machine (`local` or SSH) and its `home` is where the `opencode.json` and `~/.env.workbench` checks run; `components` restricts the check to those ids (omit it to check every component). Use it after apply_clone and after component changes; for a pre-clone preview use plan_clone.",
+        "Re-check a target after a clone: return a per-component `present`/`missing` list plus whether `opencode.json` and `~/.env.workbench` exist. Read-only and idempotent: it runs a detection probe (SSH or local) and checks files, writing nothing. `target` selects the machine (`local` or SSH) and its `home` is where the `opencode.json` and `~/.env.workbench` checks run; `components` restricts the check to those ids (omit it to check every component, the default); `workspace` sets the profile path used by component checks. Use it after apply_clone and after component changes; for a pre-clone preview use plan_clone.",
       inputSchema: { target: targetShape, ...optionsShape },
       outputSchema: verifyOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -324,7 +324,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Install one Workbench component",
       description:
-        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from describe_workbench. Overwrites that component's files when present (e.g. `skills`/`plugins` replace the copies under `<home>/.config/opencode`); global installs need write permission and can take minutes. Idempotent and consent-gated: without `confirm:true` it returns the plan. Use it for one targeted component; use apply_clone to install the full default set.",
+        "Install a single Workbench component by id (e.g. `node`, `opencode`, `npm-mcps`, `skills`) on a target; `component` must be an id from describe_workbench. Overwrites that component's files when present (e.g. `skills`/`plugins` replace the copies under `<home>/.config/opencode`); global installs need write permission and can take minutes. Idempotent and consent-gated: without `confirm:true` it returns the plan. Parameter semantics: `component` is required; `workspace` defaults to `~/opencode-workbench`; `confirm` defaults to false (plan only). Use it for one targeted component; use apply_clone to install the full default set.",
       inputSchema: {
         target: targetShape,
         component: z.string().describe("Component id from describe_workbench."),
@@ -368,7 +368,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Remove one Workbench component",
       description:
-        "Uninstall a single Workbench component by id from a target — the inverse of install_component — for a bounded, documented subset (`opencode`, `pnpm`, `uv`, `npm-mcps`, `vendored-mcps`, `research-mcps`, `github-mcp`, `skills`, `plugins`, `docker-containers`, `playwright-browsers`); `component` must be an id from describe_workbench. Idempotent: an already-absent component reports `absent`; components with no automated uninstall (system packages such as git/curl/node) report `manual` and require manual removal. Consent-gated and destructive: without `confirm:true` it returns a preview and changes nothing. Removes only that component's files — it does not delete `opencode.json` or the profile repo. Use it to tear down one component; to remove several, call it per id.",
+        "Uninstall one Workbench component by id from a target — the inverse of install_component — for a bounded, documented subset with an automated uninstall (e.g. `opencode`, `pnpm`, `npm-mcps`, `skills`, `docker-containers`); `component` must be an id from describe_workbench. Idempotent: an already-absent component reports `absent`; a component with no automated uninstall (system packages such as git/curl/node) reports `manual`. Destructive and consent-gated: without `confirm:true` it returns a preview and changes nothing, and it deletes only that component's files — never `opencode.json` or the profile repo. Parameter semantics: `workspace` sets the profile path some removals need; `dryRun` reports without changing. Use it to tear down one component; for several, call it per id.",
       inputSchema: {
         target: targetShape,
         component: z.string().describe("Component id from describe_workbench."),
@@ -400,7 +400,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Update one Workbench component",
       description:
-        "Update one Workbench component in place by id: re-run its install script to fetch the current version (e.g. `opencode` re-runs the official installer; `npm-mcps` reinstalls the latest globals). OVERWRITES the component's files and needs write permission; global installs can take minutes. `workspace` points at the profile repo when needed; `dryRun` previews. Consent-gated: without `confirm:true` it returns a preview. For the whole profile use apply_clone.",
+        "Update one Workbench component in place by id: re-run its install script to fetch the current version (e.g. `opencode` re-runs the official installer; `npm-mcps` reinstalls the latest globals). It OVERWRITES the component's files, needs write permission, and can take minutes for global installs; the resolved version may change. Parameter semantics: `component` must be an id from describe_workbench; `workspace` defaults to `~/opencode-workbench`; `dryRun` previews; `confirm` defaults to false — set `confirm:true` to apply. For the whole profile use apply_clone.",
       inputSchema: {
         target: targetShape,
         component: z.string().describe("Component id from describe_workbench."),
@@ -432,7 +432,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "List required credentials",
       description:
-        "List the credentials the profile references, which the target already provides, and how to acquire each missing one. Value-blind: it reads only whether each env var is set — no values, no network, no writes. `target` selects the machine (`local` or SSH); its `home` determines the `template` path returned and the env file the presence check reads. Returns `present`/`missing` var-name arrays plus one guidance record per credential (`var`, `purpose`, `url`, `method`, `command`). Use it after plan_clone to see what would degrade; act on one credential with run_auth_flow.",
+        "List the credentials the profile references, which the target already provides, and how to acquire each missing one. Value-blind: it reads only whether each env var is set — no values, no network, no writes — via one read-only probe. Parameter semantics: `target` selects the machine (`local` or SSH) and its `home` sets the returned `template` path and the env file the presence check reads; there are no other parameters. Returns `present`/`missing` var-name arrays plus one guidance record per credential (`var`, `purpose`, `url`, `method`, `command`). Use it after plan_clone to see what would degrade; act on one credential with run_auth_flow.",
       inputSchema: { target: targetShape },
       outputSchema: credentialsOutput,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: true },
@@ -461,7 +461,7 @@ export function registerTools(server: McpServer): void {
     {
       title: "Acquire one credential (best-effort)",
       description:
-        "Return the acquisition plan for one credential on a target: the provider URL, the exact non-interactive command when one exists (e.g. `opencode auth login`, `opencode mcp auth vercel`, `gh auth login`), and whether it is already present. Read-only and value-blind: it emits guidance and re-checks presence; it does not run the commands or handle secret values. `var` is the env var name from list_required_credentials. Use it for a single credential; it does not replace that listing.",
+        "Return the acquisition plan for one credential on a target: the provider URL, the exact non-interactive command when one exists (e.g. `opencode auth login`, `opencode mcp auth vercel`, `gh auth login`), and whether it is already present. Read-only and value-blind: it emits guidance and re-checks presence with one read-only probe; it does not run the commands or handle secret values. Parameter semantics: `var` must be an env var name returned by list_required_credentials (unknown names error); `target` selects the machine and its `home` is where the value should be written. Use it for a single credential; it does not replace that listing.",
       inputSchema: {
         target: targetShape,
         var: z.string().describe("Credential env var name from list_required_credentials (e.g. OPENCODE_API_KEY)."),
