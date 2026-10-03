@@ -23,7 +23,7 @@ most automated method available and degrading to instructions when none exists.
    `run_auth_flow`, e.g. `opencode auth login` or `opencode mcp auth vercel`.
    The browser/device flow keeps the secret out of the agent.
 3. **CLI (automated)** — for GitHub, run `gh auth login` and set
-   `SIMONPLMAK_CLOUD_PAT` (or reuse `gh auth token`).
+   `SIMONMAK_ASCENT_PAT` (or reuse `gh auth token`).
 4. **Assisted paste** — DeepSeek, Brave, Perplexity, Sentry, Firecrawl, Exa:
    open the provider URL returned by `run_auth_flow`, obtain the key, and write
    `NAME=value` into `~/.env.workbench` (mode 600). Never echo the value.

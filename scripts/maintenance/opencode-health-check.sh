@@ -150,7 +150,7 @@ echo "── Secret Dependencies ──"
 SECRET_CHECKS=(
   "DEEPSEEK_API_KEY:deepseek provider"
   "OPENCODE_API_KEY:opencode-go provider"
-  "SIMONPLMAK_CLOUD_PAT:github + shadcn MCP"
+  "SIMONMAK_ASCENT_PAT:github + shadcn MCP"
   "PERPLEXITY_API_KEY:perplexity MCP"
   "BRAVE_API_KEY:brave-search MCP"
   "DATABASE_URL:postgres MCP"

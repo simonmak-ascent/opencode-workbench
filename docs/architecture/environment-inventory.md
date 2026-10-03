@@ -17,7 +17,7 @@
 
 | Variable | Purpose | Source | Required |
 |----------|---------|--------|----------|
-| `SIMONPLMAK_CLOUD_PAT` | GitHub PAT (github MCP, shadcn MCP) | build box Secret | Yes |
+| `SIMONMAK_ASCENT_PAT` | GitHub PAT (github MCP, shadcn MCP) | build box Secret | Yes |
 | `PERPLEXITY_API_KEY` | Perplexity API (perplexity-agent-mcp) | build box Secret | Yes (*) |
 | `BRAVE_API_KEY` | Brave Search API (brave-search MCP) | build box Secret | Yes |
 | `BROWSERLESS_TOKEN` | Browserless auth token | build box Secret | Yes |

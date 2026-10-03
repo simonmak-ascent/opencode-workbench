@@ -11,7 +11,7 @@
 | gh_grep | remote | HTTP | None | search GitHub code |
 | clerk | remote | HTTP | None | auth snippets, user management |
 | vercel | remote | HTTP | Bearer (VERCEL_ACCESS_TOKEN) | deploy, projects, domains, analytics |
-| github | local (binary) | stdio | PAT (SIMONPLMAK_CLOUD_PAT) | repos, PRs, issues, commits, code search |
+| github | local (binary) | stdio | PAT (SIMONMAK_ASCENT_PAT) | repos, PRs, issues, commits, code search |
 | perplexity | local (vendored) | stdio | PERPLEXITY_API_KEY | ask, research, reason, search |
 | brave-search | local (npm) | stdio | BRAVE_API_KEY | web_search, local_search |
 | postgres | local (npm) | stdio | DATABASE_URL | query |
@@ -21,7 +21,7 @@
 | mermaid | local (npm) | stdio | None | generate diagrams |
 | saga | local (npm) | stdio | DB_PATH | task tracking (disabled) |
 | echarts | local (npm) | stdio | None | charts (bar, line, pie, scatter, etc.) |
-| shadcn | local (npm) | stdio | PAT (SIMONPLMAK_CLOUD_PAT) | components, blocks, themes |
+| shadcn | local (npm) | stdio | PAT (SIMONMAK_ASCENT_PAT) | components, blocks, themes |
 | swagger-testcase | local (npm) | stdio | None | test case generation, API analysis |
 | design-system | local (npm) | stdio | None | component HTML, CSS tokens, themes |
 | sentry | local (npm) | stdio | SENTRY_AUTH_TOKEN | issues, events, traces, analysis |

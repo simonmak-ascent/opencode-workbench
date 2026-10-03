@@ -86,7 +86,7 @@ export const REQUIRED_CREDENTIALS: CredentialSpec[] = [
     method: "instruction",
   },
   {
-    var: "SIMONPLMAK_CLOUD_PAT",
+    var: "SIMONMAK_ASCENT_PAT",
     label: "GitHub personal access token",
     purpose: "github + shadcn MCP.",
     url: "https://github.com/settings/tokens",

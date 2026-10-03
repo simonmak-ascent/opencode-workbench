@@ -45,7 +45,7 @@
 ### Local Binary
 - `github-mcp-server` — GitHub API interactions
   - Install: download from github/github-mcp-server releases
-  - Auth: `GITHUB_PERSONAL_ACCESS_TOKEN` (env var `SIMONPLMAK_CLOUD_PAT`)
+  - Auth: `GITHUB_PERSONAL_ACCESS_TOKEN` (env var `SIMONMAK_ASCENT_PAT`)
 
 ### Local npm (global install, all enabled)
 | Server | Package | Version | Auth |
@@ -75,7 +75,7 @@
 
 | Secret | MCP Servers |
 |--------|------------|
-| SIMONPLMAK_CLOUD_PAT | github, shadcn |
+| SIMONMAK_ASCENT_PAT | github, shadcn |
 | PERPLEXITY_API_KEY | perplexity |
 | BRAVE_API_KEY | brave-search |
 | BROWSERLESS_TOKEN | browserless |

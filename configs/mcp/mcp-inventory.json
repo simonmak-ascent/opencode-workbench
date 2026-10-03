@@ -34,7 +34,7 @@
       {
         "name": "github-mcp-server",
         "path": "~/.local/bin/github-mcp-server",
-        "auth_var": "SIMONPLMAK_CLOUD_PAT",
+        "auth_var": "SIMONMAK_ASCENT_PAT",
         "enabled": true,
         "type": "go binary"
       }

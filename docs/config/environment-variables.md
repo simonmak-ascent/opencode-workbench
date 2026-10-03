@@ -10,7 +10,7 @@
 | `DEEPSEEK_API_KEY` | Primary AI model | build box Secret |
 | `DATABASE_URL` | PostgreSQL connection | `devcontainer.json` |
 | `OPENCODE_API_KEY` | OpenCode Zen + Console Go | build box Secret |
-| `SIMONPLMAK_CLOUD_PAT` | GitHub + shadcn MCP auth | build box Secret |
+| `SIMONMAK_ASCENT_PAT` | GitHub + shadcn MCP auth | build box Secret |
 
 ## Required (Operational — MCP servers fail without)
 

@@ -101,7 +101,7 @@ zls, yaml-ls, vue, typescript, tinymist, texlab, terraform, svelte, sourcekit-ls
 | Variable | Set? | Used By |
 |---|---|---|
 | `DEEPSEEK_API_KEY` | Yes | DeepSeek provider |
-| `SIMONPLMAK_CLOUD_PAT` | Yes | GitHub MCP, shadcn MCP |
+| `SIMONMAK_ASCENT_PAT` | Yes | GitHub MCP, shadcn MCP |
 | `PERPLEXITY_API_KEY` | Yes | Perplexity MCP |
 | `BRAVE_API_KEY` | Yes | Brave Search MCP |
 | `DATABASE_URL` | Yes | Postgres MCP |

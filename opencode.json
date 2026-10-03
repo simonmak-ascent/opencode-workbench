@@ -481,7 +481,7 @@
         "stdio"
       ],
       "environment": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:SIMONPLMAK_CLOUD_PAT}"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:SIMONMAK_ASCENT_PAT}"
       },
       "enabled": true,
       "timeout": 30000
@@ -600,7 +600,7 @@
         "/home/node/.npm-global/lib/node_modules/@jpisnice/shadcn-ui-mcp-server/build/index.js"
       ],
       "environment": {
-        "GITHUB_TOKEN": "{env:SIMONPLMAK_CLOUD_PAT}"
+        "GITHUB_TOKEN": "{env:SIMONMAK_ASCENT_PAT}"
       },
       "enabled": true,
       "timeout": 30000

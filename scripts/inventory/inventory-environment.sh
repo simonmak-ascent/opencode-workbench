@@ -25,7 +25,7 @@ echo "## MCP Secrets"
 echo ""
 echo "| Variable | Value |"
 echo "|----------|-------|"
-for VAR in SIMONPLMAK_CLOUD_PAT PERPLEXITY_API_KEY BRAVE_API_KEY BROWSERLESS_TOKEN FIGMA_TOKEN SENTRY_AUTH_TOKEN; do
+for VAR in SIMONMAK_ASCENT_PAT PERPLEXITY_API_KEY BRAVE_API_KEY BROWSERLESS_TOKEN FIGMA_TOKEN SENTRY_AUTH_TOKEN; do
     if [ -n "${!VAR:-}" ]; then
         echo "| $VAR | **present** |"
     else

@@ -21,7 +21,7 @@
 | exa | remote | yes | EXA_API_KEY | `https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,web_search_advanced_exa` |
 | firecrawl | local | yes | FIRECRAWL_API_KEY | `npx -y firecrawl-mcp@3.25.5` |
 | gh_grep | remote | yes | — | `https://mcp.grep.app` |
-| github | local | yes | SIMONPLMAK_CLOUD_PAT | `/home/node/.local/bin/github-mcp-server stdio` |
+| github | local | yes | SIMONMAK_ASCENT_PAT | `/home/node/.local/bin/github-mcp-server stdio` |
 | google-search | local | no | GOOGLE_API_KEY, GOOGLE_CSE_ID | `node /home/node/.npm-global/lib/node_modules/@adenot/mcp-google-search/build/index.js` |
 | google-workspace | local | no | GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET | `docker run -i --rm -v /home/node/.mcp/google-workspace-mcp:/app/config -e GOOGLE_CLIENT_ID={env:GOOGLE_CLIENT_ID} -e GOOGLE_CLIENT_SECRET={env:GOOGLE_CLIENT_SECRET} -e LOG_MODE=strict ghcr.io/aaronsb/google-workspace-mcp:latest` |
 | humanity4ai | local | yes | — | `node /workspaces/project_human/mcp-servers/dist/mcp-server.js` |
@@ -34,7 +34,7 @@
 | primary-sources | local | yes | COMPANIES_HOUSE_API_KEY, FRED_API_KEY, RESEARCH_CONTACT | `npx -y @simonmak-ascent/primary-sources-mcp@1.0.0` |
 | saga | local | yes | — | `node /home/node/.npm-global/lib/node_modules/saga-mcp/dist/index.js` |
 | sentry | remote | yes | SENTRY_AUTH_TOKEN | `https://mcp.sentry.dev/mcp` |
-| shadcn | local | yes | SIMONPLMAK_CLOUD_PAT | `node /home/node/.npm-global/lib/node_modules/@jpisnice/shadcn-ui-mcp-server/build/index.js` |
+| shadcn | local | yes | SIMONMAK_ASCENT_PAT | `node /home/node/.npm-global/lib/node_modules/@jpisnice/shadcn-ui-mcp-server/build/index.js` |
 | stripe | remote | yes | STRIPE_SECRET_KEY | `https://mcp.stripe.com` |
 | surrealdb | local | yes | SURREAL_DATABASE, SURREAL_NAMESPACE, SURREAL_PASSWORD, SURREAL_TOKEN, SURREAL_URL, SURREAL_USERNAME | `node /home/node/.local/bin/surreal-mcp-shim.mjs` |
 | swagger-testcase | local | yes | — | `node /home/node/.npm-global/lib/node_modules/swagger-testcase-mcp/dist/index.js` |

@@ -38,7 +38,7 @@
 ## Environment Variables
 
 - [ ] `DEEPSEEK_API_KEY` present
-- [ ] `SIMONPLMAK_CLOUD_PAT` present
+- [ ] `SIMONMAK_ASCENT_PAT` present
 - [ ] `PERPLEXITY_API_KEY` present
 - [ ] `BRAVE_API_KEY` present
 - [ ] `BROWSERLESS_TOKEN` present

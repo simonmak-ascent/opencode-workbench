@@ -19,7 +19,7 @@
    ```
    run_auth_flow { target, var: "OPENCODE_API_KEY" }   # -> opencode auth login
    run_auth_flow { target, var: "VERCEL_ACCESS_TOKEN" } # -> opencode mcp auth vercel
-   run_auth_flow { target, var: "SIMONPLMAK_CLOUD_PAT" } # -> gh auth login
+   run_auth_flow { target, var: "SIMONMAK_ASCENT_PAT" } # -> gh auth login
    ```
    Run the returned command. Interactive flows are run by the user/agent, never
    by the MCP (which stays value-blind).
