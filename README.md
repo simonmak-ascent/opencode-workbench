@@ -77,6 +77,37 @@ flowchart TB
   BOX --> PROF["Workstation profile<br/>OpenCode CLI · 35 MCP servers · 45 skills · Docker infra"]
 ```
 
+## Clone lifecycle
+
+`apply_clone` is consent-gated: without `confirm: true` it returns a plan and changes nothing.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as OpenCode agent
+    participant M as opencode-workbench MCP
+    participant B as Target box (local or SSH)
+    A->>M: inspect_target
+    M-->>A: OS, toolchain, Docker, existing config
+    A->>M: plan_clone
+    M-->>A: components + privileged-command preview
+    A->>M: apply_clone { confirm: true }
+    M->>B: install components · write ~/.env.workbench template
+    B-->>M: result
+    A->>M: verify_clone
+    M-->>A: pass/fail + missing credentials
+```
+
+## MCP tool surface
+
+```mermaid
+flowchart LR
+    A["OpenCode agent"] --> D["Discovery<br/>describe_workbench · inspect_target"]
+    A --> C["Clone<br/>plan_clone · apply_clone · verify_clone"]
+    A --> K["Components<br/>install · remove · update_component"]
+    A --> S["Credentials<br/>list_required_credentials · run_auth_flow"]
+```
+
 ```
 opencode-workbench/
 ├── mcp-server/                     # opencode-workbench: clone this profile onto Linux
