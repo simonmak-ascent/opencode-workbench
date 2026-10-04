@@ -48,3 +48,9 @@ build/
 
 # Self-test report (runtime artifact)
 selftest-report.json
+
+# Local agent + VDD methodology artifacts — internal, never published
+AGENTS.md
+constitution.md
+vdd/
+specs/
