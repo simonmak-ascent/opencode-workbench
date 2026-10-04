@@ -52,7 +52,11 @@ The clone is **key-resilient**: with no model key it still boots on the OpenCode
 
 The connector never reads or transmits secret values; it writes an empty `~/.env.workbench` template for you to fill in.
 
-## Quick Start
+## Quick Start (≤ 5 minutes)
+
+**Fastest path:** no box required — register the MCP server with
+`npx -y @simonmak-ascent/opencode-workbench` (config in
+[Clone This Workbench](#clone-this-workbench)); or provision a fresh box:
 
 ```bash
 # Create a new build box
@@ -64,6 +68,14 @@ opencode
 ```
 
 ## Architecture
+
+```mermaid
+flowchart TB
+  AGENT["OpenCode agent"] -->|"npx @simonmak-ascent/opencode-workbench"| MCP["opencode-workbench MCP<br/>inspect · plan · apply · verify"]
+  REPO[("Git repo — single source of truth")] --> MCP
+  MCP -->|"local or SSH"| BOX["Target Linux box"]
+  BOX --> PROF["Workstation profile<br/>OpenCode CLI · 35 MCP servers · 45 skills · Docker infra"]
+```
 
 ```
 opencode-workbench/
