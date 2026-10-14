@@ -33,7 +33,7 @@ mcp-publisher publish             # reads ./server.json
 
 Verify: `curl -s "https://registry.modelcontextprotocol.io/v0/servers?search=opencode-workbench"`.
 
-> The `name` in `server.json` (`io.github.simonmak-ascent/opencode-workbench`) is
+> The `name` in `server.json` (`com.ascent-partners/opencode-workbench`) is
 > namespaced to the GitHub org that owns the repo; `login github` asserts that.
 
 ## 2. Glama
@@ -61,7 +61,7 @@ Store the key in `~/.env.workbench` (never commit it).
 ## 4. PulseMCP
 
 Editorial/curated submission — submit the official-registry name
-(`io.github.simonmak-ascent/opencode-workbench`) and repo URL through the PulseMCP
+(`com.ascent-partners/opencode-workbench`) and repo URL through the PulseMCP
 site; no API key needed beyond an account.
 
 ## 5. mcp.so

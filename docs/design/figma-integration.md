@@ -99,7 +99,7 @@ export default {
 figma-tokens:
   runs-on: ubuntu-latest
   steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - run: npm run tokens:build    # Run Style Dictionary
     - run: |
         if ! git diff --exit-code src/styles/generated/; then

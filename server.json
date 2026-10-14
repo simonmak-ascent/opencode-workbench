@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
-  "name": "io.github.simonmak-ascent/opencode-workbench",
+  "name": "com.ascent-partners/opencode-workbench",
   "description": "Provision an OpenCode workbench and MCP stack on any Linux box, local or over SSH.",
-      "version": "4.0.1",
+  "version": "4.0.2",
   "repository": {
     "url": "https://github.com/simonmak-ascent/opencode-workbench",
     "source": "github"
@@ -11,8 +11,10 @@
     {
       "registryType": "npm",
       "identifier": "@simonmak-ascent/opencode-workbench",
-  "version": "4.0.1",
-      "transport": { "type": "stdio" }
+      "version": "4.0.2",
+      "transport": {
+        "type": "stdio"
+      }
     }
   ],
   "remotes": [

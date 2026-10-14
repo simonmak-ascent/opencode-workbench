@@ -6,7 +6,7 @@
 
 - Hosted MCP endpoint (Streamable HTTP): https://opencode-workbench.simonmak.com/mcp
 - Local stdio server: `npx -y @simonmak-ascent/opencode-workbench`
-- Official MCP Registry name: `io.github.simonmak-ascent/opencode-workbench`
+- Official MCP Registry name: `com.ascent-partners/opencode-workbench`
 - Context7 library ID: `/simonmak-ascent/opencode-workbench`
 
 ## MCP tools
