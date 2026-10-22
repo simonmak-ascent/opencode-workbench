@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en-GB" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vision Driven Design — Ascent Partners</title>
+  <meta name="description" content="Give AI coding agents a spec-driven methodology — 8 phases with bi-directional traceability and 7 quality gates.">
+  <link rel="canonical" href="/">
+    <link rel="alternate" hreflang="x-default" href="/">
+    <link rel="alternate" hreflang="zh-Hans" href="/zh/">
+    <link rel="alternate" hreflang="zh-Hant-HK" href="/hk/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vision Driven Design">
+  <meta property="og:title" content="Vision Driven Design">
+  <meta property="og:description" content="Give AI coding agents a spec-driven methodology — 8 phases with bi-directional traceability and 7 quality gates.">
+  <meta property="og:url" content="https://vdd.simonmak.com/">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vision Driven Design">
+  <meta name="twitter:description" content="Give AI coding agents a spec-driven methodology — 8 phases with bi-directional traceability and 7 quality gates.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Titillium+Web:wght@400;600;700&family=Raleway:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="apg-tokens.css">
+  <link rel="stylesheet" href="apg-tool.css">
+  <script>(function(){try{var v=localStorage.getItem("apg-theme");document.documentElement.setAttribute("data-theme",v==="light"||v==="dark"?v:"dark");}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();</script>
+</head>
+<body>
+  <div class="apg-topbar"><div class="apg-container apg-topbar-inner">
+    <a class="apg-brand" href="https://www.ascent-partners.com/tools"><span class="apg-mark">AP</span> Ascent&nbsp;Partners · <span style="font-family:var(--ap-font-body);font-weight:400">Open Tooling</span></a>
+    <div class="apg-controls"><span class="apg-langs"><a class="apg-lang" href="" hreflang="en-GB" aria-current="true">English</a><a class="apg-lang" href="zh/" hreflang="zh-Hans">中文</a><a class="apg-lang" href="hk/" hreflang="zh-Hant-HK">繁體</a></span><button class="apg-theme-toggle" type="button" aria-label="Toggle theme">☾</button></div>
+  </div></div>
+
+  <header class="apg-hero">
+    <img src="hero.jpg" alt="" width="1440" height="750">
+    <div class="apg-scrim"></div>
+    <nav class="apg-crumbs" aria-label="Breadcrumb"><div class="apg-container"><ol>
+      <li><a href="https://www.ascent-partners.com/">Home</a></li>
+      <li><a href="https://www.ascent-partners.com/tools">Open Tooling</a></li>
+      <li aria-current="page">Vision Driven Design</li>
+    </ol></div></nav>
+    <h1 class="apg-container">Vision Driven Design</h1>
+  </header>
+
+  <main class="apg-container apg-main">
+    <div class="apg-header">
+      <span class="apg-badge">MCP server</span>
+      <p class="apg-value">Give AI coding agents a spec-driven methodology — 8 phases with bi-directional traceability and 7 quality gates.</p>
+      <p class="apg-thesis">A methodology for AI coding agents: eight phases, seven gates — so “done” means traceable, not just working.</p>
+    </div>
+    <dl class="apg-stats"><div class="apg-stat"><dt>tools</dt><dd>15</dd></div><div class="apg-stat"><dt>phases</dt><dd>8</dd></div><div class="apg-stat"><dt>gate checks</dt><dd>108</dd></div><div class="apg-stat"><dt>open source</dt><dd>MIT</dd></div></dl>
+    <div class="apg-sections">
+      <section class="apg-section-h"><h2>Capabilities</h2><ul class="apg-caps"><li>15 tools over Streamable HTTP</li><li>Vision → strategy → tactics → specs → plan → tasks → implement → validate</li><li>7 bi-directional gates (108 checks); DO-178C / IEC 62304 / CMMI alignment</li></ul></section>
+      <section class="apg-section-h"><h2>Standards</h2><ul class="apg-chips"><li>DO-178C</li><li>IEC 62304</li><li>CMMI</li></ul></section>
+      <section class="apg-section-h"><h2>Connect</h2><p>Point an MCP client at the hosted endpoint. Open access, no API key.</p><div class="apg-tabs" role="tablist"><button class="apg-tab" role="tab" aria-selected="true" data-target="pane-opencode">OpenCode</button><button class="apg-tab" role="tab" aria-selected="false" data-target="pane-claude-code">Claude Code</button><button class="apg-tab" role="tab" aria-selected="false" data-target="pane-claude-desktop">Claude Desktop</button><button class="apg-tab" role="tab" aria-selected="false" data-target="pane-cursor">Cursor</button><button class="apg-tab" role="tab" aria-selected="false" data-target="pane-vscode">VS Code</button><button class="apg-tab" role="tab" aria-selected="false" data-target="pane-generic">Any MCP client</button><div class="apg-pane" id="pane-opencode" role="tabpanel"><button class="apg-copy" type="button">Copy</button><pre>{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "vdd": { "type": "remote", "url": "https://vdd.simonmak.com/api/mcp" }
+  }
+}</pre></div><div class="apg-pane" id="pane-claude-code" role="tabpanel" hidden><button class="apg-copy" type="button">Copy</button><pre>claude mcp add --transport http vdd https://vdd.simonmak.com/api/mcp</pre></div><div class="apg-pane" id="pane-claude-desktop" role="tabpanel" hidden><button class="apg-copy" type="button">Copy</button><pre>{
+  "mcpServers": {
+    "vdd": { "url": "https://vdd.simonmak.com/api/mcp" }
+  }
+}</pre></div><div class="apg-pane" id="pane-cursor" role="tabpanel" hidden><button class="apg-copy" type="button">Copy</button><pre>{
+  "mcpServers": {
+    "vdd": { "url": "https://vdd.simonmak.com/api/mcp" }
+  }
+}</pre></div><div class="apg-pane" id="pane-vscode" role="tabpanel" hidden><button class="apg-copy" type="button">Copy</button><pre>{
+  "servers": {
+    "vdd": { "type": "http", "url": "https://vdd.simonmak.com/api/mcp" }
+  }
+}</pre></div><div class="apg-pane" id="pane-generic" role="tabpanel" hidden><button class="apg-copy" type="button">Copy</button><pre>{
+  "mcpServers": {
+    "vdd": { "url": "https://vdd.simonmak.com/api/mcp" }
+  }
+}</pre></div></div></section>
+      <section class="apg-section-h"><h2>Facts</h2><dl class="apg-facts"><div class="apg-fact"><dt>Endpoint</dt><dd><code>https://vdd.simonmak.com/api/mcp</code></dd></div><div class="apg-fact"><dt>Transport</dt><dd>Streamable HTTP</dd></div><div class="apg-fact"><dt>Auth</dt><dd>Open — no API key</dd></div><div class="apg-fact"><dt>Licence</dt><dd>MIT</dd></div><div class="apg-fact"><dt>Registry</dt><dd><code>com.ascent-partners/vision-driven-design</code></dd></div></dl></section>
+      <section class="apg-card"><h2>Where it comes from</h2><p>A methodology from the Ascent Partners technology practice — spec-driven development with bi-directional traceability, developed against VDD itself.</p><div class="apg-inline-links"><a href="https://www.ascent-partners.com/services/technology-advisory">Technology Advisory</a><a href="https://www.ascent-partners.com/about#contact">Contact us</a></div></section>
+      <div class="apg-actions">
+        <a class="apg-btn apg-btn-primary" href="https://vdd.simonmak.com" rel="noopener">Documentation</a>
+        <a class="apg-btn apg-btn-secondary" href="https://github.com/simonmak-ascent/vision-driven-design" rel="noopener">Source</a>
+      </div>
+      <a class="apg-back" href="https://www.ascent-partners.com/tools">← All tools</a>
+    </div>
+  </main>
+
+  <footer class="apg-footer"><div class="apg-container">
+    <p>MIT © Simon Mak / Ascent Partners Group Limited · v1.9.2 · <a href="https://github.com/simonmak-ascent/vision-driven-design" rel="noopener">GitHub</a> · <a href="https://www.npmjs.com/package/@simonmak-ascent/mcp" rel="noopener">npm</a></p>
+  </div></footer>
+  <script src="apg-tool.js"></script>
+</body>
+</html>

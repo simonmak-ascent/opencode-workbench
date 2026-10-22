@@ -1,6 +1,6 @@
 ---
 name: web-research
-description: Conduct comprehensive web research using Brave Search, Google Search, and Perplexity in a systematic multi-source strategy to produce well-sourced findings
+description: Conduct comprehensive web research using Brave Search, Exa, and Perplexity in a systematic multi-source strategy to produce well-sourced findings
 ---
 
 ## When to Use
@@ -18,9 +18,9 @@ Use `brave-search` for fast real-time results:
 - Tool: `brave_web_search`, `brave_local_search`
 
 ### Step 2 — Deep Extraction
-Use `google-search` for comprehensive content:
-- Best for: in-depth articles, official sources
-- Tools: `google_search`, `deep_search`, `deep_search_news`
+Use `exa` for semantic discovery and clean page extraction:
+- Best for: in-depth articles, official sources, related-page discovery
+- Tools: `web_search_exa`, `web_fetch_exa`
 
 ### Step 3 — Synthesized Answers
 Use `perplexity` for AI-synthesized research:
@@ -35,7 +35,7 @@ Use `gh_grep` for code patterns:
 ## Recommended Pattern
 ```
 1. brave_web_search("your query") — get 5-10 results
-2. google deep_search on top 2-3 URLs for full content
+2. web_fetch_exa on the top 2-3 URLs for full content
 3. perplexity_ask if synthesis needed
 4. Cite all sources in output
 ```

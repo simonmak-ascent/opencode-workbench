@@ -1,16 +1,18 @@
 ---
 name: workbench-compute
-description: Run compute and tests on one of the persistent Alibaba Cloud compute boxes (workbench, wcag-workforce, wcag-workforce-2) via the `cs` helper — prefer the most-resourced via `cs best`. Use whenever the user asks to run tests, type-check, lint, build, install deps, or verify code — and whenever a `cs` command is needed (cs best/run/setup/sync/provision/pull/ssh/cp/login/win-setup/tunnel). Never run compute locally.
+description: Run compute and tests on one of the persistent Alibaba Cloud ECS compute nodes (ecs-01, ecs-02 — the `apg-prod` fleet) via the `cs` helper — prefer the most-resourced via `cs best`. Use whenever the user asks to run tests, type-check, lint, build, install deps, or verify code — and whenever a `cs` command is needed (cs best/run/setup/sync/provision/pull/ssh/cp/login/win-setup/tunnel). Never run compute locally.
 ---
 
 # Compute offload via `cs`
 
-Three persistent Alibaba Cloud compute boxes — `workbench` (SSH alias
-`workbench`, root), `wcag-workforce` (`wcag-1`, admin) and `wcag-workforce-2`
-(`wcag-2`, admin) — are the only place compute runs. The `cs` helper
-(`~/.config/opencode/bin/cs`, on PATH at `~/.local/bin/cs`) drives them from any
-repo directory, keeping each box copy under git control. **Prefer the box with
-the most free resources:** run `cs best` to probe all three and switch.
+The persistent Alibaba Cloud **ECS** compute fleet — `ecs-02` (SSH alias
+`ecs-02`, default, `root`) and `ecs-01` (alias `ecs-01`, root) — is the only
+place compute runs. Key `~/.ssh/apg-prod-key`; VPC `apg-prod-vpc`
+(`10.20.0.0/16`, `cn-hongkong`). The `cs` helper (`~/.config/opencode/bin/cs`,
+on PATH at `~/.local/bin/cs`) drives them from any repo directory, keeping each
+box copy under git control. **Prefer the node with the most free resources:** run
+`cs best` to probe the pool and switch. Topology/services/ports:
+`~/.config/opencode/docs/boxes.md`; ids: `apg-infra/docs/inventory.md`.
 
 ## Golden rule
 
@@ -21,19 +23,39 @@ editing + git + MCP only.
 ## Commands (quick reference)
 
 ```bash
-cs best                 # probe all three boxes; switch to the most-resourced provisioned one
-cs host [<host>]        # print/set the active box (e.g. cs host wcag-workforce-2)
+cs best                 # probe the pool; switch to the most-resourced provisioned node
+cs host [<host>]        # print/set the active node (e.g. cs host ecs-01; ecs-02 default)
+cs open                 # create/reuse a box working copy (+ deps); session start
 cs setup                # one-time: git-clone the repo on the box + install deps
 cs provision            # setup + sync + install deps (first time for a new repo)
 cs sync                 # ensure clone exists, rsync this worktree on top (incl. uncommitted)
 cs run "<cmd>"          # sync + run a command, e.g. cs run "pnpm check && pnpm test"
 cs pull                 # git pull on the box (sync committed state)
-cs ssh "<cmd>"          # raw command on the box
-cs cp <file> remote:<p> # copy a file to the box
+cs ssh "<cmd>"          # raw command on the box (no sync — preferred for commands)
+cs cp <file> remote:<p> # copy a file to the box (literal `remote:` prefix required)
+cs close                # remove the box working copy (refuses if dirty / box-owned)
+cs gc [--ttl <hours>]   # reap box working copies idle > TTL (default 12h)
+cs gc-install           # install the idle-reaper systemd timer on the box
 cs login                # print WSL/Windows login instructions
-cs win-setup            # one-time: create Windows SSH key + config (PowerShell ssh workbench)
-cs tunnel               # SSH-forward 4096 (opencode) / 3000 (browserless)
+cs win-setup            # one-time: create Windows SSH key + config (PowerShell ssh ecs-02)
+cs tunnel               # SSH-forward 3000 to the shared browserless (on ecs-03; opencode UI is via Caddy)
 ```
+
+> **Pin the host.** `~/.config/opencode/cs-host` can be flipped by another session (e.g. to a host
+> with no clone/creds) — prefix `CS_HOST=ecs-02 cs …`, or run `cs host ecs-02` (with an argument) to
+> persist it. `cs run` rsyncs your worktree over the box **with `--delete`**; use `cs ssh` for
+> commands so box-only files are not wiped.
+
+## Ephemeral workspaces (policy)
+
+**GitHub is the only repo store.** A box working copy exists only while a task
+runs and is removed afterwards — `cs close` removes it, and a per-box systemd
+timer (`cs gc-install`, hourly) reaps copies idle longer than `CS_TTL_HOURS`
+(default 12). Neither discards uncommitted work: both save a `/tmp/cs-close-*
+.tracked.patch` and stop, and neither touches a repo marked `.cs-box-workspace`
+(that repo's box copy is the source of truth). pnpm/uv **stores persist** (they
+are caches, not repos), so re-clones install fast.
+
 
 ## First time (new repo)
 
@@ -59,9 +81,9 @@ For Python projects: `cs run "uv run pytest"` (deps via `uv sync`).
 
 ## Login
 
-- **WSL:** `ssh workbench`
-- **Windows (PowerShell):** `ssh workbench` — after one-time `cs win-setup`
-  (generates `C:\Users\<you>\.ssh\workbench_ed25519`, adds it to the box, writes
+- **WSL:** `ssh ecs-02`
+- **Windows (PowerShell):** `ssh ecs-02` — after one-time `cs win-setup`
+  (generates `C:\Users\<you>\.ssh\ecs-02_ed25519`, adds it to the box, writes
   the config). Re-run is idempotent.
 
 ## Gotchas (hard-won)

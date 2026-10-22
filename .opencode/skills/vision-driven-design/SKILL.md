@@ -1,8 +1,6 @@
 ---
 name: vision-driven-design
-description: Vision-Driven Design (VDD) — an 8-phase, spec-driven development methodology with bi-directional traceability. Use when starting a product/feature from a vision, or when running the vdd MCP chain (vdd_init → vdd_vision → vdd_strategize → vdd_tactics → vdd_specify → vdd_clarify → vdd_plan → vdd_tasks → vdd_next_task → vdd_validate).
-license: MIT
-compatibility: opencode
+description: "Vision Driven Design (VDD): an 8-phase spec-driven development methodology that starts from a human vision statement and maintains bi-directional traceability through strategy, tactics, specification, planning, implementation, and validation."
 ---
 
 # Skill: vision-driven-design
@@ -69,7 +67,7 @@ Without forward verification: vision goals ship with no implementation.
 
    **Or run end-to-end**:
    `/vdd:e2e "your vision"` → executes the full 8-phase chain (init→vision→strategize→
-   tactics→specify→clarify→plan→tasks→next-task→validate) in a single command, writing all 10+
+   tactics→specify→clarify→plan→tasks→get-next-task→validate) in a single command, writing all 10+
    template files to your project.
 
 3. **Review at the end**:
@@ -179,14 +177,15 @@ Each gate verifies both directions and validates 4 S&T assumptions:
 | `/vdd:clarify <feature>` | 4 | Standalone clarification pass on a spec |
 | `/vdd:plan <feature>` | 5 | Generate `plan.md`, `data-model.md`, `contracts/` |
 | `/vdd:tasks <feature>` | 6 | Generate `tasks.md` with test-first ordering |
-| `/vdd:next-task <feature>` | 7 | Extract next uncompleted task from tasks.md |
+| `/vdd:get-next-task <feature>` | 7 | Extract next uncompleted task from tasks.md |
 | `/vdd:implement <task-id>` | 7 | Execute a single task, verify, commit |
 | `/vdd:validate` | 8 | Full-chain traceability, drift detection, impact verification |
 | `/vdd:trace` | any | Generate bidirectional traceability matrix |
 | `/vdd:analyze <feature>` | any | Cross-artifact consistency and conflict analysis |
 | `/vdd:amend "what changed"` | any | Cascade a requirement change through the full chain |
 | `/vdd:detect-environment` | any | Report per-phase tool/MCP requirements + available capabilities |
-| `/vdd:e2e "vision statement"` | 0–8 | **End-to-end**: execute full chain init→vision→strategize→tactics→specify→clarify→plan→tasks→next-task→validate in one call. Writes all 10+ template files. Accept optional `--actionItemId` / `--feature` to customize feature name (default: "feature-1"). |
+| `/vdd:e2e "vision statement"` | 0–8 | **End-to-end**: execute full chain init→vision→strategize→tactics→specify→clarify→plan→tasks→get-next-task→validate in one call. Writes all 10+ template files. Accept optional `--actionItemId` / `--feature` to customize feature name (default: "feature-1"). |
+| `/vdd:e2e -clone <domain>` | 7 | **Clone**: crawl the site (browserless/fetch) into a full dataset, capture exact UI/UX, rebuild backend, generate DB schema, emit AI tools, and generate a deployable **dynamic** site (`vdd/clone-site/`) that renders every crawled page. Accepts https/http/www/bare domain (e.g. `https://www.ascent-partners.com` or `ascent-partners.com`). |
 
 ---
 
@@ -241,15 +240,16 @@ vdd/
 | One-page cheat sheet | `references/quick-reference.md` |
 | Topic navigation | `references/INDEX.md` |
 | Compliance evidence templates | `references/compliance-evidence.md` |
+| Clone pipeline → live site playbook | `references/clone-playbook.md` |
 | Domain-specific research patterns | `domain-primers/*.md` |
 
 ## MCP & Packages
 
-The public MCP server at `vdd.simonmak.com/api/sse` and the TypeScript packages are in this repo:
-- `api/sse.js` — deployed Vercel handler (16 tools)
-- `packages/vdd-engine/` — shared core (16 phase functions + `meta.ts`: phase metadata, tool requirements, research subagents, domain primers)
-- `packages/vdd-mcp/` — MCP server (16 tools, stdio + SSE)
-- `packages/vdd-cli/` — CLI binary (16 subcommands, `--json`)
+The public MCP server at `vdd.simonmak.com/api/mcp` and the TypeScript packages are in this repo:
+- `api/mcp.js` — deployed Vercel Streamable HTTP handler (15 tools); `api/_vdd-rpc.js` — shared JSON-RPC core + browser docs page
+- `packages/vdd-engine/` — shared core (18 phase functions + `meta.ts`: phase metadata, tool requirements, research subagents, domain primers)
+- `packages/vdd-mcp/` — MCP server (15 tools, stdio + Streamable HTTP)
+- `packages/vdd-cli/` — CLI binary (17 subcommands, `--json`)
 
 **Capability contract:** the MCP is the *structured orchestration + verification* layer — it emits
 research-subagent dispatch specs, per-phase tool requirements (`/vdd:detect-environment`), domain-primer
@@ -257,3 +257,11 @@ lists, and enforces substantive (non-placeholder) gates. The **host agent** exec
 audit, and implementation using its own environment MCP tools (Brave Search, Perplexity, Context7,
 gh_grep, Playwright, filesystem). A freshly generated template is marked NOT-ready (gates report
 placeholders) until the host agent fills it in and re-runs `/vdd:validate`.
+
+**Local vs hosted.** The stdio server (`npx -y @simonmak-ascent/mcp`) and the CLI read and write the
+real project filesystem (`mode:"local"`; artifact phases report `persisted:true`). The hosted endpoint
+(`vdd.simonmak.com/api/mcp`) is **stateless and has no filesystem**: it returns artifact content with
+`persisted:false` + `writeTargets`, and for filesystem-dependent phases (`vdd_tactics`, `vdd_clarify`,
+`vdd_get_next_task`, `vdd_inspect`, `vdd_validate`, `vdd_implement`) it returns a **`delegation`
+envelope** — re-call the same tool with `artifactFiles` (and `codebaseAudit` for tactics) to receive the
+real result. Details: `docs/deployment.md`.

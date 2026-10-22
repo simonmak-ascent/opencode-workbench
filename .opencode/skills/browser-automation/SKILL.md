@@ -27,14 +27,12 @@ description: Automate web browsers for scraping, interaction, form filling, and 
 - Sites with bot detection
 
 ## Browserless Connection
-- Host: localhost:3000 (SWAS runtime — browserless runs on the SWAS box)
-- Token: [ENV:BROWSERLESS_TOKEN was redacted]
+- **Single shared instance on `ecs-03`** (the accessibility-primary ECS node; no other node runs one). Binds `127.0.0.1:3000` + `10.20.3.30:3000` (VPC only).
+- From the workstation: a persistent systemd user service (`browserless-tunnel.service`) keeps `localhost:3000` forwarded; otherwise run `cs tunnel` (defaults to `ecs-03`), then Host `localhost:3000`.
+- From another node in the VPC: `http://10.20.3.30:3000`.
+- Token: `~/.config/opencode/secrets/browserless-token` (the one shared token — never hardcode it)
 - Protocol: http
 - Note: The browserless-mcp package has a known bug with MCP protocol response formatting. Use `playwright` MCP for screenshots and scraping as a workaround.
-
-## ESG Hub MCP
-- Endpoint: https://esg-hub.ascent.partners
-- Note: Some endpoints may return internal errors (e.g., search). Use list_esg_pages and get_esg_page for reliable access.
 
 ## Common Playwright Patterns
 ```
@@ -54,8 +52,8 @@ playwright_select_option(ref, values)
 ```
 # Initialize connection first
 browserless_initialize({
-  host: "localhost", port: 3000,
-  token: "browserless-local-token", protocol: "http"
+  host: "localhost", port: 3000,            # via the persistent tunnel / `cs tunnel` to ecs-03
+  token: process.env.BROWSERLESS_TOKEN, protocol: "http"
 })
 
 # Then use browser operations

@@ -5,7 +5,7 @@ description: >
   UI/UX and a functional backend (Payload CMS + Next.js + self-hosted Postgres). Use
   after `vdd e2e -clone <domain>` produces vdd/clone-manifest.json, or when the user
   asks to "clone a site", "scaffold the clone", "deploy the clone", or "make the clone
-  live". Covers: scaffold generator (scripts/vdd-clone-scaffold.mjs), build on SWAS
+  live". Covers: scaffold generator (scripts/vdd-clone-scaffold.mjs), build on a compute node
   (cs run), self-hosted deploy (docker compose + cs tunnel), seed, and fidelity audit.
 ---
 
@@ -53,7 +53,7 @@ The repo root (`.`) becomes the cloned-site root. The generator emits:
 cp .env.example .env     # set PAYLOAD_SECRET (and DATABASE_URI stays the compose value)
 ```
 
-### 4. Build on SWAS (never locally)
+### 4. Build on the compute node (never locally)
 
 ```
 cs provision                       # first time
@@ -64,11 +64,11 @@ cs run "pnpm install && pnpm build"
 
 ```
 cs run "docker compose up -d --build"
-ssh -N -L 3001:localhost:3001 workbench   # access http://localhost:3001
+ssh -N -L 3001:localhost:3001 ecs-02   # access http://localhost:3001
 ```
 
-The app runs on host port **3001** (3000 is Browserless on the box); Postgres is
-`postgres:16-alpine` on host 5433. Payload auto-migrates on boot.
+The app runs on host port **3001** (`cs-host` defaults to `ecs-02`; 3000 is Browserless on **ecs-03**);
+Postgres is `postgres:16-alpine` on host 5433. Payload auto-migrates on boot.
 
 ### 6. Seed + verify
 
@@ -88,7 +88,7 @@ and iterate on gaps.
 ## Rules
 
 - **Never run compute locally** — `pnpm install/build`, `tsc`, `docker` all go
-  through `cs run` on the SWAS box.
+  through `cs run` on the compute node (ECS; see `docs/boxes.md`).
 - **Open-source DB only** — self-hosted Postgres via docker compose (no Neon).
 - **No hardcoded secrets** — `PAYLOAD_SECRET` from `.env`; Stripe keys via env,
   and wire donations with `stripe-best-practices` (Checkout Sessions).
@@ -96,6 +96,6 @@ and iterate on gaps.
 
 ## References
 
-- Engine: `$HOME/git_repo/vision_driven_design/packages/vdd-engine/`
-- Playbook: `$HOME/git_repo/vision_driven_design/references/clone-playbook.md`
-- Scaffold generator: `$HOME/git_repo/vision_driven_design/scripts/vdd-clone-scaffold.mjs`
+- Engine: `/mnt/c/git_repo/vision_driven_design/packages/vdd-engine/`
+- Playbook: `/mnt/c/git_repo/vision_driven_design/references/clone-playbook.md`
+- Scaffold generator: `/mnt/c/git_repo/vision_driven_design/scripts/vdd-clone-scaffold.mjs`

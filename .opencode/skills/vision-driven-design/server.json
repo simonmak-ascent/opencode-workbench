@@ -1,0 +1,39 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.ascent-partners/vision-driven-design",
+  "title": "Vision Driven Design (VDD) MCP Server",
+  "description": "Spec-driven development MCP server: 8 phases, bi-directional traceability, 7 quality gates.",
+  "version": "1.9.4",
+  "repository": {
+    "url": "https://github.com/simonmak-ascent/vision-driven-design",
+    "source": "github",
+    "subfolder": "packages/vdd-mcp"
+  },
+  "websiteUrl": "https://vdd.simonmak.com",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://vdd.simonmak.com/api/mcp"
+    }
+  ],
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/simonmak-ascent/vision-driven-design/main/docs/social-preview.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "any"
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@simonmak-ascent/mcp",
+      "version": "1.9.4",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
