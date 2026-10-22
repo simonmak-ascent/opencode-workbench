@@ -36,8 +36,8 @@
 
 ## MCP Servers (19 total, 18 enabled)
 
-### Remote (5)
-- context7, gh_grep, clerk, vercel (token auth)
+### Remote (4)
+- context7, gh_grep, vercel (token auth)
 
 ### Local — npm global (11)
 - brave-search, postgres, playwright, shadcn, echarts, mermaid, saga (disabled), swagger-testcase, design-system, figma, sentry

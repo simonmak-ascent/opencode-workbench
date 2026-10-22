@@ -33,7 +33,6 @@
 |--------|-----|------|
 | context7 | `https://mcp.context7.com/mcp` | none |
 | gh_grep | `https://mcp.grep.app` | none |
-| clerk | `https://mcp.clerk.com/mcp` | none |
 | vdd | `https://vdd.simonmak.com/api/mcp` | none |
 | exa | `https://mcp.exa.ai/mcp` | `EXA_API_KEY` |
 | cloudflare | `https://mcp.cloudflare.com/mcp` | `CLOUDFLARE_API_TOKEN` |

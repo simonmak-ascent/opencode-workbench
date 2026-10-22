@@ -9,7 +9,6 @@
 |--------|------|-----------|------|-----------|
 | context7 | remote | HTTP | None | resolve-library-id, query-docs |
 | gh_grep | remote | HTTP | None | search GitHub code |
-| clerk | remote | HTTP | None | auth snippets, user management |
 | vercel | remote | HTTP | Bearer (VERCEL_ACCESS_TOKEN) | deploy, projects, domains, analytics |
 | github | local (binary) | stdio | PAT (SIMONMAK_ASCENT_PAT) | repos, PRs, issues, commits, code search |
 | perplexity | local (vendored) | stdio | PERPLEXITY_API_KEY | ask, research, reason, search |

@@ -442,12 +442,6 @@
         "Authorization": "Bearer {env:CLOUDFLARE_API_TOKEN}"
       }
     },
-    "clerk": {
-      "type": "remote",
-      "url": "https://mcp.clerk.com/mcp",
-      "enabled": true,
-      "timeout": 60000
-    },
     "vercel": {
       "type": "remote",
       "url": "https://mcp.vercel.com",

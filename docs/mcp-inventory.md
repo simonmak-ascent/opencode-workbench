@@ -12,7 +12,6 @@
 |---|---|---|---|---|---|
 | 1 | `context7` | `https://mcp.context7.com/mcp` | 405 | Public | Method Not Allowed over GET (expected for MCP) |
 | 2 | `gh_grep` | `https://mcp.grep.app` | 405 | Public | Method Not Allowed over GET (expected for MCP) |
-| 4 | `clerk` | `https://mcp.clerk.com/mcp` | 406 | Public | Not Acceptable over GET (expected for MCP) |
 | 5 | `vercel` | `https://mcp.vercel.com` | 401 | OAuth | **Status: needs_auth** — OAuth flow incomplete or expired |
 
 ### Remote MCP Health

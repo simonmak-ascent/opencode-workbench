@@ -76,7 +76,6 @@
 |--------|-----|------|
 | context7 | https://mcp.context7.com/mcp | None |
 | gh_grep | https://mcp.grep.app | None |
-| clerk | https://mcp.clerk.com/mcp | None |
 | vercel | https://mcp.vercel.com | OAuth |
 
 ## MCP Servers (local binary)

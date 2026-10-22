@@ -14,7 +14,6 @@
 |--------|------|------|--------|
 | context7 | remote | none | active |
 | gh_grep | remote | none | active |
-| clerk | remote | none | active |
 | vercel | remote | OAuth | active |
 | github | local binary | PAT | active |
 | perplexity | vendored | API key | active |
@@ -39,7 +38,6 @@
 ### Remote (no local install needed)
 - `context7` — documentation search via Context7
 - `gh_grep` — GitHub code search via grep.app
-- `clerk` — authentication snippets via Clerk
 - `vercel` — deployment management (OAuth to Vercel)
 
 ### Local Binary
@@ -92,12 +90,12 @@
 │  opencode.json (21 MCP server definitions)   │
 ├──────────┬──────────┬──────────┬────────────┤
 │ Remote   │ Local    │ Vendored │ Disabled   │
-│ (4)      │ npm (11) │ (2)      │ (4)        │
+│ (3)      │ npm (11) │ (2)      │ (4)        │
 ├──────────┼──────────┼──────────┼────────────┤
 │ context7 │ brave    │ perplexity│ surrealdb  │
 │ gh_grep  │ postgres │ browserless│ storybook │
 │          │ playwright│          │ wcagc      │
-│ clerk    │ shadcn   │          │ convertica │
+│          │ shadcn   │          │ convertica │
 │ vercel*  │ echarts  │          │            │
 │          │ mermaid  │          │            │
 │          │ saga     │          │            │

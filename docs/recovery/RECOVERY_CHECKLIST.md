@@ -68,7 +68,6 @@
 
 - [ ] context7 (remote) responds
 - [ ] gh_grep (remote) responds
-- [ ] clerk (remote) responds
 - [ ] github (local) responds
 - [ ] brave-search (local) responds
 - [ ] postgres (local) responds

@@ -26,7 +26,6 @@ Available MCPs (18 enabled):
 - **Deploy**: vercel, github
 - **Design**: figma, shadcn, echarts, mermaid
 - **Observe**: sentry
-- **Auth**: clerk
 - **Docs**: design-system, swagger-testcase
 
 If current MCPs are insufficient, propose free tools via the `ToolingAgent` pattern and document in `docs/architecture/tooling-decision-log.md`.

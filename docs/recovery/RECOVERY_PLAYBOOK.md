@@ -61,7 +61,7 @@ opencode
 
 ```bash
 # Vercel uses Bearer token auth (VERCEL_ACCESS_TOKEN) — no manual step needed
-# All other remote MCPs (context7, gh_grep, clerk) use no auth
+# All other remote MCPs (context7, gh_grep) use no auth
 ```
 
 ## Phase 7: Verify MCP Servers
@@ -69,7 +69,6 @@ opencode
 In OpenCode, check that all expected MCP tools are available:
 - context7 (remote)
 - gh_grep (remote)
-- clerk (remote)
 - github (local)
 - brave-search (local)
 - postgres (local)

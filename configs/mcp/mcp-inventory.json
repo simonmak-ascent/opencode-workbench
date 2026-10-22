@@ -18,12 +18,6 @@
         "auth": "none"
       },
       {
-        "name": "clerk",
-        "url": "https://mcp.clerk.com/mcp",
-        "enabled": true,
-        "auth": "none"
-      },
-      {
         "name": "vercel",
         "url": "https://mcp.vercel.com",
         "enabled": true,

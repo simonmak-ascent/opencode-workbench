@@ -27,7 +27,7 @@
 - **Persistence**: SurrealDB table `prompt_artifacts`
 
 ### ConfigAgent
-- **Responsibility**: Generate project configurations (Next.js, Sentry, Clerk, etc.)
+- **Responsibility**: Generate project configurations (Next.js, Sentry, etc.)
 - **Tools**: `github`, `context7`
 - **Input**: `{ target: string, requirements: string[] }`
 - **Output**: `{ config_files: string[], config_summary: string }`

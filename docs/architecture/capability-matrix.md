@@ -42,7 +42,7 @@ Legend: **C** component · **M** MCP · **S** skill.
 |------------|--------------|
 | Deploy | **M** `vercel`, `cloudflare` · **S** `cloud-deploy`, `cicd-setup` |
 | UI components | **M** `shadcn`, `design-system` · **S** `component-builder`, `frontend-design`, `ui-ux-pro-max`, `web-design-guidelines`, `responsive-design` |
-| Auth / billing | **M** `clerk`, `stripe` |
+| Auth / billing | **M** `stripe` |
 | Browser automation / E2E | **M** `playwright`, `browserless`, `browser-mcp` · **S** `test-writer`, `clone-audit` |
 | Diagrams / charts | **M** `mermaid`, `echarts`, `designlang`, `difflens` |
 | API design | **S** `api-designer`, `api-builder`, `swagger-testcase` |
