@@ -1,11 +1,9 @@
 name: MCP Tool Definition Quality
 
 on:
+  # `tdqs` is a required status check: run it on every PR so unrelated changes
+  # are not left permanently "expected".
   pull_request:
-    paths:
-      - "mcp-server/**"
-      - "package.json"
-      - "pnpm-lock.yaml"
   push:
     branches: [main]
     paths:

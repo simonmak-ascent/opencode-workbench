@@ -1,10 +1,9 @@
 name: Validate Documentation
 
 on:
+  # `validate-docs` is a required status check: run it on every PR so unrelated
+  # changes are not left permanently "expected".
   pull_request:
-    paths:
-      - 'docs/**'
-      - 'configs/**'
   push:
     branches: [main]
     paths:
