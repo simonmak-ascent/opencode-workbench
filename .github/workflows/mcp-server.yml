@@ -8,11 +8,10 @@ on:
       - 'package.json'
       - 'pnpm-lock.yaml'
       - '.github/workflows/mcp-server.yml'
+  # `build / typecheck / test` is a required status check: it must report on
+  # every pull request. A paths filter leaves unrelated PRs permanently
+  # "expected" and unmergeable.
   pull_request:
-    paths:
-      - 'mcp-server/**'
-      - 'package.json'
-      - '.github/workflows/mcp-server.yml'
   workflow_dispatch:
 
 permissions:
