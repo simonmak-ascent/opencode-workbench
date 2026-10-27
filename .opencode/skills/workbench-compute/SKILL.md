@@ -38,8 +38,12 @@ cs gc [--ttl <hours>]   # reap box working copies idle > TTL (default 12h)
 cs gc-install           # install the idle-reaper systemd timer on the box
 cs login                # print WSL/Windows login instructions
 cs win-setup            # one-time: create Windows SSH key + config (PowerShell ssh ecs-02)
-cs tunnel               # SSH-forward 3000 to the shared browserless (on ecs-03; opencode UI is via Caddy)
+cs tunnel               # SSH-forward the shared browserless port to localhost (the opencode UI is an ALB rule to the app's port — no node-side proxy)
 ```
+
+> **Ingress:** the ALB is the only ingress and it routes to the app's own port; nginx is the only
+> web server on a node. There is no node-side routing proxy to configure or restart — authority is
+> `~/git/apg-infra/docs/standards.md`.
 
 > **Pin the host.** `~/.config/opencode/cs-host` can be flipped by another session (e.g. to a host
 > with no clone/creds) — prefix `CS_HOST=ecs-02 cs …`, or run `cs host ecs-02` (with an argument) to
