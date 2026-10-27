@@ -11,7 +11,8 @@
 - Local stdio server: `npx -y @simonmak-ascent/opencode-workbench`
 - Hosted (Streamable HTTP): `https://opencode-workbench.simonmak.com/mcp`
 - Homepage: https://opencode-workbench.simonmak.com
-- Glama: https://glama.ai/mcp/servers/simonmak-ascent/opencode-workbench
+- Glama: https://glama.ai/mcp/connectors/com.ascent-partners/opencode-workbench
+- Official MCP Registry name: `com.ascent-partners/opencode-workbench`
 - Context7 library ID: `/simonmak-ascent/opencode-workbench`
 
 ## MCP tools (10)
@@ -40,12 +41,13 @@ Every tool takes a `target`:
 - [README and quick start](https://github.com/simonmak-ascent/opencode-workbench#readme)
 - [MCP server README](https://github.com/simonmak-ascent/opencode-workbench/tree/main/mcp-server)
 - [Clone architecture](https://github.com/simonmak-ascent/opencode-workbench/blob/main/docs/architecture/clone-mcp.md)
+- [Connector manifest schema](https://github.com/simonmak-ascent/opencode-workbench/blob/main/connector.schema.json)
 - [Registry listing runbook](https://github.com/simonmak-ascent/opencode-workbench/blob/main/docs/publishing/registry-listing.md)
-- [VDD vision](https://github.com/simonmak-ascent/opencode-workbench/blob/main/vdd/vision.md)
-- [Constitution](https://github.com/simonmak-ascent/opencode-workbench/blob/main/constitution.md)
 
 ## Quality
 
-- Tool descriptions target the Tool Definition Quality Score (TDQS); `mcp-tdqs lint` reports 0 errors.
-- CI: `mcp-server.yml` (build/typecheck/test), `secret-scan.yml` (gitleaks),
-  `validate-docs.yml`, `validate-inventory.yml` (config/doc parity).
+- Tool descriptions target the Tool Definition Quality Score (TDQS); CI lints the built server with
+  `mcp-tdqs@0.2.0 --fail-on error`.
+- CI: `mcp-server.yml` (build/typecheck/test), `tdqs.yml` (tool-surface lint), `secret-scan.yml`
+  (gitleaks), `validate-docs.yml`, `validate-inventory.yml` (config/doc parity).
+- Release: a `v*` tag publishes npm first, then `server.json` to the MCP Registry.
