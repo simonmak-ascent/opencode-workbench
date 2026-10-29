@@ -8,7 +8,7 @@
  *   skills     — every SKILL.md parses and documents itself
  *   tools      — expected CLIs are on PATH
  *   infra      — Docker containers (optional)
- *   remote     — the hosted workbench + primary-sources + vdd MCP endpoints
+ *   remote     — the hosted workbench + vdd MCP endpoints
  *
  * Never reads or prints secret values: it only checks whether env vars are set
  * and reports HTTP status codes.
@@ -226,7 +226,6 @@ async function checkInfra() {
 // ---------------------------------------------------------------------- remote
 const REMOTE = [
   ["workbench", "https://opencode-workbench.simonmak.com/mcp"],
-  ["primary-sources", "https://primary-sources-mcp.vercel.app/mcp"],
   ["vdd", "https://vdd.simonmak.com/api/mcp"],
 ];
 async function checkRemote() {

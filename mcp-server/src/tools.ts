@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import {
   apply,
@@ -54,6 +56,15 @@ const infoOutput = z.object({
   defaultComponents: z.array(z.string()).describe("Component ids installed by default."),
   optionalMcp: z.array(z.string()).describe("Optional MCP add-on ids available in the profile."),
   components: z.array(componentInfoOutput).describe("Every component with id, tier and description."),
+  versions: z
+    .object({
+      repo: z.string().describe("Version of this package."),
+      opencode: z.string().optional().describe("OpenCode CLI version the profile records as current."),
+      mcp: z.number().describe("MCP servers recorded across every install class."),
+      skills: z.number().describe("Agent skills in the bundled profile."),
+    })
+    .optional()
+    .describe("Summary of the bundled workbench.versions.json, when present."),
 });
 
 const inspectOutput = z.object({
@@ -191,6 +202,34 @@ function structured(value: unknown): { content: []; structuredContent: Record<st
   return { content: [], structuredContent: value as Record<string, unknown> };
 }
 
+/**
+ * Summarise the bundled `workbench.versions.json` for describe_workbench.
+ * Returns undefined when the file is absent (an older install, or a checkout
+ * that has not generated it) — describe_workbench must never fail on that.
+ */
+function versionsSummary():
+  | { repo: string; opencode?: string; mcp: number; skills: number }
+  | undefined {
+  try {
+    const raw = readFileSync(resolve(packageRoot(), "workbench.versions.json"), "utf8");
+    const m = JSON.parse(raw) as {
+      repo?: { version?: string };
+      opencode?: { version?: string };
+      mcp?: Record<string, Record<string, unknown>>;
+      skills?: { count?: number };
+    };
+    const mcp = Object.values(m.mcp ?? {}).reduce((n, group) => n + Object.keys(group ?? {}).length, 0);
+    return {
+      repo: m.repo?.version ?? "unknown",
+      opencode: m.opencode?.version ?? undefined,
+      mcp,
+      skills: m.skills?.count ?? 0,
+    };
+  } catch {
+    return undefined;
+  }
+}
+
 function fail(message: string, error: unknown) {
   return {
     content: [{ type: "text" as const, text: `${message}: ${(error as Error).message}` }],
@@ -223,6 +262,7 @@ export function registerTools(server: McpServer): void {
           description: c.description,
           manual: c.manual ?? false,
         })),
+        versions: versionsSummary(),
       }),
   );
 

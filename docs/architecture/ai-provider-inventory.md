@@ -21,7 +21,7 @@
 
 | Provider | MCP Server | Secret Required | Status | Notes |
 |----------|-----------|----------------|--------|-------|
-| **Perplexity** | `perplexity-agent-mcp` (local) | `PERPLEXITY_API_KEY` | ✅ Key regenerated (pending rebuild) | Regenerated 2026-07-26 with `pplx-` prefix. Requires build box rebuild to take effect |
+| **Perplexity** | external tooling (no MCP server — `perplexity-agent-mcp` was vendored and removed 2026-10-30) | `PERPLEXITY_API_KEY` | ✅ Key present | Regenerated 2026-07-26 with `pplx-` prefix |
 | **Brave Search** | `server-brave-search` (local) | `BRAVE_API_KEY` | ✅ Working | Search API, key format `BSA...` |
 | **Sentry** | `@sentry/mcp-server` (local) | `SENTRY_AUTH_TOKEN` | ✅ Working | Key format `sntryu_...` |
 

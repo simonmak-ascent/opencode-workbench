@@ -10,7 +10,7 @@
 |--------|---------|---------|----------|
 | `DEEPSEEK_API_KEY` | DeepSeek LLM API (primary model) | OpenCode provider (deepseek/deepseek-v4-pro) | https://platform.deepseek.com/api_keys |
 | `SIMONPLMAK_CLOUD_PAT` | GitHub classic PAT (repo scope) | github MCP, shadcn MCP | https://github.com/settings/tokens |
-| `PERPLEXITY_API_KEY` | Perplexity Agent API | perplexity-agent-mcp | https://perplexity.ai/settings/api (*) |
+| `PERPLEXITY_API_KEY` | Perplexity Agent API | external tooling only — no MCP server in this profile | https://perplexity.ai/settings/api (*) |
 | `BRAVE_API_KEY` | Brave Search API | brave-search MCP | https://brave.com/search/api/ |
 | `BROWSERLESS_TOKEN` | Browserless auth token | browserless MCP + Docker container | https://browserless.io/account |
 | `FIGMA_TOKEN` | Figma Developer API | figma-developer-mcp | https://www.figma.com/settings (Personal Access Tokens) |

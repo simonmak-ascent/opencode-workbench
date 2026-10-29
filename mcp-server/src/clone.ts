@@ -35,6 +35,8 @@ export interface InspectResult {
   opencodeBin?: string;
   /** Version the `opencode` binary reports, without the leading `v` (e.g. "2.2.1"). */
   opencodeVersion?: string;
+  /** Number of SKILL.md files under `~/.config/opencode/skills`. */
+  skillsCount?: string;
   dockerRunning?: boolean;
   /** Space-separated names of credentials present on the target (never values). */
   envPresent?: string;

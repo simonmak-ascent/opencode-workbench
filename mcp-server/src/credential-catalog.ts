@@ -156,29 +156,6 @@ export const REQUIRED_CREDENTIALS: CredentialSpec[] = [
     url: "https://ram.console.aliyun.com/manage/ak",
     method: "instruction",
   },
-  {
-    var: "FRED_API_KEY",
-    label: "FRED API key",
-    purpose: "primary-sources MCP: fred_series (optional).",
-    url: "https://fredaccount.stlouisfed.org/apikeys",
-    method: "paste",
-    optional: true,
-  },
-  {
-    var: "COMPANIES_HOUSE_API_KEY",
-    label: "UK Companies House API key",
-    purpose: "primary-sources MCP: companies_house_* (optional).",
-    url: "https://developer.company-information.service.gov.uk/manage-account",
-    method: "paste",
-    optional: true,
-  },
-  {
-    var: "RESEARCH_CONTACT",
-    label: "Research contact string",
-    purpose: "User-Agent contact for primary-source APIs (optional).",
-    method: "paste",
-    optional: true,
-  },
 ];
 
 export function credentialByVar(name: string): CredentialSpec | undefined {

@@ -19,9 +19,6 @@ workbench/
 │       ├── api-research/SKILL.md
 │       ├── ... (26 more)
 │       └── test-writer/SKILL.md
-├── vendor/                 # Vendored MCP source code
-│   ├── browserless-mcp/    # Built by setup.sh
-│   └── perplexity-agent-mcp/ # Installed by setup.sh
 ├── configs/                # Reference configs
 │   ├── mcp/
 │   │   ├── README.md
@@ -83,8 +80,6 @@ workbench/
 | Path | Purpose | Classification |
 |------|---------|---------------|
 | `bin/github-mcp-server` | GitHub MCP binary | Source from GitHub Releases |
-| `bin/browserless-mcp/` | Vendored browserless MCP | Copied from repo vendor/ |
-| `bin/perplexity-agent-mcp/` | Vendored perplexity MCP | Copied from repo vendor/ |
 | `share/` | npm/pip system data | Runtime cache |
 | `state/` | Application state | Runtime cache |
 

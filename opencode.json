@@ -391,17 +391,6 @@
       "oauth": false,
       "timeout": 120000
     },
-    "primary-sources": {
-      "type": "local",
-      "command": ["npx", "-y", "@simonmak-ascent/primary-sources-mcp@1.0.0"],
-      "environment": {
-        "FRED_API_KEY": "{env:FRED_API_KEY}",
-        "COMPANIES_HOUSE_API_KEY": "{env:COMPANIES_HOUSE_API_KEY}",
-        "RESEARCH_CONTACT": "{env:RESEARCH_CONTACT}"
-      },
-      "enabled": true,
-      "timeout": 120000
-    },
     "arxiv": {
       "type": "local",
       "command": ["uvx", "arxiv-mcp-server"],
@@ -416,7 +405,7 @@
     },
     "firecrawl": {
       "type": "local",
-      "command": ["npx", "-y", "firecrawl-mcp@3.25.5"],
+      "command": ["npx", "-y", "firecrawl-mcp"],
       "environment": {
         "FIRECRAWL_API_KEY": "{env:FIRECRAWL_API_KEY}"
       },
@@ -480,18 +469,6 @@
       "enabled": true,
       "timeout": 30000
     },
-    "perplexity": {
-      "type": "local",
-      "command": [
-        "node",
-        "/home/node/.local/bin/perplexity-agent-mcp/index.js"
-      ],
-      "environment": {
-        "PERPLEXITY_API_KEY": "{env:PERPLEXITY_API_KEY}"
-      },
-      "enabled": true,
-      "timeout": 600000
-    },
     "brave-search": {
       "type": "local",
       "command": [
@@ -512,21 +489,6 @@
       ],
       "environment": {
         "DATABASE_URL": "{env:DATABASE_URL}"
-      },
-      "enabled": true,
-      "timeout": 30000
-    },
-    "browserless": {
-      "type": "local",
-      "command": [
-        "node",
-        "/home/node/.local/bin/browserless-mcp/dist/index.js"
-      ],
-      "environment": {
-        "BROWSERLESS_HOST": "localhost",
-        "BROWSERLESS_PORT": "3000",
-        "BROWSERLESS_TOKEN": "{env:BROWSERLESS_TOKEN}",
-        "BROWSERLESS_PROTOCOL": "http"
       },
       "enabled": true,
       "timeout": 30000

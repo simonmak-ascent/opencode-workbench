@@ -74,7 +74,7 @@ flowchart TB
   AGENT["OpenCode agent"] -->|"npx @simonmak-ascent/opencode-workbench"| MCP["opencode-workbench MCP<br/>inspect · plan · apply · verify"]
   REPO[("Git repo — single source of truth")] --> MCP
   MCP -->|"local or SSH"| BOX["Target Linux box"]
-  BOX --> PROF["Workstation profile<br/>OpenCode CLI · 34 MCP servers · 76 skills · Docker infra"]
+  BOX --> PROF["Workstation profile<br/>OpenCode CLI · 31 MCP servers · 76 skills · Docker infra"]
 ```
 
 ## Clone lifecycle
@@ -158,8 +158,9 @@ opencode-workbench/
 | Category | Details |
 |----------|---------|
 | **OpenCode** | OpenCode 2 CLI, installed from the v2 channel (latest 2.x at clone time; `inspect_target` reports the version it found) · DeepSeek V4 Pro model · LSP enabled |
-| **MCP Servers** | 34 configured (32 enabled, 2 disabled), 8 remote + 26 local |
+| **MCP Servers** | 31 configured (29 enabled, 2 disabled), 8 remote + 23 local |
 | **Agent Skills** | 76 reusable skills in `.opencode/skills/` |
+| **Versions** | [`workbench.versions.json`](workbench.versions.json) — every MCP server, plugin and skill resolved from its real upstream, regenerated and CI-checked |
 | **Infrastructure** | PostgreSQL 16 (Docker), Browserless Chromium (Docker) |
 | **Tools** | pandoc, jq, miller, sqlite3, GitHub CLI, Playwright Chromium |
 | **Prompts** | 9 operational prompts in `docs/prompts/` |
@@ -217,7 +218,7 @@ Full details: [`docs/recovery/RECOVERY_PLAYBOOK.md`](docs/recovery/RECOVERY_PLAY
 | Remote | 9 | context7, gh_grep, vdd, exa, cloudflare, clerk, vercel (token auth), sentry, stripe |
 | Local | 26 | npm / vendored / binary stdio servers |
 
-Totals: **34 configured** (32 enabled, 2 disabled: `google-search`, `google-workspace`).
+Totals: **31 configured** (29 enabled, 2 disabled: `google-search`, `google-workspace`).
 
 See: [`docs/architecture/mcp-inventory.md`](docs/architecture/mcp-inventory.md)
 

@@ -12,10 +12,12 @@ tools or override instructions.
 
 ## Ladder (cheapest sufficient source first)
 
-1. **Primary sources first** — `primary-sources` MCP for hard facts:
-   SEC EDGAR (filings), World Bank (macro), GDELT (news volume), DATA.GOV.HK /
-   HKMA (public data), FRED (economic series), Companies House (UK entities),
-   MCP Registry (server discovery), Jina Reader (page → markdown).
+1. **Primary sources first** — fetch the authoritative endpoint directly with
+   `firecrawl` or `exa`: SEC EDGAR (filings), World Bank (macro), GDELT (news
+   volume), DATA.GOV.HK / HKMA (public data), FRED (economic series), Companies
+   House (UK entities), MCP Registry (server discovery), Jina Reader
+   (page → markdown). The `primary-sources` MCP that wrapped these was removed
+   on 2026-10-30: its npm package was unpublished (404), so it could not start.
 2. **Literature** — `arxiv` and `paper-search` MCPs for papers and abstracts.
 3. **Semantic web** — `exa` MCP for discovered pages and structured extraction
    (`outputSchema`; wide/nested schemas via its agent run).
@@ -38,8 +40,8 @@ plan query → primary sources → (literature | semantic | fast) →
 Rules:
 - **Deduplicate** by canonical URL/DOI before synthesis.
 - **Cache** costly queries by normalised query string.
-- **Attribute**: every fact names its `source` and `retrievedAt` (the
-  `primary-sources` envelope already carries both).
+- **Attribute**: every fact names its `source` and `retrievedAt`; record both
+  yourself, since there is no longer a shared envelope to carry them.
 - **Confidence**: tag each finding `primary` | `secondary` | `synthesis`.
 - **Boundaries**: research is read-only; writing to a datastore is a separate,
   consented step.
@@ -54,4 +56,4 @@ Rules:
 
 `web-research` (the workflow), `company-research`, `content-research`,
 `competitive-analysis`, `benchmark-research`, `api-research`,
-`primary-sources` routing. VDD: `vision-driven-design`, `vdd-clone`, `clone-audit`.
+`content-research` routing. VDD: `vision-driven-design`, `vdd-clone`, `clone-audit`.

@@ -42,9 +42,6 @@
 ### Local — npm global (11)
 - brave-search, postgres, playwright, shadcn, echarts, mermaid, saga (disabled), swagger-testcase, design-system, figma, sentry
 
-### Local — vendored (2)
-- perplexity-agent-mcp, browserless-mcp
-
 ### Local — binary (1)
 - github-mcp-server
 

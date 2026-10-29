@@ -69,9 +69,6 @@ export const CORE_NPM_MCPS = [
   "mcp-design-system-extractor",
 ] as const;
 
-/** Vendored MCPs shipped in `vendor/` that must be built on the target. */
-export const VENDORED_MCPS = ["perplexity-agent-mcp", "browserless-mcp"] as const;
-
 const npmMacpsInstall = CORE_NPM_MCPS.map((p) => `  npm install -g --silent ${p} || warn "failed: ${p}"`).join("\n");
 
 export const COMPONENTS: Component[] = [
@@ -146,15 +143,6 @@ oc_ver="$("$oc_bin" --version 2>/dev/null | awk 'NR==1{print $NF}' | sed 's/^v//
     install: `curl -LsSf https://astral.sh/uv/install.sh | sh`,
   },
   {
-    id: "research-mcps",
-    title: "Research MCP servers",
-    tier: "core",
-    description: "primary-sources (npm) plus arxiv/paper-search/firecrawl (fetched on demand via uvx/npx).",
-    detect: `command -v npx >/dev/null 2>&1 && command -v uvx >/dev/null 2>&1 && npm ls -g --depth=0 @simonmak-ascent/primary-sources-mcp >/dev/null 2>&1`,
-    install: `command -v npx >/dev/null 2>&1 || { warn "npx missing"; exit 1; }
-npm install -g --silent --no-audit --no-fund @simonmak-ascent/primary-sources-mcp@1.0.0 || warn "failed: primary-sources-mcp"`,
-  },
-  {
     id: "gh",
     title: "GitHub CLI",
     tier: "core",
@@ -177,30 +165,12 @@ fi
     title: "Core npm-global MCP servers",
     tier: "core",
     description: `${CORE_NPM_MCPS.length} portable MCP servers installed globally.`,
-    detect: `npm ls -g --depth=0 @playwright/mcp >/dev/null 2>&1 && npm ls -g --depth=0 mcp-echarts >/dev/null 2>&1`,
+    // Checking two of nine packages said "present" while seven were missing or
+    // stale. Check every one.
+    detect: `command -v npm >/dev/null 2>&1 || return 1
+${CORE_NPM_MCPS.map((p) => `npm ls -g --depth=0 ${p} >/dev/null 2>&1 || return 1`).join("\n")}`,
     install: `command -v npm >/dev/null 2>&1 || { warn "npm missing"; exit 1; }
 ${npmMacpsInstall}`,
-  },
-  {
-    id: "vendored-mcps",
-    title: "Vendored MCP servers",
-    tier: "core",
-    description: "perplexity-agent-mcp and browserless-mcp, copied from the profile repo and built.",
-    detect: `[ -f "$WB_HOME/.local/bin/perplexity-agent-mcp/index.js" ] && [ -f "$WB_HOME/.local/bin/browserless-mcp/dist/index.js" ]`,
-    install: `
-[ -n "$WB_REPO" ] || { warn "WB_REPO not set"; exit 1; }
-mkdir -p "$WB_HOME/.local/bin"
-for m in ${VENDORED_MCPS.join(" ")}; do
-  if [ -d "$WB_REPO/vendor/$m" ]; then
-    rm -rf "$WB_HOME/.local/bin/$m"
-    cp -r "$WB_REPO/vendor/$m" "$WB_HOME/.local/bin/$m"
-    ( cd "$WB_HOME/.local/bin/$m" && npm install --silent --no-audit --no-fund \
-        && (npm run build >/dev/null 2>&1 || true) ) || warn "build failed: $m"
-  else
-    warn "vendor/$m not found in $WB_REPO"
-  fi
-done
-`,
   },
   {
     id: "github-mcp",
@@ -236,7 +206,23 @@ fi
     title: "Agent skills",
     tier: "core",
     description: "Copies the profile's .opencode/skills into ~/.config/opencode/skills.",
-    detect: `[ -d "$WB_HOME/.config/opencode/skills" ] && [ "$(find "$WB_HOME/.config/opencode/skills" -name SKILL.md 2>/dev/null | wc -l)" -gt 0 ]`,
+    // A non-empty skills dir used to count as current, so a box kept whatever
+    // it copied first and never picked up new or corrected skills. Compare the
+    // tree against the repo when it is on the target.
+    detect: `skills_dst="$WB_HOME/.config/opencode/skills"
+[ -d "$skills_dst" ] || return 1
+skills_src=""
+if [ -n "$WB_REPO" ] && [ -d "$WB_REPO/.opencode/skills" ]; then skills_src="$WB_REPO/.opencode/skills"; fi
+if [ -n "$skills_src" ]; then
+  for skills_path in "$skills_src"/*/; do
+    [ -d "$skills_path" ] || continue
+    skills_name="$(basename "$skills_path")"
+    [ -d "$skills_dst/$skills_name" ] || return 1
+    diff -r "$skills_path" "$skills_dst/$skills_name" >/dev/null 2>&1 || return 1
+  done
+  return 0
+fi
+[ "$(find "$skills_dst" -name SKILL.md 2>/dev/null | wc -l)" -gt 0 ]`,
     install: `
 [ -n "$WB_REPO" ] || { warn "WB_REPO not set"; exit 1; }
 mkdir -p "$WB_HOME/.config/opencode/skills"
@@ -395,10 +381,8 @@ export const UNINSTALL_SCRIPTS: Record<string, string> = {
   opencode: `rm -rf "$WB_HOME/.opencode" "$WB_HOME/.local/bin/opencode"
 command -v npm >/dev/null 2>&1 && npm rm -g opencode-ai >/dev/null 2>&1 || true`,
   uv: `rm -f "$WB_HOME/.local/bin/uv" "$WB_HOME/.local/bin/uvx"`,
-  "research-mcps": `command -v npm >/dev/null 2>&1 && npm rm -g --silent @simonmak-ascent/primary-sources-mcp >/dev/null 2>&1 || true`,
   "npm-mcps": `command -v npm >/dev/null 2>&1 || { warn "npm missing"; exit 1; }
 ${CORE_NPM_MCPS.map((p) => `  npm rm -g --silent ${p} >/dev/null 2>&1 || true`).join("\n")}`,
-  "vendored-mcps": `rm -rf "$WB_HOME/.local/bin/perplexity-agent-mcp" "$WB_HOME/.local/bin/browserless-mcp"`,
   "github-mcp": `rm -f "$WB_HOME/.local/bin/github-mcp-server"`,
   skills: `rm -rf "$WB_HOME/.config/opencode/skills"`,
   plugins: `rm -rf "$WB_HOME/.config/opencode/plugins"`,

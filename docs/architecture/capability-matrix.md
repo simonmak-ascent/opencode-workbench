@@ -10,7 +10,7 @@ Legend: **C** component · **M** MCP · **S** skill.
 
 | Capability | Delivered by |
 |------------|--------------|
-| Primary-source facts (filings, macro, public data) | **M** `primary-sources` |
+| Primary-source facts (filings, macro, public data) | **M** `firecrawl` / `exa` on the authoritative endpoint (`primary-sources` MCP removed 2026-10-30 — package unpublished) |
 | Literature | **M** `arxiv`, `paper-search` |
 | Semantic web + extraction | **M** `exa`, `firecrawl` |
 | Fast current facts | **M** `brave-search` |
@@ -34,7 +34,7 @@ Legend: **C** component · **M** MCP · **S** skill.
 |------------|--------------|
 | Tabular/ETL tooling | **C** `data-tools` (pandoc, jq, miller, csvkit, duckdb, polars, datasette) |
 | Analysis workflow | **S** `data-analysis` (via `benchmark-research` / `content-research`) |
-| Sourced ingestion | **M** `primary-sources`, `exa`, `firecrawl` |
+| Sourced ingestion | **M** `exa`, `firecrawl` |
 
 ## Software development (web app)
 

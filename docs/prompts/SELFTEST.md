@@ -17,7 +17,7 @@ cs run "bash scripts/selftest/run-selftest.sh --scope remote"
 cs run "bash scripts/selftest/run-selftest.sh --json"
 ```
 
-Scopes: `providers` (model providers with the target's keys), `mcp` (every enabled MCP answers `initialize` + `tools/list`), `skills` (SKILL.md frontmatter), `tools` (CLIs on PATH), `infra` (pg-memory/browserless), `remote` (hosted workbench + primary-sources + vdd endpoints).
+Scopes: `providers` (model providers with the target's keys), `mcp` (every enabled MCP answers `initialize` + `tools/list`), `skills` (SKILL.md frontmatter), `tools` (CLIs on PATH), `infra` (pg-memory/browserless), `remote` (hosted workbench + vdd endpoints).
 
 Result legend: `PASS` works, `WARN` degraded/optional, `FAIL` broken (exit 1), `SKIP` missing credential (expected when a key is not configured — ties to the Zen-floor degraded mode).
 

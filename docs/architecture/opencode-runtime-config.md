@@ -41,11 +41,11 @@
 | vercel | `https://mcp.vercel.com` | `VERCEL_ACCESS_TOKEN` (token auth) |
 
 ### Local MCPs (26: 24 enabled, 2 disabled)
-Includes github (binary), perplexity + browserless (vendored), brave-search,
-postgres, playwright, mermaid, echarts, shadcn, swagger-testcase, design-system,
-saga, arxiv, paper-search, firecrawl, primary-sources, ms-365, alibaba-cloud-ops,
-surrealdb, designlang, difflens, browser-mcp, esg-hub, humanity4ai; plus the two
-disabled local servers `google-search` and `google-workspace`.
+Includes github (binary), brave-search, postgres, playwright, mermaid, echarts,
+shadcn, swagger-testcase, design-system, saga, arxiv, paper-search, firecrawl,
+ms-365, alibaba-cloud-ops, surrealdb, designlang, difflens, browser-mcp, esg-hub,
+humanity4ai; plus the two disabled local servers `google-search` and
+`google-workspace`.
 
 > `figma` was removed from the profile (superseded by the v0 workflow).
 

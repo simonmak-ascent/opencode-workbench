@@ -46,6 +46,12 @@ OPENCODE_VERSION=""
 if [ -n "$OPENCODE_BIN" ]; then
   OPENCODE_VERSION="$("$OPENCODE_BIN" --version 2>/dev/null | awk 'NR==1{print $NF}' | sed 's/^v//')"
 fi
+# Installed skill count, so a box can be compared against workbench.versions.json
+# without hashing a tree the caller cannot reproduce identically in shell.
+SKILLS_COUNT=0
+if [ -d "$HOME_DIR/.config/opencode/skills" ]; then
+  SKILLS_COUNT="$(find "$HOME_DIR/.config/opencode/skills" -name SKILL.md 2>/dev/null | wc -l | tr -d ' ')"
+fi
 DOCKER_OK="false"
 if command -v docker >/dev/null 2>&1; then
   docker info >/dev/null 2>&1 && DOCKER_OK="true" || DOCKER_OK="false"
@@ -87,6 +93,7 @@ cat <<EOF
   "npmModules": "$(val "$NPM_MODULES")",
   "opencodeBin": "$(val "$OPENCODE_BIN")",
   "opencodeVersion": "$(val "$OPENCODE_VERSION")",
+  "skillsCount": "$(val "$SKILLS_COUNT")",
   "dockerRunning": $DOCKER_OK,
   "envPresent": "$ENV_PRESENT",
   "has": {
