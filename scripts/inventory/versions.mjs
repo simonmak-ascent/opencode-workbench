@@ -176,7 +176,11 @@ function hashSkills(root) {
   for (const f of files) {
     h.update(relative(root, f).split("\\").join("/"));
     h.update("\0");
-    h.update(readFileSync(f));
+    // Normalise line endings before hashing: `.gitattributes` pins eol=lf, but a
+    // working tree can still hold CRLF (a Windows checkout, or a file written
+    // before the rule). Hashing raw bytes made the digest depend on the
+    // checkout rather than the content, so CI disagreed with a local run.
+    h.update(readFileSync(f).toString("utf8").replace(/\r\n/g, "\n"));
     h.update("\0");
   }
   return {
