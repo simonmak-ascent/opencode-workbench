@@ -32,7 +32,7 @@ description: Automate web browsers for scraping, interaction, form filling, and 
 - From another node in the VPC: `http://10.20.3.30:3000`.
 - Token: `~/.config/opencode/secrets/browserless-token` (the one shared token — never hardcode it)
 - Protocol: http
-- Note: The browserless-mcp package has a known bug with MCP protocol response formatting. Use `playwright` MCP for screenshots and scraping as a workaround.
+- Note: the `browserless` MCP server (a vendored wrapper) was removed from this profile on 2026-10-30. Use the `playwright` MCP for screenshots and scraping; reach the shared Browserless service over the ALB if you need raw sessions.
 
 ## Common Playwright Patterns
 ```

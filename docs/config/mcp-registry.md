@@ -35,10 +35,6 @@ At runtime, use `list_mcp_resources` and `list_mcp_resource_templates` to discov
 # Local MCP servers (verify npm global packages)
 npm list -g --depth=0 | grep -E "brave-search|postgres|playwright|shadcn|echarts|mermaid|saga|swagger|design-system|sentry"
 
-# Vendored MCP servers (verify binary presence)
-ls ~/.local/bin/perplexity-agent-mcp/index.js
-ls ~/.local/bin/browserless-mcp/dist/index.js
-
 # Binary MCP server
 which github-mcp-server
 ```

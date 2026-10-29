@@ -56,7 +56,7 @@ Every tool takes a `target`:
 ## Components
 
 - **required** — `git`, `curl`, `node` (>=20), `opencode`
-- **core** — `pnpm`, `uv`, `gh`, `npm-mcps`, `vendored-mcps`, `research-mcps`, `skills`, `plugins`, `playwright-browsers`
+- **core** — `pnpm`, `uv`, `gh`, `npm-mcps`, `skills`, `plugins`, `playwright-browsers`
 - **optional** — `github-mcp`, `docker`, `docker-containers`, `data-tools`, `scientific`, `db-clients`, `sandbox`
 
 Add-ons (esg-hub, humanity4ai, saga, surrealdb, google-workspace, google-search,

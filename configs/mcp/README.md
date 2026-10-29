@@ -59,10 +59,6 @@
 | Design System | mcp-design-system-extractor | 1.1.1 | none |
 | Sentry | @sentry/mcp-server | 0.37.0 | SENTRY_AUTH_TOKEN |
 
-### Vendored (custom, stored in vendor/)
-- `perplexity-agent-mcp` — Perplexity Agent API wrapper
-- `browserless-mcp` — Browserless.io automation
-
 ### Disabled by Default
 - `@storybook/mcp` — library, not a standalone CLI
 - `surrealdb-mcp-server` — requires SurrealDB credentials
