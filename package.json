@@ -16,8 +16,8 @@
     "mcp-server/dist",
     "mcp-server/README.md",
     "opencode.json",
+    "workbench.versions.json",
     ".opencode/skills",
-    "vendor",
     "connector.json",
     "README.md",
     "LICENSE"

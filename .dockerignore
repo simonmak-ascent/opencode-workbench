@@ -9,5 +9,4 @@ mcp-server/dist
 docs
 configs
 scripts
-vendor
 *.log

@@ -7,13 +7,20 @@
   "transport": {
     "type": "stdio",
     "command": "npx",
-    "args": ["-y", "@simonmak-ascent/opencode-workbench"],
+    "args": [
+      "-y",
+      "@simonmak-ascent/opencode-workbench"
+    ],
     "env": []
   },
   "transports": {
     "stdio": {
       "type": "stdio",
-      "command": ["npx", "-y", "@simonmak-ascent/opencode-workbench"]
+      "command": [
+        "npx",
+        "-y",
+        "@simonmak-ascent/opencode-workbench"
+      ]
     },
     "remote": {
       "type": "remote",
@@ -22,13 +29,24 @@
   },
   "mcp": {
     "type": "local",
-    "command": ["npx", "-y", "@simonmak-ascent/opencode-workbench"],
+    "command": [
+      "npx",
+      "-y",
+      "@simonmak-ascent/opencode-workbench"
+    ],
     "enabled": true,
     "timeout": 600000
   },
   "targets": {
-    "local": { "mode": "local" },
-    "ssh": { "mode": "ssh", "host": "<host>", "user": "<user>", "identityFile": "<optional>" }
+    "local": {
+      "mode": "local"
+    },
+    "ssh": {
+      "mode": "ssh",
+      "host": "<host>",
+      "user": "<user>",
+      "identityFile": "<optional>"
+    }
   },
   "secrets": {
     "written": [],
@@ -36,8 +54,28 @@
     "note": "The connector never reads or transmits secret values; it writes an empty template with the variable names the profile references. It can, with consent, help you acquire keys (list_required_credentials) without ever observing their values."
   },
   "components": {
-    "required": ["git", "curl", "node", "opencode"],
-    "core": ["pnpm", "uv", "gh", "npm-mcps", "vendored-mcps", "research-mcps", "skills", "plugins", "playwright-browsers"],
-    "optional": ["github-mcp", "docker", "docker-containers", "data-tools", "scientific", "db-clients"]
+    "required": [
+      "git",
+      "curl",
+      "node",
+      "opencode"
+    ],
+    "core": [
+      "pnpm",
+      "uv",
+      "gh",
+      "npm-mcps",
+      "skills",
+      "plugins",
+      "playwright-browsers"
+    ],
+    "optional": [
+      "github-mcp",
+      "docker",
+      "docker-containers",
+      "data-tools",
+      "scientific",
+      "db-clients"
+    ]
   }
 }

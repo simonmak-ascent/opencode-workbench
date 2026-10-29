@@ -16,8 +16,6 @@ describe("component uninstall coverage", () => {
       "pnpm",
       "uv",
       "npm-mcps",
-      "vendored-mcps",
-      "research-mcps",
       "github-mcp",
       "skills",
       "plugins",
