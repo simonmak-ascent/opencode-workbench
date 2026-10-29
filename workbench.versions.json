@@ -1,7 +1,7 @@
 {
   "repo": {
     "name": "@simonmak-ascent/opencode-workbench",
-    "version": "5.0.0"
+    "version": "5.0.1"
   },
   "opencode": {
     "channel": "v2",
