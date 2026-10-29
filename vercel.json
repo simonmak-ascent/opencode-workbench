@@ -1,7 +1,8 @@
 {
   "functions": {
     "api/mcp.js": {
-      "maxDuration": 30
+      "maxDuration": 30,
+      "includeFiles": "workbench.versions.json"
     }
   },
   "rewrites": [
