@@ -39,6 +39,13 @@ if [ -z "$NPM_MODULES" ]; then
 fi
 
 OPENCODE_BIN="$(command -v opencode 2>/dev/null || echo '')"
+# The OpenCode CLI major matters: the v1 installer cannot produce a v2 client,
+# and a v1 binary satisfies a presence-only check forever. Report the version so
+# drift is a visible fact rather than an assumption.
+OPENCODE_VERSION=""
+if [ -n "$OPENCODE_BIN" ]; then
+  OPENCODE_VERSION="$("$OPENCODE_BIN" --version 2>/dev/null | awk 'NR==1{print $NF}' | sed 's/^v//')"
+fi
 DOCKER_OK="false"
 if command -v docker >/dev/null 2>&1; then
   docker info >/dev/null 2>&1 && DOCKER_OK="true" || DOCKER_OK="false"
@@ -79,6 +86,7 @@ cat <<EOF
   "npmPrefix": "$(val "$NPM_PREFIX")",
   "npmModules": "$(val "$NPM_MODULES")",
   "opencodeBin": "$(val "$OPENCODE_BIN")",
+  "opencodeVersion": "$(val "$OPENCODE_VERSION")",
   "dockerRunning": $DOCKER_OK,
   "envPresent": "$ENV_PRESENT",
   "has": {
