@@ -124,10 +124,18 @@ fi
     id: "opencode",
     title: "OpenCode CLI",
     tier: "required",
-    description: "The agent CLI this workbench is built around.",
-    preview: "curl -fsSL https://opencode.ai/install | bash",
-    detect: `command -v opencode >/dev/null 2>&1 || [ -x "$WB_HOME/.opencode/bin/opencode" ]`,
-    install: `curl -fsSL https://opencode.ai/install | bash`,
+    description: "The agent CLI this workbench is built around (OpenCode 2).",
+    preview: "curl -fsSL https://opencode.ai/v2/install | bash",
+    // Presence is not enough: https://opencode.ai/install is the OpenCode 1
+    // installer and refuses 2.x outright, so a box provisioned by an older
+    // clone can hold a v1 binary forever while every check reports "present".
+    // Require a v2 major, using the binary the installer would have written.
+    detect: `oc_bin="$(command -v opencode 2>/dev/null)"
+[ -n "$oc_bin" ] || oc_bin="$WB_HOME/.opencode/bin/opencode"
+[ -x "$oc_bin" ] || return 1
+oc_ver="$("$oc_bin" --version 2>/dev/null | awk 'NR==1{print $NF}' | sed 's/^v//')"
+[ "$(printf '%s' "$oc_ver" | cut -d. -f1)" = "2" ]`,
+    install: `curl -fsSL https://opencode.ai/v2/install | bash`,
   },
   {
     id: "uv",
@@ -245,7 +253,24 @@ fi
     title: "OpenCode plugins",
     tier: "core",
     description: "memory + doc-tools plugins referenced by opencode.json.",
-    detect: `[ -f "$WB_HOME/.config/opencode/plugins/memory.ts" ] && [ -f "$WB_HOME/.config/opencode/plugins/doc-tools.ts" ]`,
+    // Presence alone meant a box kept whichever plugin version it happened to
+    // copy first: the files exist, so detect says "present", so they are never
+    // re-copied. When the repo is on the target, compare content instead and
+    // let a stale copy re-install.
+    detect: `plug_dst="$WB_HOME/.config/opencode/plugins"
+[ -d "$plug_dst" ] || return 1
+plug_src=""
+if [ -n "$WB_REPO" ] && [ -d "$WB_REPO/plugins" ]; then plug_src="$WB_REPO/plugins"; fi
+if [ -n "$plug_src" ]; then
+  for plug_f in "$plug_src"/*.ts; do
+    [ -f "$plug_f" ] || continue
+    plug_n="$(basename "$plug_f")"
+    [ -f "$plug_dst/$plug_n" ] || return 1
+    cmp -s "$plug_f" "$plug_dst/$plug_n" || return 1
+  done
+  return 0
+fi
+[ -f "$plug_dst/memory.ts" ] && [ -f "$plug_dst/doc-tools.ts" ]`,
     install: `
 [ -n "$WB_REPO" ] || { warn "WB_REPO not set"; exit 1; }
 mkdir -p "$WB_HOME/.config/opencode/plugins"

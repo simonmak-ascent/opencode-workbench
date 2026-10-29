@@ -157,7 +157,7 @@ opencode-workbench/
 
 | Category | Details |
 |----------|---------|
-| **OpenCode** | Latest stable CLI, DeepSeek V4 Pro model, LSP enabled |
+| **OpenCode** | OpenCode 2 CLI, installed from the v2 channel (latest 2.x at clone time; `inspect_target` reports the version it found) · DeepSeek V4 Pro model · LSP enabled |
 | **MCP Servers** | 34 configured (32 enabled, 2 disabled), 8 remote + 26 local |
 | **Agent Skills** | 76 reusable skills in `.opencode/skills/` |
 | **Infrastructure** | PostgreSQL 16 (Docker), Browserless Chromium (Docker) |

@@ -20,10 +20,14 @@ grep -q 'env.workbench' "$HOME/.bashrc" 2>/dev/null || \
 step() { echo ""; echo "=== [setup] $1 ==="; }
 
 step "opencode CLI"
-if ! command -v opencode >/dev/null 2>&1; then
-  curl -fsSL https://opencode.ai/install | bash
-fi
+# v2 channel: https://opencode.ai/install is the OpenCode 1 installer and
+# refuses 2.x, so it would install the wrong major on a fresh box. Upgrade an
+# existing v1 install too — presence alone is not "current".
 export PATH="$HOME/.opencode/bin:$PATH"
+oc_major="$(opencode --version 2>/dev/null | awk 'NR==1{print $NF}' | sed 's/^v//' | cut -d. -f1)"
+if [ "$oc_major" != "2" ]; then
+  curl -fsSL https://opencode.ai/v2/install | bash
+fi
 opencode --version || echo "opencode install failed (non-fatal for setup)"
 
 step "global npm MCP servers"

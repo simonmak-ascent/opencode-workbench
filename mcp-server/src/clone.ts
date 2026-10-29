@@ -33,6 +33,8 @@ export interface InspectResult {
   nodeVersion?: string;
   npmModules?: string;
   opencodeBin?: string;
+  /** Version the `opencode` binary reports, without the leading `v` (e.g. "2.2.1"). */
+  opencodeVersion?: string;
   dockerRunning?: boolean;
   /** Space-separated names of credentials present on the target (never values). */
   envPresent?: string;
@@ -118,7 +120,7 @@ export function extractJson(stdout: string): string | undefined {
   return stdout.slice(start, end + 1);
 }
 
-function detectScript(ids: string[]): string {
+function detectScript(ids: string[], workspace?: string): string {
   const fns = ids
     .map((id) => {
       const c = componentById(id);
@@ -128,11 +130,19 @@ function detectScript(ids: string[]): string {
     .filter(Boolean)
     .join("\n");
   const loop = ids.map((id) => `if c_${id} >/dev/null 2>&1; then echo "${id} ok"; else echo "${id} missing"; fi`).join("\n");
-  return `${PREAMBLE}\n${fns}\n${loop}\n`;
+  // WB_REPO lets a detect body compare installed files against the repo (the
+  // `plugins` component does). It is absent on a box that has not cloned yet,
+  // and every detect body must still work without it.
+  const env = workspace ? `export WB_REPO=${shellQuote(workspace)}\n` : "";
+  return `${env}${PREAMBLE}\n${fns}\n${loop}\n`;
 }
 
-export async function detect(target: Target, ids: string[]): Promise<Record<string, boolean>> {
-  const res = await target.run(detectScript(ids), { timeoutMs: 60_000 });
+export async function detect(
+  target: Target,
+  ids: string[],
+  workspace?: string,
+): Promise<Record<string, boolean>> {
+  const res = await target.run(detectScript(ids, workspace), { timeoutMs: 60_000 });
   const out: Record<string, boolean> = {};
   for (const line of res.stdout.split("\n")) {
     const m = /^([a-z0-9-]+) (ok|missing)$/.exec(line.trim());
@@ -149,7 +159,7 @@ function scopeIds(options: CloneOptions): string[] {
 export async function plan(target: Target, options: CloneOptions = {}): Promise<PlanResult> {
   const ids = scopeIds(options);
   const info = await inspect(target);
-  const known = await detect(target, ids);
+  const known = await detect(target, ids, options.workspace || info.workspaceDefault);
   const steps: PlanStep[] = ids.map((id) => {
     const c = componentById(id)!;
     const present = known[id] === true;
@@ -193,7 +203,7 @@ export async function apply(target: Target, options: CloneOptions = {}): Promise
   const dryRun = options.dryRun === true;
 
   const ids = scopeIds(options);
-  const present = dryRun ? {} : await detect(target, ids);
+  const present = dryRun ? {} : await detect(target, ids, workspace);
 
   if (!options.skipRepo && !dryRun) {
     await ensureRepo(target, workspace, options.profileUrl || REPO_URL);
@@ -288,7 +298,7 @@ export interface VerifyResult {
 export async function verify(target: Target, options: CloneOptions = {}): Promise<VerifyResult> {
   const info = await inspect(target);
   const ids = scopeIds(options);
-  const known = await detect(target, ids);
+  const known = await detect(target, ids, options.workspace || info.workspaceDefault);
 
   const checks = await target.run(
     `test -f ${shellQuote(info.configDir)}/opencode.json && echo config_ok; test -f ${shellQuote(info.home)}/.env.workbench && echo env_ok`,
@@ -325,7 +335,7 @@ export async function removeComponent(
   const c = componentById(id);
   if (!c) throw new Error(`unknown component '${id}'`);
   const script = uninstallScript(id);
-  const present = await detect(target, [id]);
+  const present = await detect(target, [id], options.workspace);
   if (options.dryRun) {
     return { target: target.label, id, action: present[id] ? "removed" : "absent", code: 0, output: "(dry run)" };
   }
