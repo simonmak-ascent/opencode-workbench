@@ -47,6 +47,10 @@ describe("opencode-workbench server", () => {
     await client.close();
   });
 
+  // inspect_target and plan_clone both run PROBE_SCRIPT, a shell script that shells
+  // out to `node --version` and `npm root -g`. On a cold CI runner the first npm
+  // invocation alone can take several seconds, so vitest's 5s default times them out
+  // intermittently (it did on the v4.0.3 publish run). Give them room.
   it("inspects the local machine via the probe script", async () => {
     const client = await connect();
     const res = await client.callTool({
@@ -59,7 +63,7 @@ describe("opencode-workbench server", () => {
     expect(info.home.length).toBeGreaterThan(0);
     expect(typeof info.has).toBe("object");
     await client.close();
-  });
+  }, 30_000);
 
   it("plans a local clone without side effects", async () => {
     const client = await connect();
@@ -76,7 +80,7 @@ describe("opencode-workbench server", () => {
     expect(plan.steps.some((s) => s.id === "opencode")).toBe(true);
     expect(Array.isArray(plan.toInstall)).toBe(true);
     await client.close();
-  });
+  }, 30_000);
 
   it("previews remove_component without acting", async () => {
     const client = await connect();
