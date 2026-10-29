@@ -63,21 +63,43 @@ jobs:
           VERSION: ${{ steps.v.outputs.version }}
           DIGEST: ${{ steps.build.outputs.digest }}
         run: |
-          set -euo pipefail
+          set -uo pipefail
           ref="ghcr.io/${{ github.repository }}@${DIGEST}"
           echo "verifying $ref"
+
+          out_file=$(mktemp)
+          err_file=$(mktemp)
           # The server answers MCP initialize with serverInfo.version, read from
-          # the package.json baked into the image. If the image was built from
-          # the wrong ref, or the manifest drifted, this fails.
-          out=$(printf '%s\n%s\n' \
-            '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"verify","version":"0"}}}' \
-            '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' \
-            | docker run --rm -i "$ref" 2>/dev/null | head -1)
-          echo "$out"
-          reported=$(printf '%s' "$out" | python3 -c "import json,sys;print(json.load(sys.stdin)['result']['serverInfo']['version'])")
+          # the package.json baked into the image. It is a stdio server, so it
+          # keeps the stream open until stdin closes — hence `timeout`, and no
+          # `set -e` on this line: a non-zero exit here is expected and the
+          # assertion below is what decides.
+          {
+            printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"verify","version":"0"}}}'
+            sleep 2
+          } | timeout 120 docker run --rm -i "$ref" >"$out_file" 2>"$err_file"
+          docker_status=$?
+
+          first=$(head -1 "$out_file")
+          if [ -z "$first" ]; then
+            echo "ERROR: the image produced no output (docker exit $docker_status)"
+            echo "--- stderr ---"
+            tail -30 "$err_file"
+            echo "--- stdout ---"
+            head -20 "$out_file"
+            exit 1
+          fi
+          echo "$first"
+
+          reported=$(printf '%s' "$first" | python3 -c "import json,sys;print(json.load(sys.stdin)['result']['serverInfo']['version'])")
           if [ "$reported" != "$VERSION" ]; then
-            echo "ERROR: image reports $reported but the release tag is $VERSION"
+            echo "ERROR: image reports $reported but the release is $VERSION"
             exit 1
           fi
           echo "image reports $reported, matching the release"
-          echo "digest: ${DIGEST}" >> "$GITHUB_STEP_SUMMARY"
+          {
+            echo "### Published image"
+            echo ""
+            echo "- digest: \`${DIGEST}\`"
+            echo "- reported version: \`${reported}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
