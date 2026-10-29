@@ -1,0 +1,78 @@
+name: Validate Versions
+
+# `workbench.versions.json` is the single recorded answer to "what versions does
+# this profile ship?". It is generated from the real upstreams, so it is only
+# trustworthy if something proves it has not gone stale. Regenerate and diff.
+#
+# Weekly maintenance lives in `check-updates.yml`, which opens a PR with the new
+# manifest. This workflow only guards PRs and main, so a genuinely stale upstream
+# does not leave a scheduled check permanently red.
+on:
+  # `validate-versions` is a required status check: run it on every PR so a
+  # change that alters a pin, a plugin, or the skills tree cannot skip it.
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - "workbench.versions.json"
+      - "opencode.json"
+      - "package.json"
+      - "plugins/**"
+      - ".opencode/skills/**"
+      - "scripts/inventory/versions.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Regenerate and compare
+        run: |
+          cp workbench.versions.json /tmp/committed.json
+          node scripts/inventory/versions.mjs
+          if ! diff -u /tmp/committed.json workbench.versions.json; then
+            echo ""
+            echo "ERROR: workbench.versions.json no longer matches the upstreams."
+            echo "Regenerate locally and commit the result:"
+            echo "  node scripts/inventory/versions.mjs"
+            exit 1
+          fi
+          echo "workbench.versions.json matches every resolvable upstream."
+
+      - name: Report stale pins
+        run: |
+          python3 << 'PYEOF'
+          import json, sys
+          m = json.load(open("workbench.versions.json"))
+          stale = []
+          for cls in ("npm", "pypi"):
+              for sid, e in m["mcp"].get(cls, {}).items():
+                  if e.get("stale"):
+                      stale.append(f'{sid}: pin {e["pin"]} -> latest {e["latest"]}')
+          unresolved = [
+              f'{sid}: {e["package"]}'
+              for cls in ("npm", "pypi")
+              for sid, e in m["mcp"].get(cls, {}).items()
+              if e.get("latest") is None
+          ]
+          for line in stale:
+              print(f'STALE PIN: {line}')
+          for line in unresolved:
+              print(f'UNRESOLVED: {line}')
+          print(f'inventory: {m["mcp"]["npm"].__len__()} npx, {m["mcp"]["npmGlobal"].__len__()} global, '
+                f'{m["mcp"]["pypi"].__len__()} pypi, {m["mcp"]["localFile"].__len__()} local, '
+                f'{m["mcp"]["remote"].__len__()} remote, {m["skills"]["count"]} skills')
+          # Stale pins are advisory here (the profile follows "latest"); an
+          # unresolved package is not: it means the entry cannot launch at all.
+          if unresolved:
+              sys.exit(1)
+          PYEOF

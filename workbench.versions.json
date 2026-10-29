@@ -1,0 +1,180 @@
+{
+  "repo": {
+    "name": "@simonmak-ascent/opencode-workbench",
+    "version": "4.0.4"
+  },
+  "opencode": {
+    "channel": "v2",
+    "installer": "https://opencode.ai/v2/install",
+    "version": "2.2.1",
+    "source": "https://opencode.ai/update/api/latest/cli/npm"
+  },
+  "mcp": {
+    "npm": {
+      "designlang": {
+        "package": "designlang",
+        "pin": null,
+        "latest": "13.3.2",
+        "stale": false
+      },
+      "difflens": {
+        "package": "difflens-cli",
+        "pin": null,
+        "latest": "1.1.2",
+        "stale": false
+      },
+      "firecrawl": {
+        "package": "firecrawl-mcp",
+        "pin": null,
+        "latest": "3.36.0",
+        "stale": false
+      },
+      "ms-365": {
+        "package": "@softeria/ms-365-mcp-server",
+        "pin": null,
+        "latest": "0.176.1",
+        "stale": false
+      }
+    },
+    "npmGlobal": {
+      "brave-search": {
+        "package": "@modelcontextprotocol/server-brave-search",
+        "entry": "/home/node/.npm-global/lib/node_modules/@modelcontextprotocol/server-brave-search/dist/index.js",
+        "latest": "0.6.2"
+      },
+      "design-system": {
+        "package": "mcp-design-system-extractor",
+        "entry": "/home/node/.npm-global/lib/node_modules/mcp-design-system-extractor/dist/index.js",
+        "latest": "1.2.0"
+      },
+      "echarts": {
+        "package": "mcp-echarts",
+        "entry": "/home/node/.npm-global/lib/node_modules/mcp-echarts/build/index.js",
+        "latest": "0.7.1"
+      },
+      "google-search": {
+        "package": "@adenot/mcp-google-search",
+        "entry": "/home/node/.npm-global/lib/node_modules/@adenot/mcp-google-search/build/index.js",
+        "latest": "0.3.1"
+      },
+      "mermaid": {
+        "package": "mcp-mermaid",
+        "entry": "/home/node/.npm-global/lib/node_modules/mcp-mermaid/build/index.js",
+        "latest": "0.4.1"
+      },
+      "playwright": {
+        "package": "@playwright/mcp",
+        "entry": "/home/node/.npm-global/lib/node_modules/@playwright/mcp/cli.js",
+        "latest": "0.0.83"
+      },
+      "saga": {
+        "package": "saga-mcp",
+        "entry": "/home/node/.npm-global/lib/node_modules/saga-mcp/dist/index.js",
+        "latest": "1.19.0"
+      },
+      "shadcn": {
+        "package": "@jpisnice/shadcn-ui-mcp-server",
+        "entry": "/home/node/.npm-global/lib/node_modules/@jpisnice/shadcn-ui-mcp-server/build/index.js",
+        "latest": "3.0.0"
+      },
+      "swagger-testcase": {
+        "package": "swagger-testcase-mcp",
+        "entry": "/home/node/.npm-global/lib/node_modules/swagger-testcase-mcp/dist/index.js",
+        "latest": "1.0.0"
+      }
+    },
+    "pypi": {
+      "alibaba-cloud-ops": {
+        "package": "alibaba-cloud-ops-mcp-server",
+        "pin": null,
+        "latest": "0.9.27",
+        "stale": false
+      },
+      "arxiv": {
+        "package": "arxiv-mcp-server",
+        "pin": null,
+        "latest": "0.8.2",
+        "stale": false
+      },
+      "paper-search": {
+        "package": "paper-search-mcp",
+        "pin": null,
+        "latest": "0.1.4",
+        "stale": false
+      }
+    },
+    "docker": {
+      "google-workspace": {
+        "image": "ghcr.io/aaronsb/google-workspace-mcp",
+        "tag": "latest",
+        "digest": null,
+        "resolution": "credentials-required"
+      }
+    },
+    "localFile": {
+      "browser-mcp": {
+        "entry": "/home/node/.local/bin/browser-mcp/browser-mcp-server-v2.js"
+      },
+      "esg-hub": {
+        "entry": "/workspaces/esg-hub/mcp-server/dist/index.js"
+      },
+      "github": {
+        "entry": "/home/node/.local/bin/github-mcp-server",
+        "repo": "github/github-mcp-server",
+        "latest": "v2.0.3"
+      },
+      "humanity4ai": {
+        "entry": "/workspaces/project_human/mcp-servers/dist/mcp-server.js"
+      },
+      "postgres": {
+        "entry": "/home/node/.local/bin/postgres-mcp-shim.mjs"
+      },
+      "surrealdb": {
+        "entry": "/home/node/.local/bin/surreal-mcp-shim.mjs"
+      }
+    },
+    "remote": {
+      "cloudflare": {
+        "url": "https://mcp.cloudflare.com/mcp"
+      },
+      "context7": {
+        "url": "https://mcp.context7.com/mcp"
+      },
+      "exa": {
+        "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,web_search_advanced_exa"
+      },
+      "gh_grep": {
+        "url": "https://mcp.grep.app"
+      },
+      "sentry": {
+        "url": "https://mcp.sentry.dev/mcp"
+      },
+      "stripe": {
+        "url": "https://mcp.stripe.com"
+      },
+      "vdd": {
+        "url": "https://vdd.simonmak.com/api/mcp"
+      },
+      "vercel": {
+        "url": "https://mcp.vercel.com"
+      }
+    }
+  },
+  "plugins": {
+    "sdk": {
+      "@opencode-ai/plugin": "1.19.5"
+    },
+    "npm": {
+      "opencode-env-protect": "0.3.0",
+      "opencode-sentry-monitor": "0.1.7"
+    },
+    "repo": {
+      "doc-tools.ts": "sha256:542442ebfac33cd3d0a12af63f0d62cc512324f8c6e7abf26d8ffaa523532261",
+      "memory.ts": "sha256:67780e60e9eea547e0521caeb9e4a24c0a38fd2ce7dd139ac5baf525d2e775f5"
+    }
+  },
+  "skills": {
+    "count": 76,
+    "sha256": "sha256:4bcd951211285b62c91ad030c7c57bcc71663d6cc9c79d408f48e88d8223cd77"
+  }
+}

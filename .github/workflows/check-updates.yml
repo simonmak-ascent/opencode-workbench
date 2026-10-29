@@ -1,0 +1,74 @@
+name: Check Upstream Updates
+
+# The profile follows "latest" for OpenCode, npm/PyPI MCP servers and plugins,
+# but `workbench.versions.json` is a snapshot: it records what the last release
+# resolved to. Upstreams keep moving when this repo does not, so once a week this
+# regenerates the manifest and opens a PR when anything moved.
+#
+# Deliberately a PR and not a failing scheduled check: a scheduled workflow that
+# is red every Monday because npm published a patch trains people to ignore it.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Regenerate the manifest
+        run: node scripts/inventory/versions.mjs
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet -- workbench.versions.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No upstream movement."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git diff --stat -- workbench.versions.json
+          fi
+
+      - name: Open or update the update PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          branch="chore/upstream-versions"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add workbench.versions.json
+          git commit -m "chore(versions): refresh upstream versions"
+          git push --force-with-lease origin "$branch"
+
+          if ! gh pr list --head "$branch" --state open --json number -q '.[].number' | grep -q .; then
+            gh pr create \
+              --base main \
+              --head "$branch" \
+              --title "chore(versions): refresh upstream versions" \
+              --body "Automated refresh of \`workbench.versions.json\`.
+
+          The profile follows *latest* for OpenCode, npm/PyPI MCP servers and plugins, so this
+          records what those upstreams resolve to now. Nothing here is applied to a box until
+          \`apply_clone\` or \`update_component\` runs, so merging is a documentation update —
+          review the diff and merge when the movement is expected.
+
+          A \`null\` \`latest\` means the package could not be resolved. That is not cosmetic: a
+          package that does not exist cannot launch, which is how \`primary-sources-mcp\` was
+          caught (404 on npm)."
+          else
+            echo "PR already open; branch updated."
+          fi
