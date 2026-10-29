@@ -1,0 +1,83 @@
+name: Publish Image
+
+# The repo shipped a Dockerfile that nothing built, so "the image" was whatever
+# someone ran by hand from whatever commit. This makes the image a release
+# artifact: built from the tag, labelled with version + revision, pushed to GHCR,
+# and then verified by pulling it back and asking the server what version it is.
+#
+# Runs after the npm publish for the same tag. It does not depend on npm, but the
+# tag is only a release once `Publish` succeeds, so ordering keeps a broken
+# release from also publishing an image.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Resolve version
+        id: v
+        run: |
+          v=$(python3 -c "import json;print(json.load(open('package.json'))['version'])")
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "major_minor=${v%.*}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          build-args: |
+            VERSION=${{ steps.v.outputs.version }}
+            REVISION=${{ github.sha }}
+            SOURCE=https://github.com/${{ github.repository }}
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ steps.v.outputs.version }}
+            ghcr.io/${{ github.repository }}:${{ steps.v.outputs.major_minor }}
+            ghcr.io/${{ github.repository }}:latest
+          labels: |
+            org.opencontainers.image.version=${{ steps.v.outputs.version }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+      - name: Prove the published image reports its own version
+        env:
+          VERSION: ${{ steps.v.outputs.version }}
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          ref="ghcr.io/${{ github.repository }}@${DIGEST}"
+          echo "verifying $ref"
+          # The server answers MCP initialize with serverInfo.version, read from
+          # the package.json baked into the image. If the image was built from
+          # the wrong ref, or the manifest drifted, this fails.
+          out=$(printf '%s\n%s\n' \
+            '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"verify","version":"0"}}}' \
+            '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}' \
+            | docker run --rm -i "$ref" 2>/dev/null | head -1)
+          echo "$out"
+          reported=$(printf '%s' "$out" | python3 -c "import json,sys;print(json.load(sys.stdin)['result']['serverInfo']['version'])")
+          if [ "$reported" != "$VERSION" ]; then
+            echo "ERROR: image reports $reported but the release tag is $VERSION"
+            exit 1
+          fi
+          echo "image reports $reported, matching the release"
+          echo "digest: ${DIGEST}" >> "$GITHUB_STEP_SUMMARY"
