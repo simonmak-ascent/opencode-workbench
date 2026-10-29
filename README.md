@@ -20,7 +20,7 @@ This repository is the **single source of truth** for a complete cloud developme
 
 - Workstation configuration and automation
 - OpenCode configuration (model, providers, MCP servers)
-- Agent skills (45 reusable AI instructions across research, dev, data, science and ops)
+- Agent skills (76 reusable AI instructions across research, dev, data, science and ops)
 - Operational prompts (disaster recovery, backup, security)
 - Recovery procedures (playbook, checklist, gap analysis)
 - Security governance (secret management, threat model)
@@ -74,7 +74,7 @@ flowchart TB
   AGENT["OpenCode agent"] -->|"npx @simonmak-ascent/opencode-workbench"| MCP["opencode-workbench MCP<br/>inspect · plan · apply · verify"]
   REPO[("Git repo — single source of truth")] --> MCP
   MCP -->|"local or SSH"| BOX["Target Linux box"]
-  BOX --> PROF["Workstation profile<br/>OpenCode CLI · 35 MCP servers · 45 skills · Docker infra"]
+  BOX --> PROF["Workstation profile<br/>OpenCode CLI · 34 MCP servers · 76 skills · Docker infra"]
 ```
 
 ## Clone lifecycle
@@ -122,7 +122,7 @@ opencode-workbench/
 │   ├── setup.sh                    # Post-create: installs opencode, MCPs, Docker infra
 │   └── aliases.sh                  # Shell aliases sourced at runtime
 ├── .opencode/
-│   └── skills/                     # 28 custom agent skills (10 research, 10 dev, 8 publishing)
+│   └── skills/                     # 76 agent skills, one directory per SKILL.md
 ├── vendor/                         # Vendored MCP source code
 │   ├── perplexity-agent-mcp/
 │   └── browserless-mcp/
@@ -158,8 +158,8 @@ opencode-workbench/
 | Category | Details |
 |----------|---------|
 | **OpenCode** | Latest stable CLI, DeepSeek V4 Pro model, LSP enabled |
-| **MCP Servers** | 35 configured (33 enabled, 2 disabled), 9 remote + 26 local |
-| **Agent Skills** | 45 reusable skills in `.opencode/skills/` |
+| **MCP Servers** | 34 configured (32 enabled, 2 disabled), 8 remote + 26 local |
+| **Agent Skills** | 76 reusable skills in `.opencode/skills/` |
 | **Infrastructure** | PostgreSQL 16 (Docker), Browserless Chromium (Docker) |
 | **Tools** | pandoc, jq, miller, sqlite3, GitHub CLI, Playwright Chromium |
 | **Prompts** | 9 operational prompts in `docs/prompts/` |
@@ -217,7 +217,7 @@ Full details: [`docs/recovery/RECOVERY_PLAYBOOK.md`](docs/recovery/RECOVERY_PLAY
 | Remote | 9 | context7, gh_grep, vdd, exa, cloudflare, clerk, vercel (token auth), sentry, stripe |
 | Local | 26 | npm / vendored / binary stdio servers |
 
-Totals: **35 configured** (33 enabled, 2 disabled: `google-search`, `google-workspace`).
+Totals: **34 configured** (32 enabled, 2 disabled: `google-search`, `google-workspace`).
 
 See: [`docs/architecture/mcp-inventory.md`](docs/architecture/mcp-inventory.md)
 
