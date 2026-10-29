@@ -1,9 +1,16 @@
 name: Publish MCP Registry
 
 # Publishes ./server.json to the Official MCP Registry
-# (https://registry.modelcontextprotocol.io) authenticating with GitHub OIDC —
-# no stored secret. The registry verifies the npm package version in server.json
-# already exists, so this must run AFTER the npm publish for the same version.
+# (https://registry.modelcontextprotocol.io) authenticating with DNS + an Ed25519
+# key whose public half is a TXT record on ascent-partners.com.
+#
+# The registry verifies that the npm package version named in server.json already
+# exists, so this must run AFTER the npm publish for the same version. Both
+# workflows trigger on the same tag and therefore start together, so this job
+# waits for the version to appear on npm rather than relying on manual dispatch.
+#
+# Requires the `MCP_PRIVATE_KEY` repository secret (the DNS auth private key).
+# Without it the login step fails — the registry entry cannot be created from CI.
 on:
   push:
     tags:
@@ -25,10 +32,33 @@ jobs:
         run: |
           url="https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz"
           curl -fsSL "$url" | tar xz mcp-publisher
-          ./mcp-publisher --version || true
+          # Fail here, loudly, if the download did not produce a runnable binary.
+          # `|| true` used to swallow this and surface later as
+          # "mcp-publisher: command not found" in the login step.
+          ./mcp-publisher --version
 
-      - name: Log in with GitHub OIDC
-        run: mcp-publisher login dns --domain ascent-partners.com --private-key ${{ secrets.MCP_PRIVATE_KEY }}
+      - name: Wait for the npm package version
+        run: |
+          set -euo pipefail
+          version=$(python3 -c "import json;print(json.load(open('server.json'))['version'])")
+          pkg=$(python3 -c "import json;print(json.load(open('server.json'))['packages'][0]['identifier'])")
+          echo "waiting for $pkg@$version on npm"
+          for i in $(seq 1 60); do
+            published=$(npm view "$pkg@$version" version 2>/dev/null || true)
+            if [ "$published" = "$version" ]; then
+              echo "found $pkg@$version after ${i}0s"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "ERROR: $pkg@$version never appeared on npm; the registry would reject this publish."
+          echo "Check the Publish workflow for the same tag."
+          exit 1
+
+      - name: Log in with DNS
+        run: ./mcp-publisher login dns --domain ascent-partners.com --private-key "$MCP_PRIVATE_KEY"
+        env:
+          MCP_PRIVATE_KEY: ${{ secrets.MCP_PRIVATE_KEY }}
 
       - name: Publish server.json
         run: ./mcp-publisher publish
