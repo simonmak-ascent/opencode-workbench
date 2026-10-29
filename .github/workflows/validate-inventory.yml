@@ -1,15 +1,18 @@
 name: Validate Inventory
 
 on:
+  # `validate-config` is a required status check: run it on every PR so unrelated
+  # changes are not left permanently "expected", and so a PR that only edits a file
+  # an assertion reads (README/package.json/connector.json) cannot skip it.
   pull_request:
-    paths:
-      - 'opencode.json'
-      - '.devcontainer/**'
-      - 'scripts/**'
   push:
     branches: [main]
     paths:
       - 'opencode.json'
+      - 'connector.json'
+      - 'package.json'
+      - 'server.json'
+      - 'README.md'
       - '.devcontainer/**'
       - 'scripts/**'
 
@@ -47,16 +50,23 @@ jobs:
       - name: Assert docs match opencode.json MCP count
         run: |
           python3 << 'PYEOF'
-          import json, sys
+          import json, os, sys
           with open('opencode.json') as f:
               mcp = json.load(f).get('mcp', {})
           total = len(mcp)
           enabled = sum(1 for v in mcp.values() if v.get('enabled', True))
+          # AGENTS.md is gitignored (a local-only artifact), so it is absent from a
+          # CI checkout. Assert it only when present — never crash on its absence.
           checks = [('README.md', f'{total} configured'), ('AGENTS.md', f'{total} MCP servers')]
-          fails = []
+          fails, skipped = [], []
           for path, needle in checks:
+              if not os.path.exists(path):
+                  skipped.append(f'{path}: not in checkout (gitignored) — skipped')
+                  continue
               if needle not in open(path).read():
                   fails.append(f'{path}: missing "{needle}"')
+          for line in skipped:
+              print(line)
           if fails:
               print('DRIFT: documented MCP count does not match opencode.json')
               for f in fails:
@@ -78,6 +88,25 @@ jobs:
           if vs != vp or ident != pkg.get('name'):
               print('DRIFT: server.json must match package.json name/version')
               sys.exit(1)
+          PYEOF
+
+      - name: Assert connector.json matches package.json version
+        run: |
+          python3 << 'PYEOF'
+          import json, sys
+          pkg = json.load(open('package.json'))
+          con = json.load(open('connector.json'))
+          vp, vc = pkg.get('version'), con.get('version')
+          print(f"package.json: {vp}; connector.json: {vc}")
+          if vc != vp:
+              print('DRIFT: connector.json version must match package.json')
+              print('  connector.json ships in the npm tarball and the Docker image,')
+              print('  so a mismatch is shipped, not just documented.')
+              sys.exit(1)
+          for key in ('name', 'title', 'description', 'transport'):
+              if not con.get(key):
+                  print(f'DRIFT: connector.json is missing required key "{key}"')
+                  sys.exit(1)
           PYEOF
 
       - name: Check skills count
