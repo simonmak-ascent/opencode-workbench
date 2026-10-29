@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { componentById } from "../src/components";
+import { CORE_NPM_MCPS, componentById } from "../src/components";
 import { PROBE_SCRIPT } from "../src/probe";
 
 describe("opencode CLI component", () => {
@@ -35,6 +35,31 @@ describe("plugins component", () => {
     // A box that has not cloned yet has no WB_REPO; detect must still answer.
     expect(c.detect).toMatch(/memory\.ts/);
     expect(c.detect).toMatch(/doc-tools\.ts/);
+  });
+});
+
+describe("skills component", () => {
+  const c = componentById("skills")!;
+
+  it("compares the tree against the repo instead of counting files", () => {
+    // A non-empty directory used to count as current forever.
+    expect(c.detect).toContain("diff -r");
+    expect(c.detect).toContain("WB_REPO");
+  });
+
+  it("still answers when the repo is not on the target", () => {
+    expect(c.detect).toContain("SKILL.md");
+  });
+});
+
+describe("npm-mcps component", () => {
+  const c = componentById("npm-mcps")!;
+
+  it("checks every core package, not a sample", () => {
+    // Two of nine was the old check, so seven could be missing and undetected.
+    for (const p of CORE_NPM_MCPS) {
+      expect(c.detect, `detect must cover ${p}`).toContain(p);
+    }
   });
 });
 
