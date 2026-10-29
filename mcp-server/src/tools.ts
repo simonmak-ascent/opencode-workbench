@@ -67,20 +67,29 @@ const infoOutput = z.object({
     .describe("Summary of the bundled workbench.versions.json, when present."),
 });
 
-const inspectOutput = z.object({
+// Must declare every field PROBE_SCRIPT can emit: the MCP SDK validates
+// structuredContent strictly, and an undeclared field fails the whole call at
+// runtime ("data must NOT have additional properties"). inspect-output.test.ts
+// asserts this list stays in step with the probe.
+export const inspectOutput = z.object({
   user: z.string().describe("Detected user on the target."),
   home: z.string().describe("Home directory on the target."),
   workspaceDefault: z.string().describe("Default directory where the profile repo will be cloned."),
   configDir: z.string().describe("OpenCode config directory on the target."),
   osId: z.string().optional().describe("OS identifier (e.g. ubuntu, debian, rhel)."),
+  osIdLike: z.string().optional().describe("ID_LIKE from /etc/os-release: space-separated distribution family hints."),
   osName: z.string().optional().describe("Human-readable OS name."),
   osVersion: z.string().optional().describe("OS version string."),
   kernel: z.string().optional().describe("Kernel name and release."),
   arch: z.string().optional().describe("CPU architecture (e.g. x86_64, aarch64)."),
   packageManager: z.string().optional().describe("Detected package manager (apt-get, dnf, yum, apk, pacman, zypper, or none)."),
   nodeVersion: z.string().optional().describe("Installed Node.js version, if any."),
+  npmPrefix: z.string().optional().describe("npm global prefix, if npm is installed."),
   npmModules: z.string().optional().describe("npm global modules directory."),
+  shell: z.string().optional().describe("The target user's login shell."),
   opencodeBin: z.string().optional().describe("Path to the opencode binary, if installed."),
+  opencodeVersion: z.string().optional().describe("Version the opencode binary reports, without a leading v (e.g. 2.2.1)."),
+  skillsCount: z.string().optional().describe("Number of SKILL.md files under the target's ~/.config/opencode/skills."),
   dockerRunning: z.boolean().optional().describe("Whether the Docker daemon is reachable."),
   envPresent: z.string().optional().describe("Space-separated names of credentials present on the target (values are never read)."),
   has: z.record(z.string(), z.boolean()).describe("Detection flags for git, curl, node, npm, corepack, pnpm, docker, uv, gh, opencode, sudo."),
